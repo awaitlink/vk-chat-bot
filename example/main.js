@@ -1,4 +1,4 @@
-const bot = require('vk-chat-bot');
+const bot = require('../src/vk-chat-bot.js');
 
 // Server port
 const port = process.env.PORT;
