@@ -10,7 +10,7 @@ var params = {
   confirmation_token: process.env.CONFIRMATION_TOKEN,
   group_id: process.env.GROUP_ID,
 
-  // Secret key, set in group Callback API settings
+  // Secret key, set it in group Callback API settings
   secret: process.env.SECRET,
 
   // Command prefix, optional

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 var groupId, confirmationToken, secret, vkApiKey;
 var cmdPrefix;
 
-var initialised = false;
+var initialized = false;
 
 var commandHandlers = [];
 var regexHandlers = [];
@@ -21,7 +21,7 @@ exports.init = function (params) {
   cmdPrefix = params.cmd_prefix;
 
   if (groupId != null && confirmationToken != null && secret != null && vkApiKey != null) {
-    initialised = true;
+    initialized = true;
   } else {
     console.log('[!] Bad init parameters.');
     console.log('[!] Terminating.');
@@ -61,8 +61,8 @@ exports.event = function (e, callback) {
 
 // Start the bot
 exports.start = function (port) {
-  if (!initialised) {
-    console.log('[!] Please initialise before starting using init(params).');
+  if (!initialized) {
+    console.log('[!] Please initialize the bot before starting it using init(params).');
     console.log('[!] Terminating.');
     process.exit(1);
   }
