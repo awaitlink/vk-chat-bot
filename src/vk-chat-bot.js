@@ -14,6 +14,10 @@ var possibleEvents = ["message_allow", "message_deny"];
 
 // Initialise the bot
 exports.init = function (params) {
+  if (params == undefined) {
+    badParams("init()")
+  }
+
   groupId = params.group_id;
   confirmationToken = params.confirmation_token;
   secret = params.secret;
@@ -23,14 +27,16 @@ exports.init = function (params) {
   if (groupId != null && confirmationToken != null && secret != null && vkApiKey != null) {
     initialized = true;
   } else {
-    console.log('[!] Bad init parameters.');
-    console.log('[!] Terminating.');
-    process.exit(1);
+    badParams("init()")
   }
 };
 
 // On exact command with prefix
 exports.on = function (command, callback) {
+  if ((command == undefined) || (callback == undefined)) {
+    badParams("on()")
+  }
+
   commandHandlers.push({
     command: command,
     callback: callback
@@ -39,6 +45,10 @@ exports.on = function (command, callback) {
 
 // On matching regex
 exports.onlike = function (regex, callback) {
+  if ((regex == undefined) || (callback == undefined)) {
+    badParams("onlike()")
+  }
+
   regexHandlers.push({
     regex: regex,
     callback: callback
@@ -47,6 +57,10 @@ exports.onlike = function (regex, callback) {
 
 // For special events
 exports.event = function (e, callback) {
+  if ((e == undefined) || (callback == undefined)) {
+    badParams("event()")
+  }
+
   if (!possibleEvents.includes(e)) {
     console.log('[!] Tried to register a handler for an unsupported event type: ', e);
     console.log('[!] Terminating.');
@@ -61,6 +75,10 @@ exports.event = function (e, callback) {
 
 // Start the bot
 exports.start = function (port) {
+  if (port == undefined) {
+    badParams("start()")
+  }
+
   if (!initialized) {
     console.log('[!] Please initialize the bot before starting it using init(params).');
     console.log('[!] Terminating.');
@@ -170,3 +188,9 @@ function send(uid, msg) {
     if (error) console.log('[!] Error occured when sending a message: ', error);
   })
 };
+
+function badParams(functionName) {
+  console.log('[!] Bad parameters for function ' + functionName + '.');
+  console.log('[!] Terminating.');
+  process.exit(1);
+}
