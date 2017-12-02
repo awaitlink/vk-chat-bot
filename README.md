@@ -7,8 +7,8 @@ This bot uses VK's [Callback API](https://vk.com/dev/callback_api) to get new me
 npm install vk-chat-bot
 ```
 ## Example
-You can find the example in [`example/main.js`](https://github.com/sudoio/vk-chat-bot/blob/master/example/main.js).
-For a quick start, you canjust clone this repository and push it to your [Heroku](https://heroku.com) project - that's it! (Don't forget to set some environment variables before pushing though)
+You can find the example in [`example/main.js`](https://github.com/sudoio/vk-chat-bot/blob/master/example/main.js).    
+For a quick start, you can just clone this repository and push it to your [Heroku](https://heroku.com) project - that's it! (Don't forget to set some environment variables before pushing though)
 
 ## Usage
 #### 1. Preparation
