@@ -14,7 +14,7 @@ var params = {
   secret: process.env.SECRET,
 
   // Command prefix, optional
-  cmd_prefix: "/"
+  cmd_prefix: process.env.CMD_PREFIX
 }
 
 bot.init(params);
