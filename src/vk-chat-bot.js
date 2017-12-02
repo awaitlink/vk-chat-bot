@@ -131,7 +131,7 @@ function handleMessage(uid, msg) {
   // If not, try to use a regex handler
   for (var i = 0; i < regexHandlers.length; i++) {
     handler = regexHandlers[i];
-    if (handler.regex.test(msg)) {
+    if ((new RegExp(handler.regex)).test(msg)) {
       var answer = handler.callback(msg);
       if (answer != null) {
         send(uid, answer)

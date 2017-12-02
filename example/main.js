@@ -24,11 +24,11 @@ bot.event("message_allow", (uid) => {
 });
 
 bot.on("test", (msg) => {
-  return "Test success! Your message was: \"" + msg + "\".";
+  return "Test success! Your message content (excluding command) was: \"" + msg + "\".";
 });
 
 bot.onlike("(hi|hello|hey)", (msg) => {
-  return "Hello, I am a bot.";
+  return "Hello, I am a test bot.";
 });
 
 bot.start(port);
