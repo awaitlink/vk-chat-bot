@@ -135,7 +135,7 @@ function handleMessage(uid, msg) {
   for (var i = 0; i < commandHandlers.length; i++) {
     handler = commandHandlers[i];
     if (handler.command === command) {
-      msg_content = msg.replace(cmdPrefix + command, "");
+      msg_content = msg.replace(new RegExp(cmdPrefix + command, 'g'), "");
 
       var answer = handler.callback(msg_content);
       if (answer != null) {
