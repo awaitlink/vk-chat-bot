@@ -24,7 +24,7 @@ This guide will walk you step-by-step through creating your own chat bot for a c
 - **Save** your new **token** somewhere.
 - Now switch to the `Callback API` -> `Server settings` tab.
 - In the `Secret key` field, enter **your own** random combination of characters.
-- Click `Save` blow that field.
+- Click `Save` below that field.
 - In the `Event types` tab, **check** the following boxes:
 
 ![Event types](img/event-types.png)
