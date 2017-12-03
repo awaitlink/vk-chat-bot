@@ -116,6 +116,12 @@ bot.regex("(hi|hello|hey)", (msg) => {
 bot.start(port);
 ```
 
+- Create a file called `Procfile` with the following content to tell Heroku what to do with your code:
+
+```
+web: node index.js
+```
+
 - Again, open the terminal (console) **inside that folder**, and execute the following commands:
 
 ```bash
