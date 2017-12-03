@@ -129,13 +129,18 @@ function parseRequest(body) {
 // Handle message_new
 function handleMessage(uid, msg) {
   msg = msg.toLocaleLowerCase();
-  var command = msg.split(" ")[0].replace(cmdPrefix, "");
+
+  var command = msg.split(" ")[0];
+  if (cmdPrefix) command = command.replace(cmdPrefix, "");
 
   // See if there is a matching command
   for (var i = 0; i < commandHandlers.length; i++) {
     handler = commandHandlers[i];
     if (handler.command === command) {
-      msg_content = msg.replace(new RegExp(cmdPrefix + command, 'g'), "");
+      regex = new RegExp(command, 'g');
+      if (cmdPrefix) regex = new RegExp(cmdPrefix + command, 'g');
+
+      msg_content = msg.replace(regex, "");
 
       var answer = handler.callback(msg_content);
       if (answer != null) {
