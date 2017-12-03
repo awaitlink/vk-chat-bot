@@ -1,14 +1,14 @@
 # VK Chat Bot Heroku Guide
-This guide will walk you step-by-step through creating your own chat bot for a community using `vk-chat-bot` and [Heroku](https://heroku.com).
+This guide will walk you step-by-step through creating your own chat bot for a community using `vk-chat-bot` npm package and [Heroku](https://heroku.com).
 
 ## 1. Setting up Heroku
-- Visit [signup.heroku.com](https://signup.heroku.com/) and create an account there.
+- Visit [signup.heroku.com](https://signup.heroku.com/) and **create an account** there.
 - After completing the registration process, visit your [Heroku Dashboard](https://dashboard.heroku.com/apps).
-- Create a new app with any name that is available.
+- Create a **new app** with any name that is available.
 
-`New` button | `New App` Dialog
---- | ---
-![New App](img/new-app.png) | ![New App Dialog](img/new-app-dialog.png)
+![New App](img/new-app.png)
+
+![New App Dialog](img/new-app-dialog.png)
 
 ## 2. Setting up a VK community
 - Visit [vk.com/groups](https://vk.com/groups), click `Create community`, and fill in the details:
@@ -16,50 +16,40 @@ This guide will walk you step-by-step through creating your own chat bot for a c
 ![Create a community](img/new-community.png)
 
 - In your community, go to `⋅⋅⋅` -> `Manage community`.
-- Go to `Messages` tab, and enable community messages.
-
-
-
+- Go to `Messages` tab, and **enable** community messages.
 - Go to `Settings` -> `API usage`.
-- Create a new access token by clicking `Create token`. Make sure to check `Allow access to community messages`:
+- Create a **new access token** by clicking `Create token`. Make sure to check `Allow access to community messages`:
 
 ![New Token](img/new-token.png)
-
-- **Save** your new token into Notepad.
-
-
-
+- **Save** your new **token** somewhere.
 - Now switch to the `Callback API` -> `Server settings` tab.
 - In the `Secret key` field, enter **your own** random combination of characters.
-- Click `Save`.
-
-
-
-- In the `Event types` tab, check the following boxes:
+- Click `Save` blow that field.
+- In the `Event types` tab, **check** the following boxes:
 
 ![Event types](img/event-types.png)
 
 
-- Go back to `Server settings` tab and enter in the `URL` field: **https://**`your-app-name`**.herokuapp.com/** (Replace `your-app-name` with the name you specified when creating a new Heroku app in step 1).
+- Go back to `Server settings` tab and enter in the `URL` field: **https://**`your-app-name`**.herokuapp.com/** (Replace `your-app-name` with the name you specified when creating a new Heroku app in **step 1**).
 - **Don't** press `Confirm` and **don't** close this page yet.
 
 ![Callback API settings](img/callback-api.png)
 
 ## 3. Setting up environment variables in Heroku
 
-- Open the `Settings` tab in your Heroku app, click `Reveal Config Vars`, and add some variables, as follows:
+- Open the `Settings` tab in your Heroku app, click `Reveal Config Vars`, and **add variables**, as follows:
 
 Variable name | Description | Example value
 --- | --- | ---
-`VK_API_KEY` | The token you saved earlier into Notepad | -
-`SECRET` | Secret key | `njf4890n39_4f_39fj`
-`GROUP_ID` | Number that comes after `"group_id":` | `157869221`
-`CONFIRMATION_TOKEN` | String that comes after `String to be returned:` | `f2111701`
+`VK_API_KEY` | The **token** you saved earlier into somewhere | -
+`SECRET` | **Secret key** | `njf4890n39_4f_39fj`
+`GROUP_ID` | **Number** that comes after `"group_id":` | `157869221`
+`CONFIRMATION_TOKEN` | **String** that comes after `String to be returned:` | `f2111701`
 
 ## 4. Creating the bot
 
 - Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install) installed.
-- Create a new folder for your project on your computer.
+- Create a new folder for the bot on your computer.
 - Open up terminal (console) **inside that folder**, and execute the following commands (assuming your project name is `some-random-chat-bot`):
 
 ```bash
@@ -87,7 +77,7 @@ heroku git:remote -a some-random-chat-bot
   "author": "Your Name Here",
   "license": "MIT",
   "dependencies": {
-    "vk-chat-bot": "^2.1.0",
+    "vk-chat-bot": "^2.1.7",
   },
 }
 
@@ -148,12 +138,13 @@ git push heroku master
 ```
 
 ## 5. Final steps
-- Go to your app's logs (in Heroku app dashboard -> `More` -> `View logs`)
-- If you see a message like this one, then the bot has launched successfully:
+- Go to your app's **logs** (in Heroku app dashboard -> `More` -> `View logs`)
+- If you see a **log message** like one below, then the bot has launched successfully:
 ```
 [i] Server is listening on port 12345.
 ```
-- Now go back to VK's Callback API settings, and press that `Confirm` button!
+If something is not working, feel free to [open an issue](https://github.com/sudoio/vk-chat-bot/issues) on GitHub.
+- Now go back to VK's **Callback API settings**, and press that `Confirm` button!
 
 ## 6. Ready!
 - Now you can have a conversation with your bot.
