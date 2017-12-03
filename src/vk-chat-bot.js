@@ -121,7 +121,7 @@ function parseRequest(body) {
     handleMessage(uid, msg);
   } else {
     uid = body.object.user_id;
-    console.log('[>] User allowed messages: ', uid);
+    console.log('[>] Received event: ', body.type);
     handleEvent(uid, body.type)
   }
 }
@@ -172,7 +172,7 @@ function handleEvent(uid, e) {
       handler = eventHandlers[i];
       if (handler.event === e) {
         var answer = handler.callback(uid);
-        if (answer != null) {
+        if (answer != null && !(e === "message_deny")) {
           send(uid, answer)
         }
       }
