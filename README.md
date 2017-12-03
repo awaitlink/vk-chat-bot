@@ -8,7 +8,6 @@ npm install vk-chat-bot
 ```
 ## Example
 You can find the example in [`example/main.js`](https://github.com/sudoio/vk-chat-bot/blob/master/example/main.js).    
-For a quick start, you can just clone this repository and push it to your [Heroku](https://heroku.com) project - that's it! (Don't forget to set some environment variables before pushing though)
 
 ## Usage
 #### 1. Preparation
@@ -37,26 +36,24 @@ bot.init(params);
 ```
 
 #### 2. Defining behavior
-There are three functions available to define behavior: `on()`, `onlike()` and `event()`.
 
-1. If `message_allow` or `message_deny` event occurs, matching `event()` handler will be called and `user_id` will be passed.
-1. If `message_new` event occurs, the following happens:
-  - If there is a matching command defined, matching `on()` is called (the **message** will be passed to it).
-  - If no commands match, a matching regex will be searched for and matching `onlike()` called (the **message** will be passed to it).
-
-If you want to send a response, `return` a string containing it.
+See [Behavior-defining functions](#behavior-defining-functions) section for more information.
 
 Here's an example:
 ```js
-bot.event("message_allow", (uid) => {
+// When user allowed to send messages to him
+bot.on("message_allow", (uid) => {
   return "Hello, thanks for allowing us to send you messages.";
 });
 
-bot.on("test", (msg) => {
+// When the first word in the message is cmd_prefix + "test"
+// For example, if cmd_prefix is "/", we search for "/test"
+bot.cmd("test", (msg) => {
   return "Test success! Your message content (excluding command) was: \"" + msg + "\".";
 });
 
-bot.onlike("(hi|hello|hey)", (msg) => {
+// When the message contains a word "hi", "hello" or "hey"
+bot.regex("(hi|hello|hey)", (msg) => {
   return "Hello, I am a test bot.";
 });
 ```
@@ -70,3 +67,20 @@ const port = process.env.PORT;
 
 bot.start(port);
 ```
+
+## Behavior-defining functions
+> Only one handler will be called for a message.    
+> Handlers will be searched in this order: `on()`, `cmd()`, `regex()`.
+
+Method | Description | Passed to handler | Returned value by handler
+--- | --- | --- | ---
+`on(event, handler)` | Handles various special events (see [Special events](#special-events)) | `uid` - user id | Depends on event type
+`cmd(command, handler)` | Handler is called only if the **first word** in the message is `cmd_prefix` **+** `command` | `msg` - user message, excluding the `cmd_prefix` and `command` |  **Sent** to the user
+`regex(regex, handler)` | Handler is called if the message matches the `regex` | `msg` - full user message | **Sent** to the user
+
+## Special events
+
+Event type | Description | Returned value by handler
+--- | --- | ---
+`"message_allow"` | Handler called if we receive `"message_allow"` from Callback API (User allowed sending messages to him/her) | **Sent** to the user
+`"message_deny"` | Handler called if we receive `"message_deny"` from Callback API (User disallowed sending messages to him/her) | **Ignored**
