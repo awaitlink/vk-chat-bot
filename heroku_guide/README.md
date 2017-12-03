@@ -49,89 +49,20 @@ Variable name | Description | Example value
 ## 4. Creating the bot
 
 - Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install) installed.
-- Create a new folder for the bot on your computer.
-- Open up terminal (console) **inside that folder**, and execute the following commands (assuming your project name is `some-random-chat-bot`):
+- Open up terminal (console), and execute the following commands (assuming your project name on Heroku is `some-random-chat-bot`):
 
 ```bash
-# Initialize the repository
-git init
+# Clone the example repository
+git clone https://github.com/sudoio/vk-chat-bot-example.git
+
+# Go inside the newly-created folder
+cd vk-chat-bot-example
 
 # Log in to Heroku
 heroku login
 
 # Add the heroku remote
 heroku git:remote -a some-random-chat-bot
-```
-
-- In that folder, create a file called `package.json` with the following content:
-
-```json
-{
-  "name": "some-random-chat-bot",
-  "version": "1.0.0",
-  "description": "A chat bot for VK.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Your Name Here",
-  "license": "MIT",
-  "dependencies": {
-    "vk-chat-bot": "^2.1.7",
-  },
-}
-
-```
-
-- Now let's create the actual logic for our bot. Create a file `index.js` with this content inside it:
-
-```js
-const bot = require('vk-chat-bot');
-
-// process.env gets data from environment variables we have set up in Heroku
-const port = process.env.PORT;
-var params = {
-  vk_api_key: process.env.VK_API_KEY,
-  confirmation_token: process.env.CONFIRMATION_TOKEN,
-  group_id: process.env.GROUP_ID,
-  secret: process.env.SECRET,
-  cmd_prefix: "/" // Any command prefix you want
-}
-bot.init(params);
-
-bot.on("message_allow", (uid) => {
-  return "Hello, thanks for allowing us to send you messages.";
-});
-
-bot.on("no_match", (uid) => {
-  return "I don't know how to respond to your message.";
-});
-
-bot.cmd("test", (msg) => {
-  return "Test success! Your message content (excluding command) was: \"" + msg + "\".";
-});
-
-bot.regex("(hi|hello|hey)", (msg) => {
-  return "Hello, I am a test bot.";
-});
-
-bot.start(port);
-```
-
-- Create a file called `Procfile` with the following content to tell Heroku what to do with your code:
-
-```
-web: node index.js
-```
-
-- Again, open the terminal (console) **inside that folder**, and execute the following commands:
-
-```bash
-# Stage all files
-git add .
-
-# Make a commit. You can use any message you like
-git commit -m "Initial commit"
 
 # Finally, push the bot to Heroku
 git push heroku master

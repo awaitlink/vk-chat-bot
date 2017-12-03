@@ -7,9 +7,9 @@ It uses VK's [Callback API](https://vk.com/dev/callback_api) to get new messages
 npm install vk-chat-bot
 ```
 ## Example
-You can find the example in [`example/main.js`](https://github.com/sudoio/vk-chat-bot/blob/master/example/main.js).
+You can find the example in the [`sudoio/vk-chat-bot-example`](https://github.com/sudoio/vk-chat-bot-example) repository.
 
-Also, you can take a look at the **step-by-step** [Heroku Chat Bot](https://github.com/sudoio/vk-chat-bot/blob/master/heroku_guide) guide.
+Also, you can take a look at the **step-by-step** [Heroku Chat Bot](https://github.com/sudoio/vk-chat-bot/blob/master/heroku_guide) creation guide.
 
 ## Usage
 #### 1. Preparation
