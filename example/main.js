@@ -1,3 +1,4 @@
+// Replace with require('vk-chat-bot') if you installed using npm
 const bot = require('../src/vk-chat-bot.js');
 
 // Server port
