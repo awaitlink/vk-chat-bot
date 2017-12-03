@@ -18,6 +18,8 @@ This guide will walk you step-by-step through creating your own chat bot for a c
 - In your community, go to `⋅⋅⋅` -> `Manage community`.
 - Go to `Messages` tab, and enable community messages.
 
+
+
 - Go to `Settings` -> `API usage`.
 - Create a new access token by clicking `Create token`. Make sure to check `Allow access to community messages`:
 
@@ -26,13 +28,20 @@ This guide will walk you step-by-step through creating your own chat bot for a c
 - **Save** your new token into Notepad.
 
 
-- Now switch to the `Callback API` tab.
+
+- Now switch to the `Callback API` -> `Server settings` tab.
 - In the `Secret key` field, enter **your own** random combination of characters.
 - Click `Save`.
 
 
-- In the `URL` field, enter: **https://**`your-app-name`**.herokuapp.com/** (Replace `your-app-name` with the name you specified when creating a new Heroku app in step 1).
-- **Don't** press `Confirm` yet.
+
+- In the `Event types` tab, check the following boxes:
+
+![Event types](img/event-types.png)
+
+
+- Go back to `Server settings` tab and enter in the `URL` field: **https://**`your-app-name`**.herokuapp.com/** (Replace `your-app-name` with the name you specified when creating a new Heroku app in step 1).
+- **Don't** press `Confirm` and **don't** close this page yet.
 
 ![Callback API settings](img/callback-api.png)
 
