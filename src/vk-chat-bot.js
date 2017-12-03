@@ -24,7 +24,7 @@ exports.init = function (params) {
   vkApiKey = params.vk_api_key;
   cmdPrefix = params.cmd_prefix;
 
-  if (groupId != null && confirmationToken != null && secret != null && vkApiKey != null) {
+  if (groupId && confirmationToken && secret && vkApiKey) {
     initialized = true;
   } else {
     badParams("init()")
