@@ -15,7 +15,10 @@ This guide will walk you step-by-step through creating your own chat bot for a c
 
 ![Create a community](img/new-community.png)
 
-- In your community, go to `⋅⋅⋅` -> `Manage community` -> `Settings` -> `API usage`.
+- In your community, go to `⋅⋅⋅` -> `Manage community`.
+- Go to `Messages` tab, and enable community messages.
+
+- Go to `Settings` -> `API usage`.
 - Create a new access token by clicking `Create token`. Make sure to check `Allow access to community messages`:
 
 ![New Token](img/new-token.png)
