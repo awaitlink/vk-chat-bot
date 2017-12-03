@@ -68,6 +68,8 @@ const port = process.env.PORT;
 bot.start(port);
 ```
 
+The bot will log some useful information, see [Logging](#logging) section for more information.
+
 ## Behavior-defining functions
 > Only one handler will be called for a message.    
 > Handlers will be searched in this order: `on()`, `cmd()`, `regex()`.
@@ -84,3 +86,11 @@ Event type | Description | Returned value by handler
 --- | --- | ---
 `"message_allow"` | Handler called if we receive `"message_allow"` from Callback API (User allowed sending messages to him/her) | **Sent** to the user
 `"message_deny"` | Handler called if we receive `"message_deny"` from Callback API (User disallowed sending messages to him/her) | **Ignored**
+
+## Logging
+Log message beginning | Meaning | Description
+--- | --- | ---
+`[i]` | Information | Just some information for you
+`[>]` | Request | A request to the bot was made
+`[<]` | Response | The bot sent a response to the user
+`[!]` | Error | An error happened. If it happened during initialization or starting, the bot will exit with status code **1**
