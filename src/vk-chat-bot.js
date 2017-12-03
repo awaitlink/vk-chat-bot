@@ -14,7 +14,7 @@ var possibleEvents = ["message_allow", "message_deny"];
 
 // Initialise the bot
 exports.init = function (params) {
-  if (params == undefined) {
+  if (!params) {
     badParams("init()")
   }
 
@@ -32,9 +32,9 @@ exports.init = function (params) {
 };
 
 // On exact command with prefix
-exports.on = function (command, callback) {
-  if ((command == undefined) || (callback == undefined)) {
-    badParams("on()")
+exports.cmd = function (command, callback) {
+  if (!command || !callback) {
+    badParams("cmd()")
   }
 
   commandHandlers.push({
@@ -44,9 +44,9 @@ exports.on = function (command, callback) {
 }
 
 // On matching regex
-exports.onlike = function (regex, callback) {
-  if ((regex == undefined) || (callback == undefined)) {
-    badParams("onlike()")
+exports.regex = function (regex, callback) {
+  if (!regex || !callback) {
+    badParams("regex()")
   }
 
   regexHandlers.push({
@@ -56,9 +56,9 @@ exports.onlike = function (regex, callback) {
 }
 
 // For special events
-exports.event = function (e, callback) {
-  if ((e == undefined) || (callback == undefined)) {
-    badParams("event()")
+exports.on = function (e, callback) {
+  if (!e || !callback) {
+    badParams("on()")
   }
 
   if (!possibleEvents.includes(e)) {
@@ -75,7 +75,7 @@ exports.event = function (e, callback) {
 
 // Start the bot
 exports.start = function (port) {
-  if (port == undefined) {
+  if (!port) {
     badParams("start()")
   }
 

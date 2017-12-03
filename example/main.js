@@ -19,15 +19,15 @@ var params = {
 
 bot.init(params);
 
-bot.event("message_allow", (uid) => {
+bot.on("message_allow", (uid) => {
   return "Hello, thanks for allowing us to send you messages.";
 });
 
-bot.on("test", (msg) => {
+bot.cmd("test", (msg) => {
   return "Test success! Your message content (excluding command) was: \"" + msg + "\".";
 });
 
-bot.onlike("(hi|hello|hey)", (msg) => {
+bot.regex("(hi|hello|hey)", (msg) => {
   return "Hello, I am a test bot.";
 });
 
