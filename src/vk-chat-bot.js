@@ -10,7 +10,7 @@ var initialized = false;
 var commandHandlers = [];
 var regexHandlers = [];
 var eventHandlers = [];
-var possibleEvents = ["message_allow", "message_deny"];
+var possibleEvents = ["message_allow", "message_deny", "no_match"];
 
 // Initialise the bot
 exports.init = function (params) {
@@ -122,7 +122,7 @@ function parseRequest(body) {
   } else {
     uid = body.object.user_id;
     console.log('[>] Received event: ', body.type);
-    handleEvent(uid, body.type)
+    handleEvent(uid, body.type);
   }
 }
 
@@ -139,7 +139,7 @@ function handleMessage(uid, msg) {
 
       var answer = handler.callback(msg_content);
       if (answer != null) {
-        send(uid, answer)
+        send(uid, answer);
       }
 
       return;
@@ -152,32 +152,37 @@ function handleMessage(uid, msg) {
     if ((new RegExp(handler.regex)).test(msg)) {
       var answer = handler.callback(msg);
       if (answer != null) {
-        send(uid, answer)
+        send(uid, answer);
       }
 
       return;
     }
   }
 
-  // If not, log
-  console.log("[!] Don't know how to respond to: ", msg);
+  // If not, call the no_match event
+  console.log("[i] Don't know how to respond to: \"" + msg + "\", calling 'no_match' event");
+  handleEvent(uid, "no_match");
 }
 
 // Handle a special event
 function handleEvent(uid, e) {
-  if (!possibleEvents.includes(e)) {
+  if (!possibleEvents.includes(e) ) {
     console.log('[!] Received an unsupported event type: ', body.type);
-  } else {
-    for (var i = 0; i < eventHandlers.length; i++) {
-      handler = eventHandlers[i];
-      if (handler.event === e) {
-        var answer = handler.callback(uid);
-        if (answer != null && !(e === "message_deny")) {
-          send(uid, answer)
-        }
+    return;
+  }
+
+  for (var i = 0; i < eventHandlers.length; i++) {
+    handler = eventHandlers[i];
+    if (handler.event === e) {
+      var answer = handler.callback(uid);
+      if (answer != null && !(e === "message_deny")) {
+        send(uid, answer);
       }
+      return;
     }
   }
+
+  console.log("[i] No handler for event: " + e);
 }
 
 // Send a message to user by his id

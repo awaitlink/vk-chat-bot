@@ -46,6 +46,11 @@ bot.on("message_allow", (uid) => {
   return "Hello, thanks for allowing us to send you messages.";
 });
 
+// If no matching handler is found
+bot.on("no_match", (uid) => {
+  return "I don't know how to respond to your message.";
+});
+
 // When the first word in the message is cmd_prefix + "test"
 // For example, if cmd_prefix is "/", we search for "/test"
 bot.cmd("test", (msg) => {
@@ -82,10 +87,11 @@ Method | Description | Passed to handler | Returned value by handler
 
 ## Special events
 
-Event type | Description | Returned value by handler
+Event type | When handler is called | Returned value by handler
 --- | --- | ---
-`"message_allow"` | Handler called if we receive `"message_allow"` from Callback API (User allowed sending messages to him/her) | **Sent** to the user
-`"message_deny"` | Handler called if we receive `"message_deny"` from Callback API (User disallowed sending messages to him/her) | **Ignored**
+`"message_allow"` | When we receive `"message_allow"` from Callback API (User allowed sending messages to him/her) | **Sent** to the user
+`"message_deny"` | When we receive `"message_deny"` from Callback API (User disallowed sending messages to him/her) | **Ignored**
+`"no_match"` | When no matching `cmd()` or `regex()` handler is found | **Sent** to the user
 
 ## Logging
 Log message beginning | Meaning | Description

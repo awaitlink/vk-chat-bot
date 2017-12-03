@@ -24,6 +24,10 @@ bot.on("message_allow", (uid) => {
   return "Hello, thanks for allowing us to send you messages.";
 });
 
+bot.on("no_match", (uid) => {
+  return "I don't know how to respond to your message.";
+});
+
 bot.cmd("test", (msg) => {
   return "Test success! Your message content (excluding command) was: \"" + msg + "\".";
 });
