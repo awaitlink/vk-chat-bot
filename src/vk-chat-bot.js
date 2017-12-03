@@ -41,7 +41,7 @@ exports.cmd = function (command, callback) {
     command: command,
     callback: callback
   });
-}
+};
 
 // On matching regex
 exports.regex = function (regex, callback) {
@@ -53,7 +53,7 @@ exports.regex = function (regex, callback) {
     regex: regex,
     callback: callback
   });
-}
+};
 
 // For special events
 exports.on = function (e, callback) {
@@ -71,7 +71,7 @@ exports.on = function (e, callback) {
     event: e,
     callback: callback
   });
-}
+};
 
 // Start the bot
 exports.start = function (port) {
@@ -197,7 +197,7 @@ function send(uid, msg) {
     if (!error && response.statusCode == 200) console.log("[<] Message sent to user: ", uid);
     if (error) console.log('[!] Error occured when sending a message: ', error);
   })
-};
+}
 
 function badParams(functionName) {
   console.log('[!] Bad parameters for function ' + functionName + '.');
