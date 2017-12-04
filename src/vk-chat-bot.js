@@ -114,7 +114,7 @@ exports.start = function (port) {
   })
 
   app.listen(port, (err) => {
-    if (err) return console.log('[!] Error: ', err);
+    if (err) return console.log('[!] Error: ' + err);
     log(logType.information, `Server is listening on port ${port}.`);
   })
 };
@@ -128,11 +128,11 @@ function parseRequest(body) {
   if (body.type === "message_new") {
     uid = body.object.user_id;
     msg = body.object.body;
-    log(logType.request, 'New message from user: ', uid);
+    log(logType.request, 'New message from user: ' + uid);
     handleMessage(uid, msg);
   } else {
     uid = body.object.user_id;
-    log(logType.request, 'Received event: ', body.type);
+    log(logType.request, 'Received event: ' + body.type);
     handleEvent(uid, body.type);
   }
 }
