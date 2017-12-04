@@ -50,7 +50,7 @@ bot.on("message_allow", (obj) => {
 
 // If no matching handler is found
 bot.on("no_match", (obj) => {
-  return "I don't know how to respond to your message sent at " + obj.date + " (Unixtime).";
+  return "I don't know how to respond to your message.";
 });
 
 // When the first word in the message is cmd_prefix + "test"
