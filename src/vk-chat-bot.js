@@ -2,19 +2,14 @@ const app = require('express')();
 const request = require('request');
 const bodyParser = require('body-parser');
 
-var groupId, confirmationToken, secret, vkApiKey;
-var cmdPrefix;
-
-var initialized = false;
+/////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Behavior definition ////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 var commandHandlers = [];
 var regexHandlers = [];
 var eventHandlers = [];
 var possibleEvents = ["message_allow", "message_deny", "no_match"];
-
-/////////////////////////////////////////////////////////////////////////////
-//////////////////////////// Behavior definition ////////////////////////////
-/////////////////////////////////////////////////////////////////////////////
 
 // On exact command with prefix
 exports.cmd = function (command, callback) {
@@ -47,9 +42,8 @@ exports.on = function (e, callback) {
   }
 
   if (!possibleEvents.includes(e)) {
-    console.log('[!] Tried to register a handler for an unsupported event type: ', e);
-    console.log('[!] Terminating.');
-    process.exit(1);
+    log(logType.error, 'Tried to register a handler for an unsupported event type: ' + e);
+    terminate();
   }
 
   eventHandlers.push({
@@ -62,6 +56,11 @@ exports.on = function (e, callback) {
 /////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Init & Start ///////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
+
+var groupId, confirmationToken, secret, vkApiKey;
+var cmdPrefix;
+
+var initialized = false;
 
 // Initialise the bot
 exports.init = function (params) {
@@ -89,16 +88,15 @@ exports.start = function (port) {
   }
 
   if (!initialized) {
-    console.log('[!] Please initialize the bot before starting it using init(params).');
-    console.log('[!] Terminating.');
-    process.exit(1);
+    log(logType.error, 'Please initialize the bot before starting it using init(params).');
+    terminate();
   }
 
   app.use(bodyParser.json());
 
   app.get('/', (req, res) => {
     res.status(400).send('Only POST allowed.');
-    console.log('[>] GET request.');
+    log(logType.request, 'GET request.');
   })
 
   app.post('/', (req, res) => {
@@ -111,13 +109,13 @@ exports.start = function (port) {
         parseRequest(body);
     } else {
         res.status(400).send('Invalid secret key.');
-        console.log('[>] Request with an invalid secret key.');
+        log(logType.request, 'Request with an invalid secret key.');
     }
   })
 
   app.listen(port, (err) => {
     if (err) return console.log('[!] Error: ', err);
-    console.log(`[i] Server is listening on port ${port}.`);
+    log(logType.information, `Server is listening on port ${port}.`);
   })
 };
 
@@ -130,11 +128,11 @@ function parseRequest(body) {
   if (body.type === "message_new") {
     uid = body.object.user_id;
     msg = body.object.body;
-    console.log('[>] New message from user: ', uid);
+    log(logType.request, 'New message from user: ', uid);
     handleMessage(uid, msg);
   } else {
     uid = body.object.user_id;
-    console.log('[>] Received event: ', body.type);
+    log(logType.request, 'Received event: ', body.type);
     handleEvent(uid, body.type);
   }
 }
@@ -178,14 +176,14 @@ function handleMessage(uid, msg) {
   }
 
   // If not, call the no_match event
-  console.log("[i] Don't know how to respond to: \"" + msg + "\", calling 'no_match' event");
+  log(logType.information, "Don't know how to respond to: \"" + msg + "\", calling 'no_match' event");
   handleEvent(uid, "no_match");
 }
 
 // Handle a special event
 function handleEvent(uid, e) {
   if (!possibleEvents.includes(e) ) {
-    console.log('[!] Received an unsupported event type: ', body.type);
+    log(logType.error, 'Received an unsupported event type: ' + body.type);
     return;
   }
 
@@ -200,15 +198,15 @@ function handleEvent(uid, e) {
     }
   }
 
-  console.log("[i] No handler for event: " + e);
+  log(logType.error, "[i] No handler for event: " + e);
 }
 
 // Send a message to user by his id
 function send(uid, msg) {
   var url = `https://api.vk.com/method/messages.send?user_id=${uid}&message=${encodeURIComponent(msg)}&access_token=${vkApiKey}`;
   request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) console.log("[<] Message sent to user: ", uid);
-    if (error) console.log('[!] Error occured when sending a message: ', error);
+    if (!error && response.statusCode == 200) log(logType.response, 'Message sent to user: ' + uid);
+    if (error) log(logType.error, 'Error occured when sending a message: ' + error);
   })
 }
 
@@ -216,8 +214,24 @@ function send(uid, msg) {
 /////////////////////////////////// Logging /////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-function badParams(functionName) {
-  console.log('[!] Bad parameters for function ' + functionName + '().');
-  console.log('[!] Terminating.');
+logType = {
+  information: 'i',
+  request: '>',
+  response: '<',
+  error: '!'
+}
+
+function log(type, text) {
+  message = `[${type}] ${text}`
+  console.log(message);
+}
+
+function terminate() {
+  log(logType.error, 'Terminating.');
   process.exit(1);
+}
+
+function badParams(functionName) {
+  log(logType.error, 'Bad parameters for function ' + functionName + '().');
+  terminate();
 }
