@@ -15,7 +15,7 @@ var possibleEvents = ["message_allow", "message_deny", "no_match"];
 // Initialise the bot
 exports.init = function (params) {
   if (!params) {
-    badParams("init()")
+    badParams("init")
   }
 
   groupId = params.group_id;
@@ -27,14 +27,14 @@ exports.init = function (params) {
   if (groupId && confirmationToken && secret && vkApiKey) {
     initialized = true;
   } else {
-    badParams("init()")
+    badParams("init")
   }
 };
 
 // On exact command with prefix
 exports.cmd = function (command, callback) {
   if (!command || !callback) {
-    badParams("cmd()")
+    badParams("cmd")
   }
 
   commandHandlers.push({
@@ -46,7 +46,7 @@ exports.cmd = function (command, callback) {
 // On matching regex
 exports.regex = function (regex, callback) {
   if (!regex || !callback) {
-    badParams("regex()")
+    badParams("regex")
   }
 
   regexHandlers.push({
@@ -58,7 +58,7 @@ exports.regex = function (regex, callback) {
 // For special events
 exports.on = function (e, callback) {
   if (!e || !callback) {
-    badParams("on()")
+    badParams("on")
   }
 
   if (!possibleEvents.includes(e)) {
@@ -76,7 +76,7 @@ exports.on = function (e, callback) {
 // Start the bot
 exports.start = function (port) {
   if (!port) {
-    badParams("start()")
+    badParams("start")
   }
 
   if (!initialized) {
@@ -200,7 +200,7 @@ function send(uid, msg) {
 }
 
 function badParams(functionName) {
-  console.log('[!] Bad parameters for function ' + functionName + '.');
+  console.log('[!] Bad parameters for function ' + functionName + '().');
   console.log('[!] Terminating.');
   process.exit(1);
 }
