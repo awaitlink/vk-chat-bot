@@ -25,11 +25,6 @@ This guide will walk you step-by-step through creating your own chat bot for a c
 - Now switch to the `Callback API` -> `Server settings` tab.
 - In the `Secret key` field, enter **your own** random combination of characters.
 - Click `Save` below that field.
-- In the `Event types` tab, **check** the following boxes:
-
-![Event types](img/event-types.png)
-
-
 - Go back to `Server settings` tab and enter in the `URL` field: **https://**`your-app-name`**.herokuapp.com/** (Replace `your-app-name` with the name you specified when creating a new Heroku app in **step 1**).
 - **Don't** press `Confirm` and **don't** close this page yet.
 
@@ -75,7 +70,10 @@ git push heroku master
 [i] Server is listening on port 12345.
 ```
 If something is not working, feel free to [open an issue](https://github.com/sudoio/vk-chat-bot/issues) on GitHub.
-- Now go back to VK's **Callback API settings**, and press that `Confirm` button!
+- Now go back to VK's **Callback API settings**, and press the `Confirm` button.
+- Also, in the `Event types` tab, **check** the following boxes:
+
+![Event types](img/event-types.png)
 
 ## 6. Ready!
 - Now you can have a conversation with your bot.
