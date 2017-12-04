@@ -151,7 +151,7 @@ function handleMessage(uid, obj) {
       regex = new RegExp(command, 'g');
       if (cmdPrefix) regex = new RegExp(cmdPrefix + command, 'g');
 
-      msg_content = msg.replace(regex, "");
+      msg_content = obj.body.replace(regex, "");
 
       var answer = handler.callback(msg_content, obj);
       if (answer != null) {
@@ -166,7 +166,7 @@ function handleMessage(uid, obj) {
   for (var i = 0; i < regexHandlers.length; i++) {
     handler = regexHandlers[i];
     if ((new RegExp(handler.regex)).test(msg)) {
-      var answer = handler.callback(msg, obj);
+      var answer = handler.callback(obj.body, obj);
       if (answer != null) {
         send(uid, answer);
       }
