@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 var commandHandlers = [];
 var regexHandlers = [];
 var eventHandlers = [];
-var possibleEvents = ["message_allow", "message_deny", "no_match"];
+var possibleEvents = ["message_allow", "message_deny", "message_reply", "no_match"];
 
 // On exact command with prefix
 exports.cmd = function (command, callback) {
@@ -125,21 +125,21 @@ exports.start = function (port) {
 
 // Parse Callback API's message
 function parseRequest(body) {
-  if (body.type === "message_new") {
-    uid = body.object.user_id;
-    msg = body.object.body;
+  uid = body.object.user_id;
+  obj = body.object;
+  type = body.type;
+  if (type === "message_new") {
     log(logType.request, 'New message from user: ' + uid);
-    handleMessage(uid, msg);
+    handleMessage(uid, obj);
   } else {
-    uid = body.object.user_id;
-    log(logType.request, 'Received event: ' + body.type);
-    handleEvent(uid, body.type);
+    log(logType.request, 'Received event: ' + type);
+    handleEvent(uid, type, obj);
   }
 }
 
 // Handle message_new
-function handleMessage(uid, msg) {
-  msg = msg.toLocaleLowerCase();
+function handleMessage(uid, obj) {
+  msg = obj.body.toLocaleLowerCase();
 
   var command = msg.split(" ")[0];
   if (cmdPrefix) command = command.replace(cmdPrefix, "");
@@ -153,7 +153,7 @@ function handleMessage(uid, msg) {
 
       msg_content = msg.replace(regex, "");
 
-      var answer = handler.callback(msg_content);
+      var answer = handler.callback(msg_content, obj);
       if (answer != null) {
         send(uid, answer);
       }
@@ -166,7 +166,7 @@ function handleMessage(uid, msg) {
   for (var i = 0; i < regexHandlers.length; i++) {
     handler = regexHandlers[i];
     if ((new RegExp(handler.regex)).test(msg)) {
-      var answer = handler.callback(msg);
+      var answer = handler.callback(msg, obj);
       if (answer != null) {
         send(uid, answer);
       }
@@ -177,20 +177,20 @@ function handleMessage(uid, msg) {
 
   // If not, call the no_match event
   log(logType.information, "Don't know how to respond to: \"" + msg + "\", calling 'no_match' event");
-  handleEvent(uid, "no_match");
+  handleEvent(uid, "no_match", obj);
 }
 
 // Handle a special event
-function handleEvent(uid, e) {
+function handleEvent(uid, e, obj) {
   if (!possibleEvents.includes(e) ) {
-    log(logType.error, 'Received an unsupported event type: ' + body.type);
+    log(logType.error, 'Received an unsupported event type: ' + e);
     return;
   }
 
   for (var i = 0; i < eventHandlers.length; i++) {
     handler = eventHandlers[i];
     if (handler.event === e) {
-      var answer = handler.callback(uid);
+      var answer = handler.callback(uid, obj);
       if (answer != null && !(e === "message_deny")) {
         send(uid, answer);
       }
@@ -198,7 +198,7 @@ function handleEvent(uid, e) {
     }
   }
 
-  log(logType.error, "[i] No handler for event: " + e);
+  log(logType.information, "No handler for event: " + e);
 }
 
 // Send a message to user by his id
