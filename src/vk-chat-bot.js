@@ -12,24 +12,9 @@ var regexHandlers = [];
 var eventHandlers = [];
 var possibleEvents = ["message_allow", "message_deny", "no_match"];
 
-// Initialise the bot
-exports.init = function (params) {
-  if (!params) {
-    badParams("init")
-  }
-
-  groupId = params.group_id;
-  confirmationToken = params.confirmation_token;
-  secret = params.secret;
-  vkApiKey = params.vk_api_key;
-  cmdPrefix = params.cmd_prefix;
-
-  if (groupId && confirmationToken && secret && vkApiKey) {
-    initialized = true;
-  } else {
-    badParams("init")
-  }
-};
+/////////////////////////////////////////////////////////////////////////////
+//////////////////////////// Behavior definition ////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // On exact command with prefix
 exports.cmd = function (command, callback) {
@@ -73,6 +58,30 @@ exports.on = function (e, callback) {
   });
 };
 
+
+/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// Init & Start ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+// Initialise the bot
+exports.init = function (params) {
+  if (!params) {
+    badParams("init")
+  }
+
+  groupId = params.group_id;
+  confirmationToken = params.confirmation_token;
+  secret = params.secret;
+  vkApiKey = params.vk_api_key;
+  cmdPrefix = params.cmd_prefix;
+
+  if (groupId && confirmationToken && secret && vkApiKey) {
+    initialized = true;
+  } else {
+    badParams("init")
+  }
+};
+
 // Start the bot
 exports.start = function (port) {
   if (!port) {
@@ -111,6 +120,10 @@ exports.start = function (port) {
     console.log(`[i] Server is listening on port ${port}.`);
   })
 };
+
+/////////////////////////////////////////////////////////////////////////////
+////////////////////////////// Helper functions /////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 // Parse Callback API's message
 function parseRequest(body) {
@@ -198,6 +211,10 @@ function send(uid, msg) {
     if (error) console.log('[!] Error occured when sending a message: ', error);
   })
 }
+
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// Logging /////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
 function badParams(functionName) {
   console.log('[!] Bad parameters for function ' + functionName + '().');
