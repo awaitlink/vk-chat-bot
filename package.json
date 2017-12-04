@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "2.1.11",
+  "version": "2.1.12",
   "description": "A chat bot library for VK social network communities. It uses VK's Callback API to get new messages from users.",
   "main": "src/vk-chat-bot.js",
   "scripts": {
@@ -9,11 +9,12 @@
   "author": "sudoio",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "request": "^2.83.0"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/sudoio/vk-chat-bot.git"
+    "type": "git",
+    "url": "https://github.com/sudoio/vk-chat-bot.git"
   }
 }
