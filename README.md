@@ -39,7 +39,7 @@ bot.init(params);
 
 #### 2. Defining behavior
 
-See [Behavior-defining functions](#behavior-defining-functions) section for more information.
+See [Behavior definition functions](https://github.com/sudoio/vk-chat-bot/wiki/Behavior-definition-functions) wiki for more information.
 
 Here's an example:
 ```js
@@ -75,31 +75,4 @@ const port = process.env.PORT;
 bot.start(port);
 ```
 
-The bot will log some useful information, see [Logging](#logging) section for more information.
-
-## Behavior-defining functions
-> Only one handler will be called for a message.    
-> Handlers will be searched in this order: `on()`, `cmd()`, `regex()`.
-
-Method | Description | Passed to handler | Returned value by handler
---- | --- | --- | ---
-`on(event, handler)` | Handles various special events (see [Special events](#special-events)) | **Depends** on event type | **Depends** on event type
-`cmd(command, handler)` | Handler is called only if the **first word** in the message is `cmd_prefix` **+** `command` | `msg` (user message, excluding the `cmd_prefix` and `command`), `obj` ([Private message object](https://vk.com/dev/objects/message)) |  **Sent** to the user
-`regex(regex, handler)` | Handler is called if the message matches the `regex` | `msg` (full user message), `obj` ([Private message object](https://vk.com/dev/objects/message)) | **Sent** to the user
-
-## Special events
-
-Event type | When handler is called | Passed to handler | Returned value by handler
---- | --- | --- | ---
-`"message_allow"` | When we receive `"message_allow"` from Callback API (User **allowed** sending messages to him/her) | `obj` (object passed by Callback API ([learn more](https://vk.com/dev/callback_api))) | **Sent** to the user
-`"message_deny"` | When we receive `"message_deny"` from Callback API (User **disallowed** sending messages to him/her) | `obj` (object passed by Callback API ([learn more](https://vk.com/dev/callback_api))) | **Ignored**
-`"message_reply"` | When we receive `"message_reply"` from Callback API (New **message sent** by community (or by the bot itself)) | `obj` ([Private message object](https://vk.com/dev/objects/message)) | **Sent** to the user
-`"no_match"` | When no matching `cmd()` or `regex()` handler is found | `obj` ([Private message object](https://vk.com/dev/objects/message)) | **Sent** to the user
-
-## Logging
-Log message beginning | Meaning | Description
---- | --- | ---
-`[i]` | Information | Just some information for you
-`[>]` | Request | A request to the bot was made
-`[<]` | Response | The bot sent a response to the user
-`[!]` | Error | An error happened. If it happened during initialization or starting, the bot will exit with status code **1**
+The bot will log some useful information, see [Logging](https://github.com/sudoio/vk-chat-bot/wiki/Logging) wiki for more information.
