@@ -9,7 +9,7 @@ npm install vk-chat-bot
 ## Example
 You can find the example in the [`sudoio/vk-chat-bot-example`](https://github.com/sudoio/vk-chat-bot-example) repository.
 
-Also, you can take a look at the **step-by-step** [Heroku Chat Bot](https://github.com/sudoio/vk-chat-bot/blob/master/heroku_guide) creation guide.
+Also, you can take a look at the **step-by-step** [Heroku Chat Bot](https://github.com/sudoio/vk-chat-bot/wiki/Heroku-Deploy-Guide) creation guide.
 
 ## Usage
 #### 1. Preparation
