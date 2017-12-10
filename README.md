@@ -4,7 +4,7 @@ It uses VK's [Callback API](https://vk.com/dev/callback_api) to get new messages
 
 ## Installation
 ```bash
-npm install vk-chat-bot
+npm i vk-chat-bot
 ```
 ## Example
 You can find the example in the [`sudoio/vk-chat-bot-example`](https://github.com/sudoio/vk-chat-bot-example) repository.
