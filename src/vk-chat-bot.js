@@ -67,6 +67,11 @@ exports.on = function (e, callback) {
 /////////////////////////////////////////////////////////////////////////////
 
 exports.help = function () {
+  if (!initialized) {
+    log(logType.error, 'Please initialize the bot before accessing the help message.');
+    return null;
+  }
+
   var helpMessage = "\n";
 
   for (var i = 0; i < commandHandlers.length; i++) {
