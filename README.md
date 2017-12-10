@@ -55,8 +55,14 @@ bot.on("no_match", (obj) => {
 
 // When the first word in the message is cmd_prefix + "test"
 // For example, if cmd_prefix is "/", we search for "/test"
-bot.cmd("test", (msg, obj) => {
-  return "Test success! Your message content (excluding command) was: '" + msg + "'.";
+bot.cmd("test", "sure thing tests something", (msg, obj) => {
+  return "Test success! Your message content was: '" + msg + "'.";
+});
+
+// For example, if cmd_prefix is "/", we search for "/help"
+bot.cmd("help", "shows the help message", (msg, obj) => {
+  // bot.help() returns the help message
+  return "Test Bot v1.0" + bot.help();
 });
 
 // When the message contains a word "hi", "hello" or "hey"
