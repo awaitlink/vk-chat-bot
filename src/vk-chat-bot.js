@@ -12,13 +12,23 @@ var eventHandlers = [];
 var possibleEvents = ["message_allow", "message_deny", "message_reply", "no_match"];
 
 // On exact command with prefix
-exports.cmd = function (command, callback) {
-  if (!command || !callback) {
-    badParams("cmd")
+exports.cmd = function (command, a, b) {
+  if (!command || !a) {
+    // At least a should be defined
+    badParams("cmd");
+  }
+
+  var description = a;
+  var callback = b;
+  if (!b) {
+    // We have only command and callback
+    description = null;
+    callback = a;
   }
 
   commandHandlers.push({
     command: command,
+    description: description,
     callback: callback
   });
 };
@@ -26,7 +36,7 @@ exports.cmd = function (command, callback) {
 // On matching regex
 exports.regex = function (regex, callback) {
   if (!regex || !callback) {
-    badParams("regex")
+    badParams("regex");
   }
 
   regexHandlers.push({
@@ -38,7 +48,7 @@ exports.regex = function (regex, callback) {
 // For special events
 exports.on = function (e, callback) {
   if (!e || !callback) {
-    badParams("on")
+    badParams("on");
   }
 
   if (!possibleEvents.includes(e)) {
@@ -52,6 +62,29 @@ exports.on = function (e, callback) {
   });
 };
 
+/////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// Help ///////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+exports.help = function () {
+  var helpMessage = "\n";
+
+  for (var i = 0; i < commandHandlers.length; i++) {
+    var commandHelpEntry = "";
+
+    commandHelpEntry += cmdPrefix;
+    commandHelpEntry += commandHandlers[i].command;
+
+    if (commandHandlers[i].description) {
+      commandHelpEntry += " - ";
+      commandHelpEntry += commandHandlers[i].description;
+    }
+
+    helpMessage += commandHelpEntry + "\n";
+  }
+
+  return helpMessage;
+};
 
 /////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// Init & Start ///////////////////////////////
@@ -65,7 +98,7 @@ var initialized = false;
 // Initialise the bot
 exports.init = function (params) {
   if (!params) {
-    badParams("init")
+    badParams("init");
   }
 
   groupId = params.group_id;
@@ -77,14 +110,14 @@ exports.init = function (params) {
   if (groupId && confirmationToken && secret && vkApiKey) {
     initialized = true;
   } else {
-    badParams("init")
+    badParams("init");
   }
 };
 
 // Start the bot
 exports.start = function (port) {
   if (!port) {
-    badParams("start")
+    badParams("start");
   }
 
   if (!initialized) {
