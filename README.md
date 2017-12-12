@@ -1,6 +1,8 @@
-# VK Chat Bot [![npm version](https://img.shields.io/npm/v/vk-chat-bot.svg)](https://www.npmjs.com/package/vk-chat-bot)  	[![Downloads](https://img.shields.io/npm/dt/vk-chat-bot.svg)](https://www.npmjs.com/package/vk-chat-bot) [![Dependency Status](https://david-dm.org/sudoio/vk-chat-bot.svg)](https://david-dm.org/sudoio/vk-chat-bot) [![MIT License](https://img.shields.io/github/license/sudoio/vk-chat-bot.svg)](https://github.com/sudoio/fast-electron/blob/master/LICENSE.md)
-This is a chat bot library for [VK](https://vk.com) social network communities.    
-It uses VK's [Callback API](https://vk.com/dev/callback_api) to get new messages from users.
+# VK Chat Bot
+[![npm version](https://img.shields.io/npm/v/vk-chat-bot.svg?style=flat-square)](https://www.npmjs.com/package/vk-chat-bot)  	[![Downloads](https://img.shields.io/npm/dt/vk-chat-bot.svg?style=flat-square)](https://www.npmjs.com/package/vk-chat-bot) [![Dependency Status](https://david-dm.org/sudoio/vk-chat-bot.svg?style=flat-square)](https://david-dm.org/sudoio/vk-chat-bot) [![MIT License](https://img.shields.io/github/license/sudoio/vk-chat-bot.svg?style=flat-square)](https://github.com/sudoio/fast-electron/blob/master/LICENSE.md)
+
+> This is a chat bot library for [VK](https://vk.com) social network communities.    
+> It uses VK's [Callback API](https://vk.com/dev/callback_api) to get new messages from users.
 
 ## Installation
 ```bash
