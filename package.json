@@ -1,7 +1,7 @@
 {
   "name": "vk-chat-bot",
   "version": "3.1.8",
-  "description": "A chat bot library for VK social network communities. It uses VK's Callback API to get new messages from users.",
+  "description": "A library to easily create chat bots for VK communities (uses Callback API).",
   "main": "src/vk-chat-bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
