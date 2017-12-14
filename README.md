@@ -4,6 +4,10 @@
 > This is a chat bot library for [VK](https://vk.com) social network communities.    
 > It uses VK's [Callback API](https://vk.com/dev/callback_api) to get new messages from users.
 
+Branch | Status
+---|---
+`master` | [![Travis build status](https://img.shields.io/travis/sudoio/vk-chat-bot/master.svg?style=flat-square)]()
+
 ## Installation
 ```bash
 npm i vk-chat-bot
