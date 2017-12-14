@@ -5,17 +5,18 @@ exports.type = {
   error: '!'
 };
 
+function getLogMessage(type, text) {
+  return `[${type}] ${text}`;
+}
+
 exports.log = function(type, text) {
-  message = `[${type}] ${text}`
-  console.log(message);
+  console.log(getLogMessage(type, text));
 };
 
 exports.terminate = function() {
-  exports.log(exports.type.error, 'Terminating.');
-  process.exit(1);
+  throw new Error(getLogMessage(exports.type.error, `Terminating. See above for more information.`));
 };
 
 exports.badParams = function(functionName) {
-  exports.log(exports.type.error, 'Bad parameters for function ' + functionName + '().');
-  exports.terminate();
+  throw new Error(getLogMessage(exports.type.error, `Bad parameters for function ${functionName}().`));
 };

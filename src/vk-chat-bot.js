@@ -24,7 +24,7 @@ exports.init = function (params) {
   confirmationToken = params.confirmation_token;
   secret = params.secret;
   vkApiKey = params.vk_api_key;
-  
+
   behavior.setCmdPrefix(params.cmd_prefix);
 
   if (groupId && confirmationToken && secret && vkApiKey) {
@@ -52,7 +52,7 @@ exports.start = function (port) {
   app.get('/', (req, res) => {
     res.status(400).send('Only POST allowed.');
     logging.log(logging.type.request, 'GET request.');
-  })
+  });
 
   app.post('/', (req, res) => {
     body = req.body;
@@ -66,13 +66,19 @@ exports.start = function (port) {
         res.status(400).send('Invalid secret key.');
         logging.log(logging.type.request, 'Request with an invalid secret key.');
     }
-  })
+  });
 
-  app.listen(port, (err) => {
+  var server = app.listen(port, (err) => {
     if (err){
       logging.log(logging.type.error, 'Error: ' + err);
-      return;
+      logging.terminate();
     }
     logging.log(logging.type.information, `Server is listening on port ${port}.`);
-  })
+
+    // Quit in test mode
+    if (vkApiKey == "test"){
+      logging.log(logging.type.information, `Stopping the server because in test mode.`);
+      server.close();
+    }
+  });
 };
