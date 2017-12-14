@@ -6,7 +6,7 @@
 
 Branch | Status
 ---|---
-`master` | [![Travis build status](https://img.shields.io/travis/sudoio/vk-chat-bot/master.svg?style=flat-square)]()
+`master` | [![Travis build status](https://img.shields.io/travis/sudoio/vk-chat-bot/master.svg?style=flat-square)](#)
 
 ## Installation
 ```bash
