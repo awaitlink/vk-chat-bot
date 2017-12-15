@@ -1,7 +1,7 @@
 const app = require('express')();
 const bodyParser = require('body-parser');
 
-const behavior = require('./behavior.js');
+const Behavior = require('./behavior.js');
 const log = new (require('./log.js'))();
 
 exports.cmd   = function (command, a, b)   { behavior.cmd   (command, a, b);   };
@@ -10,7 +10,7 @@ exports.on    = function (e, callback)     { behavior.on    (e, callback);     }
 
 exports.help = function () { return behavior.help(); };
 
-var groupId, confirmationToken, secret, vkApiKey;
+var groupId, confirmationToken, secret, behavior;
 
 var initialized = false;
 
@@ -23,11 +23,10 @@ exports.init = function (params) {
   groupId = params.group_id;
   confirmationToken = params.confirmation_token;
   secret = params.secret;
-  vkApiKey = params.vk_api_key;
 
-  behavior.setCmdPrefix(params.cmd_prefix);
+  behavior = new Behavior(params.vk_api_key, params.cmd_prefix);
 
-  if (groupId && confirmationToken && secret && vkApiKey) {
+  if (groupId && confirmationToken && secret && behavior) {
     initialized = true;
   } else {
     log.badParams("init");
@@ -44,8 +43,6 @@ exports.start = function (port) {
     log.log(log.type.error, 'Please initialize the bot before starting it using init(params).');
     log.terminate();
   }
-
-  behavior.initAPI(vkApiKey);
 
   app.use(bodyParser.json());
 
@@ -76,7 +73,7 @@ exports.start = function (port) {
     log.log(log.type.information, `Server is listening on port ${port}.`);
 
     // Quit in test mode
-    if (vkApiKey == "test"){
+    if (behavior.isInTestMode){
       log.log(log.type.information, `Stopping the server because in test mode.`);
       server.close();
     }
