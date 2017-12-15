@@ -1,9 +1,17 @@
 const assert = require('assert');
 
-const bot = require('../src/vk-chat-bot.js');
+const ChatBot = require('../src/vk-chat-bot.js');
 const log = new (require('../src/log.js'))();
 
-describe('logging', () => {
+var botParams = {
+  vk_api_key: "test",
+  confirmation_token: "test",
+  group_id: "test",
+  secret: "test",
+  cmd_prefix: "/"
+};
+
+describe('Log', () => {
   describe('#terminate()', () => {
     it('should throw an Error', () => {
       assert.throws(() => {
@@ -13,20 +21,20 @@ describe('logging', () => {
   });
 });
 
-describe('vk-chat-bot', () => {
-  describe('#init()', () => {
-    it('should throw an Error with no params', () => {
+describe('ChatBot', () => {
+  describe('#constructor()', () => {
+    it('should throw an Error with missing required params', () => {
       assert.throws(() => {
-        bot.init();
-      }, Error);
-    });
-
-    it('should throw an Error with wrong params', () => {
-      assert.throws(() => {
-        bot.init({
+        var bot = new ChatBot({
           group_id: "test",
           cmd_prefix: "test"
         });
+      }, Error);
+    });
+
+    it('shouldn\'t throw an Error when everything\'s right', () => {
+      assert.doesNotThrow(() => {
+        var bot = new ChatBot(botParams);
       }, Error);
     });
   });
@@ -34,58 +42,39 @@ describe('vk-chat-bot', () => {
   describe('#start()', () => {
     it('should throw an Error when no port specified', () => {
       assert.throws(() => {
+        var bot = new ChatBot(botParams);
         bot.start();
       }, Error);
     });
 
-    it('should throw an Error when not initialized', () => {
-      assert.throws(() => {
-        bot.start(12345);
-      }, Error);
-    });
-  });
-
-  describe('#init()', () => {
     it('shouldn\'t throw an Error when everything\'s right', () => {
       assert.doesNotThrow(() => {
-        var params = {
-          vk_api_key: "test",
-          confirmation_token: "test",
-          group_id: "test",
-          secret: "test",
-          cmd_prefix: "/"
-        };
-
-        bot.init(params);
-      }, Error);
-    });
-  });
-
-  describe('#start()', () => {
-    it('shouldn\'t throw an Error when everything\'s right', () => {
-      assert.doesNotThrow(() => {
+        var bot = new ChatBot(botParams);
         bot.start(12345);
       }, Error);
     });
   });
 });
 
-describe('behavior', () => {
+describe('Behavior', () => {
   describe('#on()', () => {
     it('should throw an error with wrong event name', () => {
       assert.throws(() => {
+        var bot = new ChatBot(botParams);
         bot.on("", () => {});
       }, Error);
     });
 
     it('should throw an error with missing parameters', () => {
       assert.throws(() => {
+        var bot = new ChatBot(botParams);
         bot.on("no_match");
       }, Error);
     });
 
     it('shouldn\'t throw an error when everything\'s right', () => {
       assert.doesNotThrow(() => {
+        var bot = new ChatBot(botParams);
         bot.on("no_match", "shows the help message", (msg, obj) => {});
       }, Error);
     });
@@ -94,14 +83,22 @@ describe('behavior', () => {
   describe('#cmd()', () => {
     it('should throw an error with missing parameters', () => {
       assert.throws(() => {
+        var bot = new ChatBot(botParams);
         bot.cmd("test");
       }, Error);
     });
 
-    it('shouldn\'t throw an error when everything\'s right', () => {
+    it('shouldn\'t throw an error when everything\'s right (3 params)', () => {
       assert.doesNotThrow(() => {
+        var bot = new ChatBot(botParams);
         bot.cmd("test", "sure thing tests something", (msg, obj) => {});
-        bot.cmd("help", "shows the help message", (msg, obj) => {});
+      }, Error);
+    });
+
+    it('shouldn\'t throw an error when everything\'s right (2 params)', () => {
+      assert.doesNotThrow(() => {
+        var bot = new ChatBot(botParams);
+        bot.cmd("test", (msg, obj) => {});
       }, Error);
     });
   });
@@ -109,12 +106,14 @@ describe('behavior', () => {
   describe('#regex()', () => {
     it('should throw an error with missing parameters', () => {
       assert.throws(() => {
+        var bot = new ChatBot(botParams);
         bot.regex(".*");
       }, Error);
     });
 
     it('shouldn\'t throw an error when everything\'s right', () => {
       assert.doesNotThrow(() => {
+        var bot = new ChatBot(botParams);
         bot.regex(".*", (msg, obj) => {});
       }, Error);
     });
@@ -122,8 +121,12 @@ describe('behavior', () => {
 
   describe('#help()', () => {
     it('should return a proper help message', () => {
-      message = "\n/test - sure thing tests something\n/help - shows the help message\n";
+      var bot = new ChatBot(botParams);
 
+      bot.cmd("test", "sure thing tests something", (msg, obj) => {});
+      bot.cmd("help", "shows the help message", (msg, obj) => {});
+
+      message = "\n/test - sure thing tests something\n/help - shows the help message\n";
       assert.equal(bot.help(), message);
     });
   });
