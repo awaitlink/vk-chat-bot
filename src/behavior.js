@@ -67,9 +67,9 @@ class Behavior {
 
   // Parse Callback API's message
   parseRequest(body) {
-    uid = body.object.user_id;
-    obj = body.object;
-    type = body.type;
+    var uid = body.object.user_id;
+    var obj = body.object;
+    var type = body.type;
     if (type === "message_new") {
       log.log(log.type.request, 'New message from user: ' + uid);
       this.handleMessage(uid, obj);
@@ -81,19 +81,19 @@ class Behavior {
 
   // Handle message_new
   handleMessage(uid, obj) {
-    msg = obj.body.toLocaleLowerCase();
+    var msg = obj.body.toLocaleLowerCase();
 
     var command = msg.split(" ")[0];
     if (this.cmdPrefix) command = command.replace(this.cmdPrefix, "");
 
     // See if there is a matching command
     for (var i = 0; i < this.commandHandlers.length; i++) {
-      handler = this.commandHandlers[i];
+      var handler = this.commandHandlers[i];
       if (handler.command === command) {
-        regex = new RegExp(command, 'g');
+        var regex = new RegExp(command, 'g');
         if (this.cmdPrefix) regex = new RegExp(this.cmdPrefix + command, 'g');
 
-        msg_content = obj.body.replace(regex, "");
+        var msg_content = obj.body.replace(regex, "");
 
         var answer = handler.callback(msg_content, obj);
         if (answer != null) {
@@ -106,7 +106,7 @@ class Behavior {
 
     // If not, try to use a regex handler
     for (var i = 0; i < this.regexHandlers.length; i++) {
-      handler = this.regexHandlers[i];
+      var handler = this.regexHandlers[i];
       if ((new RegExp(handler.regex)).test(msg)) {
         var answer = handler.callback(obj.body, obj);
         if (answer != null) {
@@ -130,7 +130,7 @@ class Behavior {
     }
 
     for (var i = 0; i < this.eventHandlers.length; i++) {
-      handler = this.eventHandlers[i];
+      var handler = this.eventHandlers[i];
       if (handler.event === e) {
         var answer = handler.callback(uid, obj);
         if (answer != null && !(e === "message_deny")) {
