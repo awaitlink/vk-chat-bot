@@ -1,14 +1,15 @@
 const assert = require('assert');
 
 const bot = require('../src/vk-chat-bot.js');
-const logging = require('../src/logging.js');
+const Log = require('../src/log.js');
 const api = require('../src/api.js');
 
 describe('logging', () => {
   describe('#terminate()', () => {
     it('should throw an Error', () => {
       assert.throws(() => {
-        logging.terminate();
+        log = new Log();
+        log.terminate();
       }, Error);
     });
   });

@@ -1,4 +1,5 @@
-const logging = require('./logging.js');
+const Log = require('./log.js');
+log = new Log();
 const api = require('./api.js');
 
 var commandHandlers = [];
@@ -20,7 +21,7 @@ exports.setKey = function (key) {
 exports.cmd = function (command, a, b) {
   if (!command || !a) {
     // At least a should be defined
-    logging.badParams("cmd");
+    log.badParams("cmd");
   }
 
   var description = a;
@@ -41,7 +42,7 @@ exports.cmd = function (command, a, b) {
 // On matching regex
 exports.regex = function (regex, callback) {
   if (!regex || !callback) {
-    logging.badParams("regex");
+    log.badParams("regex");
   }
 
   regexHandlers.push({
@@ -53,12 +54,12 @@ exports.regex = function (regex, callback) {
 // For special events
 exports.on = function (e, callback) {
   if (!e || !callback) {
-    logging.badParams("on");
+    log.badParams("on");
   }
 
   if (!possibleEvents.includes(e)) {
-    logging.log(logging.type.error, 'Tried to register a handler for an unsupported event type: ' + e);
-    logging.terminate();
+    log.log(log.type.error, 'Tried to register a handler for an unsupported event type: ' + e);
+    log.terminate();
   }
 
   eventHandlers.push({
@@ -73,10 +74,10 @@ exports.parseRequest = function(body) {
   obj = body.object;
   type = body.type;
   if (type === "message_new") {
-    logging.log(logging.type.request, 'New message from user: ' + uid);
+    log.log(log.type.request, 'New message from user: ' + uid);
     handleMessage(uid, obj);
   } else {
-    logging.log(logging.type.request, 'Received event: ' + type);
+    log.log(log.type.request, 'Received event: ' + type);
     handleEvent(uid, type, obj);
   }
 }
@@ -120,14 +121,14 @@ function handleMessage(uid, obj) {
   }
 
   // If not, call the no_match event
-  logging.log(logging.type.information, "Don't know how to respond to: \"" + msg + "\", calling 'no_match' event");
+  log.log(log.type.information, "Don't know how to respond to: \"" + msg + "\", calling 'no_match' event");
   handleEvent(uid, "no_match", obj);
 }
 
 // Handle a special event
 function handleEvent(uid, e, obj) {
   if (!possibleEvents.includes(e) ) {
-    logging.log(logging.type.error, 'Received an unsupported event type: ' + e);
+    log.log(log.type.error, 'Received an unsupported event type: ' + e);
     return;
   }
 
@@ -142,7 +143,7 @@ function handleEvent(uid, e, obj) {
     }
   }
 
-  logging.log(logging.type.information, "No handler for event: " + e);
+  log.log(log.type.information, "No handler for event: " + e);
 }
 
 exports.help = function () {

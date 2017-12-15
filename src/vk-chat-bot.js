@@ -2,7 +2,8 @@ const app = require('express')();
 const bodyParser = require('body-parser');
 
 const behavior = require('./behavior.js');
-const logging = require('./logging.js');
+const Log = require('./log.js');
+log = new Log();
 
 exports.cmd   = function (command, a, b)   { behavior.cmd   (command, a, b);   };
 exports.regex = function (regex, callback) { behavior.regex (regex, callback); };
@@ -17,7 +18,7 @@ var initialized = false;
 // Initialise the bot
 exports.init = function (params) {
   if (!params) {
-    logging.badParams("init");
+    log.badParams("init");
   }
 
   groupId = params.group_id;
@@ -30,19 +31,19 @@ exports.init = function (params) {
   if (groupId && confirmationToken && secret && vkApiKey) {
     initialized = true;
   } else {
-    logging.badParams("init");
+    log.badParams("init");
   }
 };
 
 // Start the bot
 exports.start = function (port) {
   if (!port) {
-    logging.badParams("start");
+    log.badParams("start");
   }
 
   if (!initialized) {
-    logging.log(logging.type.error, 'Please initialize the bot before starting it using init(params).');
-    logging.terminate();
+    log.log(log.type.error, 'Please initialize the bot before starting it using init(params).');
+    log.terminate();
   }
 
   behavior.setKey(vkApiKey);
@@ -51,7 +52,7 @@ exports.start = function (port) {
 
   app.get('/', (req, res) => {
     res.status(400).send('Only POST allowed.');
-    logging.log(logging.type.request, 'GET request.');
+    log.log(log.type.request, 'GET request.');
   });
 
   app.post('/', (req, res) => {
@@ -64,20 +65,20 @@ exports.start = function (port) {
         behavior.parseRequest(body);
     } else {
         res.status(400).send('Invalid secret key.');
-        logging.log(logging.type.request, 'Request with an invalid secret key.');
+        log.log(log.type.request, 'Request with an invalid secret key.');
     }
   });
 
   var server = app.listen(port, (err) => {
     if (err){
-      logging.log(logging.type.error, 'Error: ' + err);
-      logging.terminate();
+      log.log(log.type.error, 'Error: ' + err);
+      log.terminate();
     }
-    logging.log(logging.type.information, `Server is listening on port ${port}.`);
+    log.log(log.type.information, `Server is listening on port ${port}.`);
 
     // Quit in test mode
     if (vkApiKey == "test"){
-      logging.log(logging.type.information, `Stopping the server because in test mode.`);
+      log.log(log.type.information, `Stopping the server because in test mode.`);
       server.close();
     }
   });

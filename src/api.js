@@ -1,6 +1,7 @@
 const request = require('request');
 
-const logging = require('./logging.js');
+const Log = require('./log.js');
+log = new Log();
 
 var apiKey = null;
 
@@ -10,7 +11,7 @@ exports.setKey = function(key) {
 
 exports.send = function(uid, msg) {
   if (!apiKey){
-    logging.log(logging.type.response, 'Send error: no API key set.');
+    log.log(log.type.response, 'Send error: no API key set.');
     return false;
   }
 
@@ -23,11 +24,11 @@ exports.send = function(uid, msg) {
 
   request(url, function (error, response, body) {
     if (!error && response.statusCode == 200){
-      logging.log(logging.type.response, 'Message sent to user: ' + uid + '.');
+      log.log(log.type.response, 'Message sent to user: ' + uid + '.');
     }
 
     if (error){
-      logging.log(logging.type.error, 'Error occured when sending a message: ' + error);
+      log.log(log.type.error, 'Error occured when sending a message: ' + error);
     }
   });
 };
