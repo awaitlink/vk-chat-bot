@@ -19,12 +19,12 @@ Also, you can take a look at the **step-by-step** [Heroku Chat Bot](https://gith
 
 ## Usage
 #### 1. Preparation
-First, `require()` the `vk-chat-bot`:
+First, `require()` the `ChatBot` class from `vk-chat-bot`:
 ```js
-const bot = require("vk-chat-bot");
+const ChatBot = require("vk-chat-bot");
 ```
 
-Then, initialize your bot with `bot.init(params)`:
+Then, initialize your bot:
 ```js
 var params = {
   vk_api_key: process.env.VK_API_KEY,
@@ -40,7 +40,7 @@ var params = {
   cmd_prefix: "/"
 }
 
-bot.init(params);
+bot = new ChatBot(params);
 ```
 
 #### 2. Defining behavior
