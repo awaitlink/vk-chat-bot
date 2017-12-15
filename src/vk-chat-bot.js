@@ -40,7 +40,7 @@ class ChatBot {
     });
 
     app.post('/', (req, res) => {
-      body = req.body;
+      var body = req.body;
 
       if (body.type === "confirmation" && body.group_id == this.groupId) {
           res.status(200).send(this.confirmationToken);
