@@ -1,29 +1,14 @@
 const assert = require('assert');
 
 const bot = require('../src/vk-chat-bot.js');
-const Log = require('../src/log.js');
-const api = require('../src/api.js');
+const log = new (require('../src/log.js'))();
 
 describe('logging', () => {
   describe('#terminate()', () => {
     it('should throw an Error', () => {
       assert.throws(() => {
-        log = new Log();
         log.terminate();
       }, Error);
-    });
-  });
-});
-
-describe('api', () => {
-  describe('#send()', () => {
-    it('should return false when no API key is set', () => {
-      assert.equal(api.send('test', 'test'), false);
-    });
-
-    it('should return true when everything\'s right', () => {
-      api.setKey('test');
-      assert.equal(api.send('test', 'test'), true);
     });
   });
 });

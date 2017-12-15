@@ -2,8 +2,7 @@ const app = require('express')();
 const bodyParser = require('body-parser');
 
 const behavior = require('./behavior.js');
-const Log = require('./log.js');
-log = new Log();
+const log = new (require('./log.js'))();
 
 exports.cmd   = function (command, a, b)   { behavior.cmd   (command, a, b);   };
 exports.regex = function (regex, callback) { behavior.regex (regex, callback); };
@@ -46,7 +45,7 @@ exports.start = function (port) {
     log.terminate();
   }
 
-  behavior.setKey(vkApiKey);
+  behavior.initAPI(vkApiKey);
 
   app.use(bodyParser.json());
 

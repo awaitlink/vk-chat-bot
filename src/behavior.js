@@ -1,6 +1,5 @@
-const Log = require('./log.js');
-log = new Log();
-const api = require('./api.js');
+const log = new (require('./log.js'))();
+const API = require('./api.js');
 
 var commandHandlers = [];
 var regexHandlers = [];
@@ -8,13 +7,14 @@ var eventHandlers = [];
 var possibleEvents = ["message_allow", "message_deny", "message_reply", "no_match"];
 
 var cmdPrefix = null;
+var api;
 
 exports.setCmdPrefix = function (prefix) {
   cmdPrefix = prefix;
 }
 
-exports.setKey = function (key) {
-  api.setKey(key);
+exports.initAPI = function (key) {
+  api = new API(key);
 }
 
 // On exact command with prefix
