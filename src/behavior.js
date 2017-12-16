@@ -1,5 +1,6 @@
 const log = new (require('./log.js'))();
 const API = require('./api.js');
+const APIBuffer = require('./api_buffer.js');
 
 class Behavior {
   constructor(vkApiKey, cmdPrefix) {
@@ -67,80 +68,89 @@ class Behavior {
 
   // Parse Callback API's message
   parseRequest(body) {
-    var uid = body.object.user_id;
     var obj = body.object;
     var type = body.type;
+
     if (type === "message_new") {
       log.log(log.type.request, 'New message from user: ' + uid);
-      this.handleMessage(uid, obj);
+      this.handleMessage(obj);
     } else {
       log.log(log.type.request, 'Received event: ' + type);
-      this.handleEvent(uid, type, obj);
+      this.handleEvent(type, obj);
     }
   }
 
-  // Handle message_new
-  handleMessage(uid, obj) {
-    var msg = obj.body.toLocaleLowerCase();
+  // Handles message_new
+  handleMessage(obj) {
+    var msg = obj.body;
+    handleWithCommand(obj) || handleWithRegex(obj) || noMatchFound(obj);
+  }
 
-    var command = msg.split(" ")[0];
-    if (this.cmdPrefix) command = command.replace(this.cmdPrefix, "");
+  handleWithCommand(obj) {
+    var msg = obj.body;
 
     // See if there is a matching command
     for (var i = 0; i < this.commandHandlers.length; i++) {
-      var handler = this.commandHandlers[i];
-      if (handler.command === command) {
-        var regex = new RegExp(command, 'g');
-        if (this.cmdPrefix) regex = new RegExp(this.cmdPrefix + command, 'g');
+      var cmdHandler = this.commandHandlers[i];
+      var cmdRegex = new RegExp(`(${escapeRegex(this.cmdPrefix || "")}${escapeRegex(command)} )+`, 'gi');
+      var cleanMessage = msg.replace(cmdRegex, "");
 
-        var msg_content = obj.body.replace(regex, "");
+      if (cmdRegex.test(msg)) {
+        var $ = new APIBuffer(this.api, "message_new", obj, cleanMessage);
+        cmdHandler.callback($);
+        $.send();
 
-        var answer = handler.callback(msg_content, obj);
-        if (answer != null) {
-         this.api.send(uid, answer);
-        }
-
-        return;
+        return true;
       }
     }
 
-    // If not, try to use a regex handler
+    return false;
+  }
+
+  handleWithRegex(obj) {
+    var msg = obj.body;
+
+    // Try to use a regex handler
     for (var i = 0; i < this.regexHandlers.length; i++) {
-      var handler = this.regexHandlers[i];
-      if ((new RegExp(handler.regex)).test(msg)) {
-        var answer = handler.callback(obj.body, obj);
-        if (answer != null) {
-         this.api.send(uid, answer);
-        }
+      var regexHandler = this.regexHandlers[i];
 
-        return;
+      if (regexHandler.regex.test(msg)) {
+        var $ = new APIBuffer(this.api, "message_new", obj, msg);
+        regexHandler.callback($);
+        $.send();
+
+        return true;
       }
     }
 
-    // If not, call the no_match event
-    log.log(log.type.information, "Don't know how to respond to: \"" + msg + "\", calling 'no_match' event");
-    this.handleEvent(uid, "no_match", obj);
+    return false;
+  }
+
+  noMatchFound(obj){
+    // Call the no_match event
+    log.log(log.type.information, "Don't know how to respond to: \"" + msg + "\"; calling 'no_match' event");
+    this.handleEvent("no_match", obj);
   }
 
   // Handle a special event
-  handleEvent(uid, e, obj) {
+  handleEvent(e, obj) {
     if (!this.possibleEvents.includes(e) ) {
       log.log(log.type.error, 'Received an unsupported event type: ' + e);
       return;
     }
 
     for (var i = 0; i < this.eventHandlers.length; i++) {
-      var handler = this.eventHandlers[i];
-      if (handler.event === e) {
-        var answer = handler.callback(uid, obj);
-        if (answer != null && !(e === "message_deny")) {
-         this.api.send(uid, answer);
-        }
+      var eventHandler = this.eventHandlers[i];
+      if (eventHandler.event === e) {
+        var $ = new APIBuffer(this.api, e, obj, obj.body);
+        eventHandler.callback($);
+        $.send();
+
         return;
       }
     }
 
-    log.log(log.type.information, "No handler for event: " + e);
+    log.log(log.type.information, "No handler found for event: " + e);
   }
 
   help() {
@@ -161,6 +171,10 @@ class Behavior {
     }
 
     return helpMessage;
+  }
+
+  static escapeRegex(s) {
+    return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
   }
 }
 

@@ -50,30 +50,29 @@ See [Behavior definition functions](https://github.com/sudoio/vk-chat-bot/wiki/B
 Here's an example:
 ```js
 // When user allowed to send messages to him
-bot.on("message_allow", (obj) => {
-  return "Hello, thanks for allowing us to send you messages.";
+bot.on("message_allow", ($) => {
+  $.text("Hello, thanks for allowing us to send you messages.");
 });
 
 // If no matching handler is found
-bot.on("no_match", (obj) => {
-  return "I don't know how to respond to your message.";
+bot.on("no_match", ($) => {
+  $.text("I don't know how to respond to your message.");
 });
 
-// When the first word in the message is cmd_prefix + "test"
-// For example, if cmd_prefix is "/", we search for "/test"
-bot.cmd("test", "sure thing tests something", (msg, obj) => {
-  return "Test success! Your message content was: '" + msg + "'.";
+// Example: if cmd_prefix is "/", we search for "/test"
+bot.cmd("test", "sure thing tests something", ($) => {
+  $.text("Test success! Your message content was: '" + $.msg + "'.");
 });
 
-// For example, if cmd_prefix is "/", we search for "/help"
-bot.cmd("help", "shows the help message", (msg, obj) => {
+// Example: if cmd_prefix is "/", we search for "/help"
+bot.cmd("help", "shows the help message", ($) => {
   // bot.help() returns the help message
-  return "Test Bot v1.0" + bot.help();
+  $.text("Test Bot v1.0" + bot.help());
 });
 
 // When the message contains a word "hi", "hello" or "hey"
-bot.regex("(hi|hello|hey)", (msg, obj) => {
-  return "Hello, I am a test bot. You said: " + msg;
+bot.regex(/(hi|hello|hey)/gi, ($) => {
+  $.text("Hello, I am a test bot. You said: " + $.msg);
 });
 ```
 
