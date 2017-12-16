@@ -69,6 +69,7 @@ class Behavior {
   // Parse Callback API's message
   parseRequest(body) {
     var obj = body.object;
+    var uid = obj.user_id;
     var type = body.type;
 
     if (type === "message_new") {
