@@ -93,7 +93,7 @@ class Behavior {
     // See if there is a matching command
     for (var i = 0; i < this.commandHandlers.length; i++) {
       var cmdHandler = this.commandHandlers[i];
-      var cmdRegex = new RegExp(`(${this.escapeRegex(this.cmdPrefix || "")}${this.escapeRegex(cmdHandler.command)} )+`, 'gi');
+      var cmdRegex = new RegExp(`(${this.escapeRegex(this.cmdPrefix || "")}${this.escapeRegex(cmdHandler.command)})+`, 'gi');
       var cleanMessage = msg.replace(cmdRegex, "");
 
       if (cmdRegex.test(msg)) {
@@ -129,7 +129,7 @@ class Behavior {
 
   noMatchFound(obj){
     // Call the no_match event
-    log.log(log.type.information, "Don't know how to respond to: \"" + msg + "\"; calling 'no_match' event");
+    log.log(log.type.information, "Don't know how to respond to: \"" + obj.body + "\"; calling 'no_match' event");
     this.handleEvent("no_match", obj);
   }
 
