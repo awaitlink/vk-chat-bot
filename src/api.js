@@ -28,7 +28,7 @@ class API {
   }
 
   send(uid, msg) {
-    call("messages.send", {user_id: uid, message: msg});
+    this.call("messages.send", {user_id: uid, message: msg});
   }
 }
 

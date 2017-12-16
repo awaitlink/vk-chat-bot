@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "description": "A library to easily create chat bots for VK communities (uses Callback API).",
   "main": "src/vk-chat-bot.js",
   "scripts": {
