@@ -84,7 +84,7 @@ class Behavior {
   // Handles message_new
   handleMessage(obj) {
     var msg = obj.body;
-    handleWithCommand(obj) || handleWithRegex(obj) || noMatchFound(obj);
+    this.handleWithCommand(obj) || this.handleWithRegex(obj) || this.noMatchFound(obj);
   }
 
   handleWithCommand(obj) {
