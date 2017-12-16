@@ -7,18 +7,28 @@ class API {
     this.vkApiKey = vkApiKey;
   }
 
-  send(uid, msg) {
-    var url = `https://api.vk.com/method/messages.send?user_id=${uid}&message=${encodeURIComponent(msg)}&access_token=${this.vkApiKey}`;
+  call(method, params) {
+    var method = encodeURIComponent(method);
+    var url = `https://api.vk.com/method/${method}?access_token=${this.vkApiKey}`;
+
+    Object.keys(params).map(e => {
+      var name = encodeURIComponent(e);
+      var value = encodeURIComponent(params[e]);
+
+      url += `&${name}=${value}`;
+    });
 
     request(url, function (error, response, body) {
       if (!error && response.statusCode == 200){
-        log.log(log.type.response, 'Message sent to user: ' + uid + '.');
-      }
-
-      if (error){
-        log.log(log.type.error, 'Error occured when sending a message: ' + error);
+        log.log(log.type.response, `VK API call to ${method} succeeded`);
+      } else {
+        log.log(log.type.error, `Error (${error}) occured when calling ${method}. Response: ${response}`);
       }
     });
+  }
+
+  send(uid, msg) {
+    call("messages.send", {user_id: uid, message: msg});
   }
 }
 
