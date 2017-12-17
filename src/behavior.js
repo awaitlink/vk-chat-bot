@@ -93,7 +93,9 @@ class Behavior {
     // See if there is a matching command
     for (var i = 0; i < this.commandHandlers.length; i++) {
       var cmdHandler = this.commandHandlers[i];
-      var cmdRegex = new RegExp(`(${this.escapeRegex(this.cmdPrefix || "")}${this.escapeRegex(cmdHandler.command)})+`, 'gi');
+      var cmd = this.escapeRegex(cmdHandler.command);
+      var prefix = this.escapeRegex(this.cmdPrefix || "");
+      var cmdRegex = new RegExp(`^(${prefix}${cmd} *)+`, 'gi');
       var cleanMessage = msg.replace(cmdRegex, "");
 
       if (cmdRegex.test(msg)) {
