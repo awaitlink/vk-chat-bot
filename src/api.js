@@ -1,4 +1,4 @@
-const request = require('request');
+const request = require('request-promise');
 
 const log = new (require('./log.js'))();
 
@@ -18,17 +18,24 @@ class API {
       url += `&${name}=${value}`;
     });
 
-    request(url, function (error, response, body) {
-      if (!error && response.statusCode == 200){
-        log.log(log.type.response, `VK API call to ${method} succeeded`);
-      } else {
-        log.log(log.type.error, `Error (${error}) occured when calling ${method}. Response: ${response}`);
-      }
+    var options = {
+      uri: url,
+      json: true
+    };
+
+    var promise = request(options);
+    promise.catch((err) => {
+      log.log(log.type.error, `Error occured when calling ${method}: ${error}`);
     });
+
+    return promise;
   }
 
   send(uid, msg) {
-    this.call("messages.send", {user_id: uid, message: msg});
+    this.call("messages.send", {user_id: uid, message: msg})
+      .then((res) => {
+        log.log(log.type.response, `Sent a message to user ${uid}.`);
+      });
   }
 }
 
