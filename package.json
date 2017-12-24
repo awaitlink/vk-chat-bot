@@ -4,7 +4,7 @@
   "description": "A library to easily create chat bots for VK communities (uses Callback API).",
   "main": "src/vk-chat-bot.js",
   "scripts": {
-    "test": "mocha"
+    "test": "standard --verbose | snazzy && mocha"
   },
   "author": "sudoio",
   "license": "MIT",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "mocha": "^4.0.1",
+    "snazzy": "^7.0.0",
     "standard": "^10.0.3"
   },
   "repository": {

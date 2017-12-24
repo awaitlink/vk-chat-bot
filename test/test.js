@@ -1,4 +1,4 @@
-/* global describe, it */
+/* eslint-env mocha */
 
 const assert = require('assert')
 
@@ -27,16 +27,20 @@ describe('ChatBot', () => {
   describe('#constructor()', () => {
     it('should throw an Error with missing required params', () => {
       assert.throws(() => {
-        ChatBot({
+        /* eslint-disable no-new */
+        new ChatBot({
           group_id: 'test',
           cmd_prefix: 'test'
         })
+        /* eslint-enable no-new */
       }, Error)
     })
 
     it('shouldn\'t throw an Error when everything\'s right', () => {
       assert.doesNotThrow(() => {
-        ChatBot(botParams)
+        /* eslint-disable no-new */
+        new ChatBot(botParams)
+        /* eslint-enable no-new */
       }, Error)
     })
   })
