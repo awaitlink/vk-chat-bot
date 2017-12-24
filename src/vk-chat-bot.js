@@ -36,11 +36,14 @@ class ChatBot {
     app.post('/', (req, res) => {
       var body = req.body
 
-      if (body.type === 'confirmation' && body.group_id === this.groupId) {
-        res.status(200).send(this.confirmationToken)
-      } else if (body.secret === this.secret) {
-        res.status(200).send('ok')
-        this.behavior.parseRequest(body)
+      if (body.secret === this.secret && body.group_id === this.groupId) {
+        if (body.type === 'confirmation') {
+          res.status(200).send(this.confirmationToken)
+          log.log(log.type.response, 'Sent confirmation token.')
+        } else {
+          res.status(200).send('ok')
+          this.behavior.parseRequest(body)
+        }
       } else {
         res.status(400).send('Invalid secret key.')
         log.log(log.type.request, 'Request with an invalid secret key.')
