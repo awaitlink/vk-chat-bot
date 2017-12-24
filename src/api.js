@@ -33,7 +33,7 @@ class API {
 
   send(uid, msg) {
     this.call("messages.send", {user_id: uid, message: msg})
-      .then((res) => {
+      .then((body) => {
         log.log(log.type.response, `Sent a message to user ${uid}.`);
       });
   }
