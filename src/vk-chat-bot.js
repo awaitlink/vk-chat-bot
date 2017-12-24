@@ -6,9 +6,7 @@ const log = new (require('./log.js'))()
 
 class ChatBot {
   constructor (params) {
-    if (!params) {
-      log.badParams('constructor')
-    }
+    log.requireParams('ChatBot.constructor', params)
 
     this.groupId = params.group_id
     this.confirmationToken = params.confirmation_token
@@ -16,9 +14,7 @@ class ChatBot {
 
     this.behavior = new Behavior(params.vk_api_key, params.cmd_prefix)
 
-    if (!(this.groupId && this.confirmationToken && this.secret && this.behavior)) {
-      log.badParams('constructor')
-    }
+    log.requireParams('ChatBot.constructor', this.groupId, this.confirmationToken, this.secret, this.behavior)
   }
 
   cmd (command, a, b) { this.behavior.cmd(command, a, b) }
@@ -28,9 +24,7 @@ class ChatBot {
   help () { return this.behavior.help() }
 
   start (port) {
-    if (!port) {
-      log.badParams('start')
-    }
+    log.requireParams('ChatBot.start', port)
 
     app.use(bodyParser.json())
 

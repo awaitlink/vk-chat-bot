@@ -17,10 +17,7 @@ class Behavior {
 
   // On exact command with prefix
   cmd (command, a, b) {
-    if (!command || !a) {
-      // At least a should be defined
-      log.badParams('cmd')
-    }
+    log.requireParams('Behavior.cmd', command, a)
 
     var description = a
     var callback = b
@@ -29,6 +26,8 @@ class Behavior {
       description = null
       callback = a
     }
+
+    log.requireFunction(callback)
 
     this.commandHandlers.push({
       command: command,
@@ -39,9 +38,8 @@ class Behavior {
 
   // On matching regex
   regex (regex, callback) {
-    if (!regex || !callback) {
-      log.badParams('regex')
-    }
+    log.requireParams('Behavior.regex', regex, callback)
+    log.requireFunction(callback)
 
     this.regexHandlers.push({
       regex: regex,
@@ -51,9 +49,8 @@ class Behavior {
 
   // For special events
   on (e, callback) {
-    if (!e || !callback) {
-      log.badParams('on')
-    }
+    log.requireParams('Behavior.on', e, callback)
+    log.requireFunction(callback)
 
     if (!this.possibleEvents.includes(e)) {
       log.log(log.type.error, 'Tried to register a handler for an unsupported event type: ' + e)

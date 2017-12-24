@@ -23,6 +23,20 @@ class Log {
   badParams (functionName) {
     throw new Error(this.getLogMessage(this.type.error, `Bad parameters for function ${functionName}().`))
   }
+
+  requireParams (functionName, ...params) {
+    for (let param of params) {
+      if (!param) {
+        this.badParams(functionName)
+      }
+    }
+  }
+
+  requireFunction (param) {
+    if (typeof param !== 'function') {
+      throw new Error(this.getLogMessage(this.type.error, `Callback function you specified is not a function.`))
+    }
+  }
 }
 
 module.exports = Log
