@@ -36,17 +36,24 @@ class ChatBot {
     app.post('/', (req, res) => {
       var body = req.body
 
-      if (body.secret === this.secret && body.group_id === this.groupId) {
-        if (body.type === 'confirmation') {
-          res.status(200).send(this.confirmationToken)
-          log.log(log.type.response, 'Sent confirmation token.')
-        } else {
-          res.status(200).send('ok')
-          this.behavior.parseRequest(body)
-        }
-      } else {
+      if (body.secret !== this.secret) {
         res.status(400).send('Invalid secret key.')
         log.log(log.type.request, 'Request with an invalid secret key.')
+        return
+      }
+
+      if (body.group_id !== this.groupId) {
+        res.status(400).send('Invalid group id.')
+        log.log(log.type.request, 'Request with an invalid group id.')
+        return
+      }
+
+      if (body.type === 'confirmation') {
+        res.status(200).send(this.confirmationToken)
+        log.log(log.type.response, 'Sent confirmation token.')
+      } else {
+        res.status(200).send('ok')
+        this.behavior.parseRequest(body)
       }
     })
 
@@ -55,6 +62,7 @@ class ChatBot {
         log.log(log.type.error, 'Error: ' + err)
         log.terminate()
       }
+
       log.log(log.type.information, `Server is listening on port ${port}.`)
 
       // Quit in test mode
