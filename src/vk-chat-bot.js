@@ -42,7 +42,7 @@ class ChatBot {
         return
       }
 
-      if (body.group_id !== this.groupId) {
+      if (body.group_id.toString() !== this.groupId) {
         res.status(400).send('Invalid group id.')
         log.log(log.type.request, 'Request with an invalid group id.')
         return
