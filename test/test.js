@@ -21,6 +21,34 @@ describe('Log', () => {
       }, Error)
     })
   })
+
+  describe('#requireFunction()', () => {
+    it('should throw an Error when argument is not a function', () => {
+      assert.throws(() => {
+        log.requireFunction('not-a-function')
+      }, Error)
+    })
+
+    it('shouldn\'t throw an Error when argument is a function', () => {
+      assert.doesNotThrow(() => {
+        log.requireFunction($ => {})
+      }, Error)
+    })
+  })
+
+  describe('#requireParams()', () => {
+    it('should throw an Error when at least one argument is invalid', () => {
+      assert.throws(() => {
+        log.requireParams('test', undefined, null)
+      }, Error)
+    })
+
+    it('shouldn\'t throw an Error when all arguments are valid', () => {
+      assert.doesNotThrow(() => {
+        log.requireParams('test', 'a', 'b')
+      }, Error)
+    })
+  })
 })
 
 describe('ChatBot', () => {
@@ -81,7 +109,7 @@ describe('Behavior', () => {
     it('shouldn\'t throw an error when everything\'s right', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
-        bot.on('no_match', 'shows the help message', (msg, obj) => {})
+        bot.on('no_match', ($) => {})
       }, Error)
     })
   })
@@ -97,14 +125,14 @@ describe('Behavior', () => {
     it('shouldn\'t throw an error when everything\'s right (3 params)', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
-        bot.cmd('test', 'sure thing tests something', (msg, obj) => {})
+        bot.cmd('test', 'sure thing tests something', ($) => {})
       }, Error)
     })
 
     it('shouldn\'t throw an error when everything\'s right (2 params)', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
-        bot.cmd('test', (msg, obj) => {})
+        bot.cmd('test', ($) => {})
       }, Error)
     })
   })
@@ -120,7 +148,7 @@ describe('Behavior', () => {
     it('shouldn\'t throw an error when everything\'s right', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
-        bot.regex('.*', (msg, obj) => {})
+        bot.regex('.*', ($) => {})
       }, Error)
     })
   })
@@ -129,8 +157,8 @@ describe('Behavior', () => {
     it('should return a proper help message', () => {
       var bot = new ChatBot(botParams)
 
-      bot.cmd('test', 'sure thing tests something', (msg, obj) => {})
-      bot.cmd('help', 'shows the help message', (msg, obj) => {})
+      bot.cmd('test', 'sure thing tests something', ($) => {})
+      bot.cmd('help', 'shows the help message', ($) => {})
 
       var message = '\n/test - sure thing tests something\n/help - shows the help message\n'
       assert.equal(bot.help(), message)
