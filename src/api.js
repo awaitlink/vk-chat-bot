@@ -15,6 +15,8 @@ class API {
       var name = encodeURIComponent(e)
       var value = encodeURIComponent(params[e])
 
+      if (!value) value = ''
+
       url += `&${name}=${value}`
     })
 
@@ -31,8 +33,8 @@ class API {
     return promise
   }
 
-  send (uid, msg) {
-    this.call('messages.send', {user_id: uid, message: msg})
+  send (uid, msg, attachment) {
+    this.call('messages.send', {user_id: uid, message: msg, attachment: attachment})
       .then((body) => {
         log.log(log.type.response, `Sent a message to user ${uid}.`)
       })

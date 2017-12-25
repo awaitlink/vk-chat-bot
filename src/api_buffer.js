@@ -10,6 +10,7 @@ class APIBuffer {
     this.uid = this.obj.user_id
 
     this.replyText = null
+    this.attachment = null
   }
 
   setUid (uid) {
@@ -20,22 +21,31 @@ class APIBuffer {
     this.replyText = txt
   }
 
+  attach (type, ownerId, resId) {
+    this.attachment.push(`${type}${ownerId}_${resId}`)
+  }
+
   send () {
     if (this.eventType === 'message_deny') {
       log.log(log.type.information, `No message was sent to user ${this.uid} ("message_deny" event)`)
       return
     }
 
-    if (!this.replyText) {
-      log.log(log.type.information, `No message was sent to user ${this.uid} (text is empty)`)
+    if (!this.replyText && !this.attachment) {
+      log.log(log.type.information, `No message was sent to user ${this.uid} (text or attachment is required)`)
       return
     }
 
-    this.api.send(this.uid, this.replyText)
+    var attachmentList = ''
+    this.attachment.forEach(e => { attachmentList += e + ',' })
+    attachmentList = attachmentList.substr(0, attachmentList.length - 1)
+
+    this.api.send(this.uid, this.replyText, attachmentList)
   }
 
   clear () {
     this.replyText = null
+    this.attachment = null
     this.uid = this.obj.user_id
   }
 }
