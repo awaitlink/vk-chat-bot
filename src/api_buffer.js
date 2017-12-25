@@ -9,8 +9,8 @@ class APIBuffer {
 
     this.uid = this.obj.user_id
 
-    this.replyText = null
-    this.attachment = null
+    this.replyText = ''
+    this.attachment = []
   }
 
   setUid (uid) {
@@ -31,21 +31,24 @@ class APIBuffer {
       return
     }
 
-    if (!this.replyText && !this.attachment) {
+    if (this.replyText === '' && this.attachment === []) {
       log.log(log.type.information, `No message was sent to user ${this.uid} (text or attachment is required)`)
       return
     }
 
     var attachmentList = ''
-    this.attachment.forEach(e => { attachmentList += e + ',' })
-    attachmentList = attachmentList.substr(0, attachmentList.length - 1)
+
+    if (this.attachment !== []) {
+      this.attachment.forEach(e => { attachmentList += e + ',' })
+      attachmentList = attachmentList.substr(0, attachmentList.length - 1)
+    }
 
     this.api.send(this.uid, this.replyText, attachmentList)
   }
 
   clear () {
-    this.replyText = null
-    this.attachment = null
+    this.replyText = ''
+    this.attachment = []
     this.uid = this.obj.user_id
   }
 }
