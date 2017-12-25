@@ -6,7 +6,14 @@ class APIBuffer {
     this.obj = obj
     this.msg = msg
     this.eventType = eType
+
+    this.uid = this.obj.user_id
+
     this.replyText = null
+  }
+
+  setUid (uid) {
+    this.uid = uid
   }
 
   text (txt) {
@@ -14,24 +21,22 @@ class APIBuffer {
   }
 
   send () {
-    var uid = this.obj.user_id
-
     if (this.eventType === 'message_deny') {
-      log.log(log.type.information, `No message was sent to user ${uid} ("message_deny" event)`)
+      log.log(log.type.information, `No message was sent to user ${this.uid} ("message_deny" event)`)
       return
     }
 
     if (!this.replyText) {
-      log.log(log.type.information, `No message was sent to user ${uid} (text is empty)`)
+      log.log(log.type.information, `No message was sent to user ${this.uid} (text is empty)`)
       return
     }
 
-    this.api.send(uid, this.replyText)
-    this.clear()
+    this.api.send(this.uid, this.replyText)
   }
 
   clear () {
     this.replyText = null
+    this.uid = this.obj.user_id
   }
 }
 
