@@ -8,11 +8,11 @@ class ChatBot {
   constructor (params) {
     log.requireParams('ChatBot.constructor', params)
 
-    this.groupId = params.group_id
-    this.confirmationToken = params.confirmation_token
-    this.secret = params.secret
+    this.groupId = params.group_id.toString()
+    this.confirmationToken = params.confirmation_token.toString()
+    this.secret = params.secret.toString()
 
-    this.behavior = new Behavior(params.vk_api_key, params.cmd_prefix)
+    this.behavior = new Behavior(params.vk_api_key.toString(), params.cmd_prefix.toString())
 
     log.requireParams('ChatBot.constructor', this.groupId, this.confirmationToken, this.secret, this.behavior)
   }
