@@ -4,6 +4,8 @@
 > This is a chat bot library for [VK](https://vk.com) social network communities.    
 > It uses VK's [Callback API](https://vk.com/dev/callback_api) to get new messages from users.
 
+> See the [wiki](https://github.com/sudoio/vk-chat-bot/wiki) for description of all features.
+
 Branch | Style | Status
 ---|---|---
 `master` | [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com) | [![Travis build status](https://img.shields.io/travis/sudoio/vk-chat-bot/master.svg?style=flat-square)](#)
@@ -12,12 +14,13 @@ Branch | Style | Status
 ```bash
 npm i vk-chat-bot
 ```
+
 ## Example
 You can find the example in the [`sudoio/vk-chat-bot-example`](https://github.com/sudoio/vk-chat-bot-example) repository.
 
 Also, you can take a look at the **step-by-step** [Heroku Chat Bot](https://github.com/sudoio/vk-chat-bot/wiki/Heroku-Deploy-Guide) creation guide.
 
-## Usage
+## Quick Start
 #### 1. Preparation
 First, `require()` the `ChatBot` class from `vk-chat-bot`:
 ```js
