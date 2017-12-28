@@ -5,19 +5,24 @@ const log = new (require('./log.js'))()
 class API {
   constructor (vkApiKey) {
     this.vkApiKey = vkApiKey
+    this.isInTestMode = vkApiKey === 'test'
+
     this.API_QUOTA = 20
 
     this.queue = []
-    setInterval(() => {
-      if (this.queue.length > 0) {
-        var e = this.queue.shift()
 
-        this.call(e.method, e.params)
-          .then((json) => {
-            e.callback(json)
-          })
-      }
-    }, 1000 / this.API_QUOTA)
+    if (!this.isInTestMode) {
+      setInterval(() => {
+        if (this.queue.length > 0) {
+          var e = this.queue.shift()
+
+          this.call(e.method, e.params)
+            .then((json) => {
+              e.callback(json)
+            })
+        }
+      }, 1000 / this.API_QUOTA)
+    }
   }
 
   scheduleCall (method, params, callback) {

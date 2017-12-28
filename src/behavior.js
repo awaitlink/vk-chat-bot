@@ -7,7 +7,7 @@ class Behavior {
     this.api = new API(vkApiKey)
     this.cmdPrefix = cmdPrefix
 
-    this.isInTestMode = vkApiKey === 'test'
+    this.isInTestMode = this.api.isInTestMode
 
     this.commandHandlers = []
     this.regexHandlers = []
