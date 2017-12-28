@@ -7,6 +7,7 @@ class API {
     this.vkApiKey = vkApiKey
     this.isInTestMode = vkApiKey === 'test'
 
+    this.API_VERSION = 5.69
     this.API_QUOTA = 20
 
     this.queue = []
@@ -35,7 +36,7 @@ class API {
 
   call (method, params) {
     method = encodeURIComponent(method)
-    var url = `https://api.vk.com/method/${method}?access_token=${this.vkApiKey}`
+    var url = `https://api.vk.com/method/${method}?access_token=${this.vkApiKey}&v=${this.API_VERSION}`
 
     Object.keys(params).map(e => {
       var name = encodeURIComponent(e)
