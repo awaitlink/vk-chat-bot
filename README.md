@@ -1,28 +1,32 @@
 # VK Chat Bot
-[![npm version](https://img.shields.io/npm/v/vk-chat-bot.svg?style=flat-square)](https://www.npmjs.com/package/vk-chat-bot)  	[![Downloads](https://img.shields.io/npm/dt/vk-chat-bot.svg?style=flat-square)](https://www.npmjs.com/package/vk-chat-bot) [![Dependency Status](https://david-dm.org/sudoio/vk-chat-bot.svg?style=flat-square)](https://david-dm.org/sudoio/vk-chat-bot) [![MIT License](https://img.shields.io/github/license/sudoio/vk-chat-bot.svg?style=flat-square)](https://github.com/sudoio/vk-chat-bot/blob/master/LICENSE.md)
+[![npm version](https://img.shields.io/npm/v/vk-chat-bot.svg?style=flat-square)](https://www.npmjs.com/package/vk-chat-bot)
+[![Downloads](https://img.shields.io/npm/dt/vk-chat-bot.svg?style=flat-square)](https://www.npmjs.com/package/vk-chat-bot)
+[![Dependency Status](https://david-dm.org/sudoio/vk-chat-bot.svg?style=flat-square)](https://david-dm.org/sudoio/vk-chat-bot)
+[![Travis build status](https://img.shields.io/travis/sudoio/vk-chat-bot/master.svg?style=flat-square)](#)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)
 
 > This is a chat bot library for [VK](https://vk.com) social network communities.    
 > See the [wiki](https://github.com/sudoio/vk-chat-bot/wiki) for description of all features.
 
-Branch | Style | Status
----|---|---
-`master` | [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com) | [![Travis build status](https://img.shields.io/travis/sudoio/vk-chat-bot/master.svg?style=flat-square)](#)
+## Features
+- **Easy to use** - setting up behavior is simple - see [Defining behavior](#2-defining-behavior)
+- **Stable** - the library calls VK API not more then 20 times/second, so you don't exceed the quota
 
-## Installation
+## Usage
+#### Installation
 ```bash
 npm i vk-chat-bot
 ```
 
-## Example
-You can find the example in the [`sudoio/vk-chat-bot-example`](https://github.com/sudoio/vk-chat-bot-example) repository.
-
+#### Example
+You can find the example in the [`sudoio/vk-chat-bot-example`](https://github.com/sudoio/vk-chat-bot-example) repository.    
 Also, you can take a look at the **step-by-step** [Heroku Chat Bot](https://github.com/sudoio/vk-chat-bot/wiki/Heroku-Deploy-Guide) creation guide.
 
-## Quick Start
-#### 1. Preparation
+#### Quick Start
+###### 1. Preparation
 First, `require()` the `ChatBot` class from `vk-chat-bot`:
 ```js
-const ChatBot = require("vk-chat-bot")
+const ChatBot = require('vk-chat-bot')
 ```
 
 Then, initialize your bot:
@@ -44,7 +48,7 @@ var params = {
 var bot = new ChatBot(params)
 ```
 
-#### 2. Defining behavior
+###### 2. Defining behavior
 
 See [Behavior definition functions](https://github.com/sudoio/vk-chat-bot/wiki/Behavior-definition-functions) wiki for more information.
 
@@ -76,7 +80,7 @@ bot.regex(/h(i|ello|ey)/i, ($) => {
 })
 ```
 
-#### 3. Start it!
+###### 3. Start it!
 Start the bot providing a port it will be run at.
 
 ```js

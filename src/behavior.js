@@ -91,7 +91,7 @@ class Behavior {
       var cmdHandler = this.commandHandlers[i]
       var cmd = this.escapeRegex(cmdHandler.command)
       var prefix = this.escapeRegex(this.cmdPrefix || '')
-      var cmdRegex = new RegExp(`^(${prefix}${cmd} *)+`, 'gi')
+      var cmdRegex = new RegExp(`^(${prefix}${cmd})( +${prefix}${cmd})*`, 'gi')
       var cleanMessage = msg.replace(cmdRegex, '')
 
       if (cmdRegex.test(msg)) {

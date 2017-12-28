@@ -5,6 +5,27 @@ const log = new (require('./log.js'))()
 class API {
   constructor (vkApiKey) {
     this.vkApiKey = vkApiKey
+    this.API_QUOTA = 20
+
+    this.queue = []
+    setInterval(() => {
+      if (this.queue.length > 0) {
+        var e = this.queue.shift()
+
+        this.call(e.method, e.params)
+          .then((json) => {
+            e.callback(json)
+          })
+      }
+    }, 1000 / this.API_QUOTA)
+  }
+
+  scheduleCall (method, params, callback) {
+    this.queue.push({
+      method: method,
+      params: params,
+      callback: callback
+    })
   }
 
   call (method, params) {
@@ -34,10 +55,15 @@ class API {
   }
 
   send (uid, msg, attachment) {
-    this.call('messages.send', {user_id: uid, message: msg, attachment: attachment})
-      .then((body) => {
-        log.log(log.type.response, `Sent a message to user ${uid}.`)
-      })
+    var params = {
+      user_id: uid,
+      message: msg,
+      attachment: attachment
+    }
+
+    this.scheduleCall('messages.send', params, (json) => {
+      log.log(log.type.response, `Sent a message to user ${uid}.`)
+    })
   }
 }
 
