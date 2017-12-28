@@ -9,7 +9,7 @@
 > See the [wiki](https://github.com/sudoio/vk-chat-bot/wiki) for description of all features.
 
 ## Features
-- **Easy to use** - setting up behavior is simple - see [Defining behavior](#2-defining-behavior)
+- **Easy to use** - setting up behavior is simple - see [Behavior setup](#2-behavior-setup)
 - **Stable** - the library calls VK API not more then 20 times/second, so you don't exceed the quota
 
 ## Usage
@@ -29,41 +29,37 @@ First, `require()` the `ChatBot` class from `vk-chat-bot`:
 const ChatBot = require('vk-chat-bot')
 ```
 
-Then, initialize your bot:
+Then, initialize your bot (see [Params object](#params-object) for more information about `params`):
 ```js
 var params = {
   vk_api_key: process.env.VK_API_KEY,
-
-  // Confirmation parameters, can be found in group Callback API settings
   confirmation_token: process.env.CONFIRMATION_TOKEN,
   group_id: process.env.GROUP_ID,
-
-  // Secret key, set it in group Callback API settings
   secret: process.env.SECRET,
 
-  // Any command prefix, optional
   cmd_prefix: "/"
 }
 
 var bot = new ChatBot(params)
 ```
 
-###### 2. Defining behavior
+###### 2. Behavior setup
 
-See [Behavior definition functions](https://github.com/sudoio/vk-chat-bot/wiki/Behavior-definition-functions) wiki for more information.
-
+See [Setting behavior](https://github.com/sudoio/vk-chat-bot/wiki/Chat-Bot#setting-behavior) wiki to learn how you can set up behavior with these functions.   
 Here's an example:
 ```js
 // When user allowed to send messages to him
 bot.on('message_allow', ($) => {
   $.text('Hello, thanks for allowing us to send you messages.')
 })
-
+```
+```js
 // If no matching handler is found
 bot.on('no_match', ($) => {
   $.text("I don't know how to respond to your message.")
 })
-
+```
+```js
 // Example: if cmd_prefix is "/", we search for "/help"
 bot.cmd('help', 'shows the help message', ($) => {
   // bot.help() returns the help message
@@ -72,7 +68,8 @@ bot.cmd('help', 'shows the help message', ($) => {
   // Attach a nice image from https://vk.com/team?z=photo6492_456240778
   $.attach('photo', 6492, 456240778)
 })
-
+```
+```js
 // When the message contains a word "hi", "hello" or "hey"
 // Ignoring case with /i
 bot.regex(/h(i|ello|ey)/i, ($) => {
