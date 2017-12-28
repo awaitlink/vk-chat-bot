@@ -29,7 +29,7 @@ First, `require()` the `ChatBot` class from `vk-chat-bot`:
 const ChatBot = require('vk-chat-bot')
 ```
 
-Then, initialize your bot (see [Params object](#params-object) for more information about `params`):
+Then, initialize your bot (see [Params object](https://github.com/sudoio/vk-chat-bot/wiki/Chat-Bot#params-object) for more information about `params`):
 ```js
 var params = {
   vk_api_key: process.env.VK_API_KEY,
