@@ -1,11 +1,11 @@
 const log = new (require('./log.js'))()
 
 class APIBuffer {
-  constructor (api, eType, obj, msg) {
+  constructor (api, eventType, object, message) {
     this.api = api
-    this.obj = obj
-    this.msg = msg
-    this.eventType = eType
+    this.obj = object
+    this.msg = message
+    this.eventType = eventType
 
     this.uid = this.obj.user_id
 
@@ -22,6 +22,7 @@ class APIBuffer {
   }
 
   attach (type, ownerId, resId) {
+    log.requireParams('APIBuffer.attach', type, ownerId, resId)
     this.attachment.push(`${type}${ownerId}_${resId}`)
   }
 
@@ -36,13 +37,7 @@ class APIBuffer {
       return
     }
 
-    var attachmentList = ''
-
-    if (this.attachment !== []) {
-      this.attachment.forEach(e => { attachmentList += e + ',' })
-      attachmentList = attachmentList.substr(0, attachmentList.length - 1)
-    }
-
+    var attachmentList = this.attachment.join(',')
     this.api.send(this.uid, this.replyText, attachmentList)
   }
 

@@ -4,6 +4,8 @@ const log = new (require('./log.js'))()
 
 class API {
   constructor (vkApiKey) {
+    log.requireParams('API.constructor', vkApiKey)
+
     this.vkApiKey = vkApiKey
     this.isInTestMode = vkApiKey === 'test'
 
@@ -19,7 +21,9 @@ class API {
 
           this.call(e.method, e.params)
             .then((json) => {
-              e.callback(json)
+              if (e.callback) {
+                e.callback(json)
+              }
             })
         }
       }, 1000 / this.API_QUOTA)

@@ -20,15 +20,17 @@ class Log {
     throw new Error(this.getLogMessage(this.type.error, `Terminating. See above for more information.`))
   }
 
-  badParams (functionName) {
-    throw new Error(this.getLogMessage(this.type.error, `Bad parameters for function ${functionName}().`))
-  }
-
   requireParams (functionName, ...params) {
+    var i = 0
     for (let param of params) {
       if (!param) {
-        this.badParams(functionName)
+        throw new Error(this.getLogMessage(
+          this.type.error,
+          `Bad parameter #${i} for function ${functionName}(): '${param}'.`
+        ))
       }
+
+      i++
     }
   }
 
