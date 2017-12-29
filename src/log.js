@@ -21,7 +21,7 @@ class Log {
   }
 
   requireParams (functionName, ...params) {
-    var i = 0
+    var i = 1
     for (let param of params) {
       if (!param) {
         throw new Error(this.getLogMessage(
