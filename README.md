@@ -3,7 +3,8 @@
 [![Downloads](https://img.shields.io/npm/dt/vk-chat-bot.svg?style=flat-square)](https://www.npmjs.com/package/vk-chat-bot)
 [![Dependency Status](https://david-dm.org/sudoio/vk-chat-bot.svg?style=flat-square)](https://david-dm.org/sudoio/vk-chat-bot)
 [![Travis build status](https://img.shields.io/travis/sudoio/vk-chat-bot/master.svg?style=flat-square)](https://travis-ci.org/sudoio/vk-chat-bot)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)    
+<sub>GitHub [Releases](https://github.com/sudoio/vk-chat-bot/releases) contain only **major** and **minor** versions.</sub>
 
 > This is a chat bot library for [VK](https://vk.com) social network communities.    
 > See the [wiki](https://github.com/sudoio/vk-chat-bot/wiki) for description of all features.
