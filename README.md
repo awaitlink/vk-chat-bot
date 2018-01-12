@@ -33,10 +33,10 @@ const ChatBot = require('vk-chat-bot')
 Then, initialize your bot (see [Params object](https://github.com/sudoio/vk-chat-bot/wiki/Chat-Bot#params-object) for more information about `params`):
 ```js
 var params = {
-  vk_api_key: process.env.VK_API_KEY,
-  confirmation_token: process.env.CONFIRMATION_TOKEN,
-  group_id: process.env.GROUP_ID,
-  secret: process.env.SECRET,
+  vk_api_key: 'your_vk_api_key_here',
+  confirmation_token: 'f123321',
+  group_id: 1234567,
+  secret: 's3r10us1y_s3cr3t_phr4s3',
 
   cmd_prefix: "/"
 }
@@ -79,7 +79,7 @@ bot.regex(/h(i|ello|ey)/i, ($) => {
 ```
 
 ###### 3. Start it!
-Start the bot providing a port it will be run at.
+Start the bot providing a port it will run at.
 
 ```js
 // Server port
