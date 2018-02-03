@@ -19,7 +19,7 @@ class API {
   }
 
   processQueue () {
-    if (this.queue.length > 0) {
+    if (this.queue && this.queue.length > 0) {
       var e = this.queue.shift()
 
       this.call(e.method, e.params)
