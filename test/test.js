@@ -15,7 +15,7 @@ var botParams = {
 
 describe('Log', () => {
   describe('#error()', () => {
-    it('should throw an Error', () => {
+    it('throws error', () => {
       assert.throws(() => {
         log.error('Test error')
       }, Error)
@@ -23,13 +23,13 @@ describe('Log', () => {
   })
 
   describe('#requireFunction()', () => {
-    it('should throw an Error when argument is not a function', () => {
+    it('error when argument is not a function', () => {
       assert.throws(() => {
         log.requireFunction('not-a-function')
       }, Error)
     })
 
-    it('shouldn\'t throw an Error when argument is a function', () => {
+    it('no error when argument is a function', () => {
       assert.doesNotThrow(() => {
         log.requireFunction($ => {})
       }, Error)
@@ -37,13 +37,13 @@ describe('Log', () => {
   })
 
   describe('#requireParams()', () => {
-    it('should throw an Error when at least one argument is invalid', () => {
+    it('error when at least one argument is invalid', () => {
       assert.throws(() => {
         log.requireParams('test', undefined, null)
       }, Error)
     })
 
-    it('shouldn\'t throw an Error when all arguments are valid', () => {
+    it('no error when all arguments are valid', () => {
       assert.doesNotThrow(() => {
         log.requireParams('test', 'a', 'b')
       }, Error)
@@ -53,7 +53,7 @@ describe('Log', () => {
 
 describe('ChatBot', () => {
   describe('#constructor()', () => {
-    it('should throw an Error with missing required params', () => {
+    it('error when missing required params', () => {
       assert.throws(() => {
         /* eslint-disable no-new */
         new ChatBot({
@@ -64,7 +64,7 @@ describe('ChatBot', () => {
       }, Error)
     })
 
-    it('shouldn\'t throw an Error when everything\'s right', () => {
+    it('no error when everything\'s right', () => {
       assert.doesNotThrow(() => {
         /* eslint-disable no-new */
         new ChatBot(botParams)
@@ -74,14 +74,14 @@ describe('ChatBot', () => {
   })
 
   describe('#start()', () => {
-    it('should throw an Error when no port specified', () => {
+    it('error when no port specified', () => {
       assert.throws(() => {
         var bot = new ChatBot(botParams)
         bot.start()
       }, Error)
     })
 
-    it('shouldn\'t throw an Error when everything\'s right', () => {
+    it('no error when everything\'s right', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
         bot.start(12345)
@@ -92,21 +92,21 @@ describe('ChatBot', () => {
 
 describe('Behavior', () => {
   describe('#on()', () => {
-    it('should throw an error with wrong event name', () => {
+    it('error when event name is wrong', () => {
       assert.throws(() => {
         var bot = new ChatBot(botParams)
         bot.on('', () => {})
       }, Error)
     })
 
-    it('should throw an error with missing parameters', () => {
+    it('error when missing parameters', () => {
       assert.throws(() => {
         var bot = new ChatBot(botParams)
         bot.on('no_match')
       }, Error)
     })
 
-    it('shouldn\'t throw an error when everything\'s right', () => {
+    it('no error when everything\'s right', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
         bot.on('no_match', ($) => {})
@@ -115,21 +115,21 @@ describe('Behavior', () => {
   })
 
   describe('#cmd()', () => {
-    it('should throw an error with missing parameters', () => {
+    it('error missing parameters', () => {
       assert.throws(() => {
         var bot = new ChatBot(botParams)
         bot.cmd('test')
       }, Error)
     })
 
-    it('shouldn\'t throw an error when everything\'s right (3 params)', () => {
+    it('no error when everything\'s right (3 params)', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
         bot.cmd('test', 'sure thing tests something', ($) => {})
       }, Error)
     })
 
-    it('shouldn\'t throw an error when everything\'s right (2 params)', () => {
+    it('no error when everything\'s right (2 params)', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
         bot.cmd('test', ($) => {})
@@ -138,14 +138,14 @@ describe('Behavior', () => {
   })
 
   describe('#regex()', () => {
-    it('should throw an error with missing parameters', () => {
+    it('error when missing parameters', () => {
       assert.throws(() => {
         var bot = new ChatBot(botParams)
         bot.regex('.*')
       }, Error)
     })
 
-    it('shouldn\'t throw an error when everything\'s right', () => {
+    it('no error when everything\'s right', () => {
       assert.doesNotThrow(() => {
         var bot = new ChatBot(botParams)
         bot.regex('.*', ($) => {})
