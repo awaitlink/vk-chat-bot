@@ -14,10 +14,10 @@ var botParams = {
 }
 
 describe('Log', () => {
-  describe('#terminate()', () => {
+  describe('#error()', () => {
     it('should throw an Error', () => {
       assert.throws(() => {
-        log.terminate()
+        log.error('Test error')
       }, Error)
     })
   })

@@ -13,20 +13,21 @@ class API {
     this.API_QUOTA = 20
 
     this.queue = []
-
     if (!this.isInTestMode) {
-      setInterval(() => {
-        if (this.queue.length > 0) {
-          var e = this.queue.shift()
+      setInterval(this.processQueue, 1000 / this.API_QUOTA)
+    }
+  }
 
-          this.call(e.method, e.params)
-            .then((json) => {
-              if (e.callback) {
-                e.callback(json)
-              }
-            })
-        }
-      }, 1000 / this.API_QUOTA)
+  processQueue () {
+    if (this.queue.length > 0) {
+      var e = this.queue.shift()
+
+      this.call(e.method, e.params)
+        .then((json) => {
+          if (e.callback) {
+            e.callback(json)
+          }
+        })
     }
   }
 

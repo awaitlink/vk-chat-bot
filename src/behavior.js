@@ -53,8 +53,7 @@ class Behavior {
     log.requireFunction(callback)
 
     if (!this.possibleEvents.includes(e)) {
-      log.log(log.type.error, 'Tried to register a handler for an unsupported event type: ' + e)
-      log.terminate()
+      log.error('Tried to register a handler for an unsupported event type: ' + e)
     }
 
     this.eventHandlers.push({

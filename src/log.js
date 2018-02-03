@@ -16,8 +16,8 @@ class Log {
     console.log(this.getLogMessage(type, text))
   }
 
-  terminate () {
-    throw new Error(this.getLogMessage(this.type.error, `Terminating. See above for more information.`))
+  error (reason) {
+    throw new Error(this.getLogMessage(this.type.error, reason))
   }
 
   requireParams (functionName, ...params) {

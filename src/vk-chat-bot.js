@@ -59,8 +59,7 @@ class ChatBot {
 
     var server = app.listen(port, (err) => {
       if (err) {
-        log.log(log.type.error, 'Error: ' + err)
-        log.terminate()
+        log.error('Error: ' + err)
       }
 
       log.log(log.type.information, `Server is listening on port ${port}.`)

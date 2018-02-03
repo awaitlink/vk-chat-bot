@@ -7,10 +7,7 @@ class APIBuffer {
     this.msg = message
     this.eventType = eventType
 
-    this.uid = this.obj.user_id
-
-    this.replyText = ''
-    this.attachment = []
+    this.clear()
   }
 
   setUid (uid) {
