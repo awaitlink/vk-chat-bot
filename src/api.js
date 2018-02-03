@@ -14,7 +14,9 @@ class API {
 
     this.queue = []
     if (!this.isInTestMode) {
-      setInterval(this.processQueue, 1000 / this.API_QUOTA)
+      setInterval(() => {
+        this.processQueue()
+      }, 1000 / this.API_QUOTA)
     }
   }
 
