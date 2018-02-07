@@ -7,14 +7,16 @@ const log = new (require('./log.js'))()
 class ChatBot {
   constructor (params) {
     log.requireParams('ChatBot.constructor', params)
+    log.requireParams('ChatBot.constructor', params.group_id, params.confirmation_token, params.secret, params.vk_api_key)
 
     this.groupId = params.group_id.toString()
     this.confirmationToken = params.confirmation_token.toString()
     this.secret = params.secret.toString()
 
-    this.behavior = new Behavior(params.vk_api_key.toString(), params.cmd_prefix.toString())
+    var vkApiKey = params.vk_api_key.toString()
+    var cmdPrefix = !params ? '' : params.cmd_prefix.toString()
 
-    log.requireParams('ChatBot.constructor', this.groupId, this.confirmationToken, this.secret, this.behavior)
+    this.behavior = new Behavior(vkApiKey, cmdPrefix)
   }
 
   cmd (command, a, b) { this.behavior.cmd(command, a, b) }
