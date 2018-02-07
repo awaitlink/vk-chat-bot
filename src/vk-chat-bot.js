@@ -14,7 +14,7 @@ class ChatBot {
     this.secret = params.secret.toString()
 
     var vkApiKey = params.vk_api_key.toString()
-    var cmdPrefix = !params ? '' : params.cmd_prefix.toString()
+    var cmdPrefix = !params.cmd_prefix ? '' : params.cmd_prefix.toString()
 
     this.behavior = new Behavior(vkApiKey, cmdPrefix)
   }
