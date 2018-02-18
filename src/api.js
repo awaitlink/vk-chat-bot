@@ -12,12 +12,12 @@ class API {
     this.API_VERSION = 5.73
     this.API_QUOTA = 20
 
-    if (!this.isInTestMode) {
-      this.checkPermissions()
-    }
-
     this.queue = []
     if (!this.isInTestMode) {
+      // Check permissions
+      this.checkPermissions()
+
+      // Start the queue processing
       setInterval(() => {
         this.processQueue()
       }, 1000 / this.API_QUOTA)
