@@ -27,7 +27,7 @@ class API {
   checkPermissions () {
     // Check if the token has the required permissions
     this.scheduleCall('groups.getTokenPermissions', {}, json => {
-      var permissions = json.response[0].permissions
+      var permissions = json.response.permissions
       var ok = false
       for (var permission of permissions) {
         if (permission.name === 'messages') {
