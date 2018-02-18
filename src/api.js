@@ -9,8 +9,12 @@ class API {
     this.vkApiKey = vkApiKey
     this.isInTestMode = vkApiKey === 'test'
 
-    this.API_VERSION = 5.69
+    this.API_VERSION = 5.73
     this.API_QUOTA = 20
+
+    if (!this.isInTestMode) {
+      this.checkPermissions()
+    }
 
     this.queue = []
     if (!this.isInTestMode) {
@@ -18,6 +22,26 @@ class API {
         this.processQueue()
       }, 1000 / this.API_QUOTA)
     }
+  }
+
+  checkPermissions () {
+    // Check if the token has the required permissions
+    this.scheduleCall('groups.getTokenPermissions', {}, json => {
+      var permissions = json.response[0].permissions
+      var ok = false
+      for (var permission of permissions) {
+        if (permission.name === 'messages') {
+          ok = true
+          break
+        }
+      }
+
+      if (!ok) {
+        log.log(log.type.error, 'Token permission "messages" is missing. Bot is unable to send messages.')
+      } else {
+        log.log(log.type.information, 'Token messages permission is present.')
+      }
+    })
   }
 
   processQueue () {

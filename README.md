@@ -5,7 +5,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)    
 <sub>GitHub [Releases](https://github.com/sudoio/vk-chat-bot/releases) contain only **major** and **minor** versions.</sub>
 
-> This is a chat bot library for [VK](https://vk.com) social network communities.    
+> This is a **chat bot library** for **VK** *communities*.    
 > See the [wiki](https://github.com/sudoio/vk-chat-bot/wiki) for description of all features.
 
 ## Features
