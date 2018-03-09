@@ -1,6 +1,4 @@
-/* eslint-env mocha */
-
-const assert = require('assert')
+import test from 'ava'
 
 const ChatBot = require('../src/vk-chat-bot.js')
 const log = new (require('../src/log.js'))()
@@ -13,155 +11,131 @@ var botParams = {
   cmd_prefix: '/'
 }
 
-describe('Log', () => {
-  describe('#error()', () => {
-    it('throws error', () => {
-      assert.throws(() => {
-        log.error('Test error')
-      }, Error)
-    })
-  })
-
-  describe('#requireFunction()', () => {
-    it('error when argument is not a function', () => {
-      assert.throws(() => {
-        log.requireFunction('not-a-function')
-      }, Error)
-    })
-
-    it('no error when argument is a function', () => {
-      assert.doesNotThrow(() => {
-        log.requireFunction($ => {})
-      }, Error)
-    })
-  })
-
-  describe('#requireParams()', () => {
-    it('error when at least one argument is invalid', () => {
-      assert.throws(() => {
-        log.requireParams('test', undefined, null)
-      }, Error)
-    })
-
-    it('no error when all arguments are valid', () => {
-      assert.doesNotThrow(() => {
-        log.requireParams('test', 'a', 'b')
-      }, Error)
-    })
+test('Log#error() throws error', t => {
+  t.throws(() => {
+    log.error('Test error')
   })
 })
 
-describe('ChatBot', () => {
-  describe('#constructor()', () => {
-    it('error when missing required params', () => {
-      assert.throws(() => {
-        /* eslint-disable no-new */
-        new ChatBot({
-          group_id: 'test',
-          cmd_prefix: 'test'
-        })
-        /* eslint-enable no-new */
-      }, Error)
-    })
-
-    it('no error when everything\'s right', () => {
-      assert.doesNotThrow(() => {
-        /* eslint-disable no-new */
-        new ChatBot(botParams)
-        /* eslint-enable no-new */
-      }, Error)
-    })
-  })
-
-  describe('#start()', () => {
-    it('error when no port specified', () => {
-      assert.throws(() => {
-        var bot = new ChatBot(botParams)
-        bot.start()
-      }, Error)
-    })
-
-    it('no error when everything\'s right', () => {
-      assert.doesNotThrow(() => {
-        var bot = new ChatBot(botParams)
-        bot.start(12345)
-      }, Error)
-    })
+test('Log#requireFunction() error when argument is not a function', t => {
+  t.throws(() => {
+    log.requireFunction('not-a-function')
   })
 })
 
-describe('Behavior', () => {
-  describe('#on()', () => {
-    it('error when event name is wrong', () => {
-      assert.throws(() => {
-        var bot = new ChatBot(botParams)
-        bot.on('', () => {})
-      }, Error)
-    })
-
-    it('error when missing parameters', () => {
-      assert.throws(() => {
-        var bot = new ChatBot(botParams)
-        bot.on('no_match')
-      }, Error)
-    })
-
-    it('no error when everything\'s right', () => {
-      assert.doesNotThrow(() => {
-        var bot = new ChatBot(botParams)
-        bot.on('no_match', ($) => {})
-      }, Error)
-    })
+test('Log#requireFunction() no error when argument is a function', t => {
+  t.notThrows(() => {
+    log.requireFunction($ => {})
   })
+})
 
-  describe('#cmd()', () => {
-    it('error missing parameters', () => {
-      assert.throws(() => {
-        var bot = new ChatBot(botParams)
-        bot.cmd('test')
-      }, Error)
-    })
-
-    it('no error when everything\'s right (3 params)', () => {
-      assert.doesNotThrow(() => {
-        var bot = new ChatBot(botParams)
-        bot.cmd('test', 'sure thing tests something', ($) => {})
-      }, Error)
-    })
-
-    it('no error when everything\'s right (2 params)', () => {
-      assert.doesNotThrow(() => {
-        var bot = new ChatBot(botParams)
-        bot.cmd('test', ($) => {})
-      }, Error)
-    })
+test('Log#requireParams() error when at least one argument is invalid', t => {
+  t.throws(() => {
+    log.requireParams('test', undefined, null)
   })
+})
 
-  describe('#regex()', () => {
-    it('error when missing parameters', () => {
-      assert.throws(() => {
-        var bot = new ChatBot(botParams)
-        bot.regex('.*')
-      }, Error)
-    })
-
-    it('no error when everything\'s right', () => {
-      assert.doesNotThrow(() => {
-        var bot = new ChatBot(botParams)
-        bot.regex('.*', ($) => {})
-      }, Error)
-    })
+test('Log#requireParams() no error when all arguments are valid', t => {
+  t.notThrows(() => {
+    log.requireParams('test', 'a', 'b')
   })
+})
 
-  describe('#help()', () => {
-    it('should return a proper help message', () => {
-      var bot = new ChatBot(botParams)
-
-      bot.cmd('test', 'sure thing tests something', ($) => {})
-      bot.cmd('help', 'shows the help message', ($) => {})
-
-      var message = '\n/test - sure thing tests something\n/help - shows the help message\n'
-      assert.equal(bot.help(), message)
+test('ChatBot#constructor() error when missing required params', t => {
+  t.throws(() => {
+    /* eslint-disable no-new */
+    new ChatBot({
+      group_id: 'test',
+      cmd_prefix: 'test'
     })
+    /* eslint-enable no-new */
   })
+})
+
+test('ChatBot#constructor() no error when everything\'s right', t => {
+  t.notThrows(() => {
+    /* eslint-disable no-new */
+    new ChatBot(botParams)
+    /* eslint-enable no-new */
+  })
+})
+
+test('ChatBot#start() error when no port specified', t => {
+  t.throws(() => {
+    var bot = new ChatBot(botParams)
+    bot.start()
+  })
+})
+
+test('ChatBot#start() no error when everything\'s right', t => {
+  t.notThrows(() => {
+    var bot = new ChatBot(botParams)
+    bot.start(12345)
+  })
+})
+
+test('Behavior#on() error when event name is wrong', t => {
+  t.throws(() => {
+    var bot = new ChatBot(botParams)
+    bot.on('', () => {})
+  })
+})
+
+test('Behavior#on() error when missing parameters', t => {
+  t.throws(() => {
+    var bot = new ChatBot(botParams)
+    bot.on('no_match')
+  })
+})
+
+test('Behavior#on() no error when everything\'s right', t => {
+  t.notThrows(() => {
+    var bot = new ChatBot(botParams)
+    bot.on('no_match', ($) => {})
+  })
+})
+
+test('Behavior#cmd() error missing parameters', t => {
+  t.throws(() => {
+    var bot = new ChatBot(botParams)
+    bot.cmd('test')
+  })
+})
+
+test('Behavior#cmd() no error when everything\'s right (3 params)', t => {
+  t.notThrows(() => {
+    var bot = new ChatBot(botParams)
+    bot.cmd('test', 'sure thing tests something', ($) => {})
+  })
+})
+
+test('Behavior#cmd() no error when everything\'s right (2 params)', t => {
+  t.notThrows(() => {
+    var bot = new ChatBot(botParams)
+    bot.cmd('test', ($) => {})
+  })
+})
+
+test('Behavior#regex() error when missing parameters', t => {
+  t.throws(() => {
+    var bot = new ChatBot(botParams)
+    bot.regex('.*')
+  })
+})
+
+test('Behavior#regex() no error when everything\'s right', t => {
+  t.notThrows(() => {
+    var bot = new ChatBot(botParams)
+    bot.regex('.*', ($) => {})
+  })
+})
+
+test('Behavior#help() should return a proper help message', t => {
+  var bot = new ChatBot(botParams)
+
+  bot.cmd('test', 'sure thing tests something', ($) => {})
+  bot.cmd('help', 'shows the help message', ($) => {})
+
+  var message = '\n/test - sure thing tests something\n/help - shows the help message\n'
+  t.is(bot.help(), message)
 })
