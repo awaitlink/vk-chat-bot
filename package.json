@@ -1,12 +1,12 @@
 {
   "name": "vk-chat-bot",
-  "version": "5.4.4",
+  "version": "5.4.5",
   "description": "A library to easily create chat bots for VK communities (uses Callback API).",
   "main": "src/vk-chat-bot.js",
   "scripts": {
     "test": "standard --verbose | snazzy && ava"
   },
-  "author": "sudoio",
+  "author": "u32i64",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sudoio/vk-chat-bot.git"
+    "url": "https://github.com/u32i64/vk-chat-bot.git"
   },
   "keywords": [
     "vk",
