@@ -8,7 +8,7 @@ class API {
     this.vkApiKey = vkApiKey
     this.isInTestMode = vkApiKey === 'test'
 
-    this.API_VERSION = 5.80
+    this.API_VERSION = '5.80'
     this.API_QUOTA = 20
 
     this.queue = []
