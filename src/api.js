@@ -36,9 +36,9 @@ class API {
       }
 
       if (!ok) {
-        log.log(log.type.error, 'Token permission "messages" is missing. Bot is unable to send messages.')
+        log.log(log.type.error, 'Token permission "messages" is missing. Bot will be unable to send any messages.')
       } else {
-        log.log(log.type.information, 'Token messages permission is present.')
+        log.log(log.type.information, 'Token permission "messages" is present.')
       }
     })
   }

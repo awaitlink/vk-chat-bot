@@ -42,7 +42,7 @@ class APIBuffer {
     this.replyText = ''
     this.attachment = []
 
-    if (eventType == 'message_allow') {
+    if (this.eventType === 'message_allow') {
       this.pid = this.obj.user_id
     } else {
       this.pid = this.obj.peer_id
