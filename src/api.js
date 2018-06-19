@@ -66,23 +66,21 @@ class API {
 
   call (method, params) {
     method = encodeURIComponent(method)
-    var url = `https://api.vk.com/method/${method}?access_token=${this.vkApiKey}&v=${this.API_VERSION}`
-
-    Object.keys(params).map(e => {
-      var name = encodeURIComponent(e)
-      var value = encodeURIComponent(params[e])
-
-      if (!value) value = ''
-
-      url += `&${name}=${value}`
-    })
+    var url = `https://api.vk.com/method/${method}`
 
     var options = {
       uri: url,
-      json: true
+      json: true,
+      qs: {
+        access_token: this.vkApiKey,
+        v: this.API_VERSION
+      }
     }
 
+    Object.keys(params).map(e => { options.qs[e] = params[e] })
+
     var promise = request(options)
+
     promise.catch((err) => {
       log.log(log.type.error, `Error occured when calling ${method}: ${err}`)
     })
