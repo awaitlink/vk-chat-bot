@@ -12,7 +12,7 @@ class Behavior {
     this.commandHandlers = []
     this.regexHandlers = []
     this.eventHandlers = []
-    this.possibleEvents = ['message_allow', 'message_deny', 'message_edit', 'message_reply', 'no_match']
+    this.possibleEvents = ['message_allow', 'message_deny', 'message_edit', 'message_reply', 'message_typing_state', 'no_match']
   }
 
   // On exact command with prefix
