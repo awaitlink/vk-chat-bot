@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "5.4.5",
+  "version": "6.0.0",
   "description": "A library to easily create chat bots for VK communities (uses Callback API).",
   "main": "src/vk-chat-bot.js",
   "scripts": {
@@ -9,13 +9,13 @@
   "author": "u32i64",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "request": "^2.85.0",
+    "request": "^2.87.0",
     "request-promise": "^4.2.2"
   },
   "devDependencies": {
-    "ava": "^1.0.0-beta.4",
+    "ava": "^1.0.0-beta.6",
     "snazzy": "^7.1.1",
     "standard": "^10.0.3"
   },
@@ -25,9 +25,12 @@
   },
   "keywords": [
     "vk",
-    "VK",
     "chat",
     "bot",
-    "api"
+    "api",
+    "callback",
+    "message",
+    "group",
+    "conversation"
   ]
 }

@@ -10,8 +10,8 @@ class APIBuffer {
     this.clear()
   }
 
-  setUid (uid) {
-    this.uid = uid
+  setPid (pid) {
+    this.pid = pid
   }
 
   text (txt) {
@@ -25,23 +25,23 @@ class APIBuffer {
 
   send () {
     if (this.eventType === 'message_deny') {
-      log.log(log.type.information, `No message was sent to user ${this.uid} ("message_deny" event)`)
+      log.log(log.type.information, `No message was sent to peer ${this.pid} ("message_deny" event)`)
       return
     }
 
     if (this.replyText === '' && this.attachment === []) {
-      log.log(log.type.information, `No message was sent to user ${this.uid} (text or attachment is required)`)
+      log.log(log.type.information, `No message was sent to peer ${this.pid} (text or attachment is required)`)
       return
     }
 
     var attachmentList = this.attachment.join(',')
-    this.api.send(this.uid, this.replyText, attachmentList)
+    this.api.send(this.pid, this.replyText, attachmentList)
   }
 
   clear () {
     this.replyText = ''
     this.attachment = []
-    this.uid = this.obj.user_id
+    this.pid = this.obj.peer_id
   }
 }
 

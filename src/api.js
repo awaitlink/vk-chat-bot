@@ -1,5 +1,4 @@
 const request = require('request-promise')
-
 const log = new (require('./log.js'))()
 
 class API {
@@ -9,7 +8,7 @@ class API {
     this.vkApiKey = vkApiKey
     this.isInTestMode = vkApiKey === 'test'
 
-    this.API_VERSION = 5.73
+    this.API_VERSION = 5.80
     this.API_QUOTA = 20
 
     this.queue = []
@@ -91,15 +90,15 @@ class API {
     return promise
   }
 
-  send (uid, msg, attachment) {
+  send (pid, msg, attachment) {
     var params = {
-      user_id: uid,
+      peer_id: pid,
       message: msg,
       attachment: attachment
     }
 
     this.scheduleCall('messages.send', params, (json) => {
-      log.log(log.type.response, `Sent a message to user ${uid}.`)
+      log.log(log.type.response, `Sent a message to peer ${pid}.`)
     })
   }
 }

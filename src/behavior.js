@@ -65,11 +65,11 @@ class Behavior {
   // Parse Callback API's message
   parseRequest (body) {
     var obj = body.object
-    var uid = obj.user_id
+    var pid = obj.peer_id
     var type = body.type
 
     if (type === 'message_new') {
-      log.log(log.type.request, 'New message from user: ' + uid)
+      log.log(log.type.request, 'New message in peer: ' + pid)
       this.handleMessage(obj)
     } else {
       log.log(log.type.request, 'Received event: ' + type)
@@ -83,7 +83,7 @@ class Behavior {
   }
 
   handleWithCommand (obj) {
-    var msg = obj.body
+    var msg = obj.text
 
     // See if there is a matching command
     for (var i = 0; i < this.commandHandlers.length; i++) {
@@ -106,7 +106,7 @@ class Behavior {
   }
 
   handleWithRegex (obj) {
-    var msg = obj.body
+    var msg = obj.text
 
     // Try to use a regex handler
     for (var i = 0; i < this.regexHandlers.length; i++) {
@@ -126,7 +126,7 @@ class Behavior {
 
   noMatchFound (obj) {
     // Call the no_match event
-    log.log(log.type.information, "Don't know how to respond to: \"" + obj.body + "\"; calling 'no_match' event")
+    log.log(log.type.information, "Don't know how to respond to: \"" + obj.text + "\"; calling 'no_match' event")
     this.handleEvent('no_match', obj)
   }
 
@@ -140,7 +140,7 @@ class Behavior {
     for (var i = 0; i < this.eventHandlers.length; i++) {
       var eventHandler = this.eventHandlers[i]
       if (eventHandler.event === e) {
-        var $ = new APIBuffer(this.api, e, obj, obj.body)
+        var $ = new APIBuffer(this.api, e, obj, obj.text)
         eventHandler.callback($)
         $.send()
 
