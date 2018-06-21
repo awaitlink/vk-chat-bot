@@ -44,6 +44,8 @@ class APIBuffer {
 
     if (this.eventType === 'message_allow') {
       this.pid = this.obj.user_id
+    } else if (this.eventType === 'message_typing_state') {
+      this.pid = this.obj.from_id
     } else {
       this.pid = this.obj.peer_id
     }
