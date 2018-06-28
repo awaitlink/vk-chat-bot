@@ -76,7 +76,7 @@ class API {
       uri: url,
       json: true,
       qs: {
-        access_token: this.vkApiKey,
+        access_token: this.vkToken,
         v: this.API_VERSION
       }
     }
