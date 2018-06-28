@@ -1,4 +1,4 @@
-var colors = require('colors');
+require('colors')
 
 class Log {
   constructor () {
@@ -11,18 +11,18 @@ class Log {
   }
 
   log (type, text) {
-    var text = `[${type}] ${text}`
+    var message = `[${type}] ${text}`
 
     switch (type) {
       case this.type.information:
-        text = text.green
+        message = message.green
         break
       case this.type.error:
-        text = text.red
+        message = message.red
         break
     }
 
-    console.log(text)
+    console.log(message)
   }
 
   error (reason) {
