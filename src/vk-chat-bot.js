@@ -6,33 +6,36 @@ const log = new (require('./log.js'))()
 
 class ChatBot {
   constructor (params) {
-    log.requireParams('ChatBot.constructor', params)
-    log.requireParams('ChatBot.constructor', params.group_id, params.confirmation_token, params.secret, params.vk_api_key)
+    log.requireParam('ChatBot.constructor', params, 'parameters for the bot')
+    log.requireParam('ChatBot.constructor', params.vk_token, 'VK API token')
+    log.requireParam('ChatBot.constructor', params.confirmation_token, 'confirmation token (from Callback API settings)')
+    log.requireParam('ChatBot.constructor', params.group_id, 'group id')
+    log.requireParam('ChatBot.constructor', params.secret, 'secret key (from Callback API settings)')
 
     this.groupId = params.group_id.toString()
     this.confirmationToken = params.confirmation_token.toString()
     this.secret = params.secret.toString()
 
-    var vkApiKey = params.vk_api_key.toString()
+    var vkToken = params.vk_token.toString()
     var cmdPrefix = !params.cmd_prefix ? '' : params.cmd_prefix.toString()
 
-    this.behavior = new Behavior(vkApiKey, cmdPrefix)
+    this.behavior = new Behavior(vkToken, cmdPrefix)
   }
 
-  cmd (command, a, b) { this.behavior.cmd(command, a, b) }
+  cmd (command, callback, description) { this.behavior.cmd(command, callback, description) }
   regex (regex, callback) { this.behavior.regex(regex, callback) }
   on (e, callback) { this.behavior.on(e, callback) }
 
   help () { return this.behavior.help() }
 
   start (port) {
-    log.requireParams('ChatBot.start', port)
+    log.requireParam('ChatBot.start', port, 'port')
 
     app.use(bodyParser.json())
 
     app.get('/', (req, res) => {
       res.status(400).send('Only POST allowed.')
-      log.log(log.type.request, 'GET request.')
+      log.log(log.type.request, 'GET request received.')
     })
 
     app.post('/', (req, res) => {
@@ -61,7 +64,7 @@ class ChatBot {
 
     var server = app.listen(port, (err) => {
       if (err) {
-        log.error('Error: ' + err)
+        log.error('Error occured while starting the server: ' + err)
       }
 
       log.log(log.type.information, `Server is listening on port ${port}.`)

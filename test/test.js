@@ -4,7 +4,7 @@ const ChatBot = require('../src/vk-chat-bot.js')
 const log = new (require('../src/log.js'))()
 
 var botParams = {
-  vk_api_key: 'test',
+  vk_token: 'test',
   confirmation_token: 'test',
   group_id: 'test',
   secret: 'test',
@@ -31,13 +31,13 @@ test('Log#requireFunction() no error when argument is a function', t => {
 
 test('Log#requireParams() error when at least one argument is invalid', t => {
   t.throws(() => {
-    log.requireParams('test', undefined, null)
+    log.requireParam('test', undefined, 'something')
   })
 })
 
 test('Log#requireParams() no error when all arguments are valid', t => {
   t.notThrows(() => {
-    log.requireParams('test', 'a', 'b')
+    log.requireParam('test', 'thing', 'something')
   })
 })
 
@@ -91,7 +91,7 @@ test('Behavior#on() error when missing parameters', t => {
 test('Behavior#on() no error when everything\'s right', t => {
   t.notThrows(() => {
     var bot = new ChatBot(botParams)
-    bot.on('no_match', ($) => {})
+    bot.on('no_match', $ => {})
   })
 })
 
@@ -105,36 +105,36 @@ test('Behavior#cmd() error missing parameters', t => {
 test('Behavior#cmd() no error when everything\'s right (3 params)', t => {
   t.notThrows(() => {
     var bot = new ChatBot(botParams)
-    bot.cmd('test', 'sure thing tests something', ($) => {})
+    bot.cmd('test', $ => {}, 'sure thing tests something')
   })
 })
 
 test('Behavior#cmd() no error when everything\'s right (2 params)', t => {
   t.notThrows(() => {
     var bot = new ChatBot(botParams)
-    bot.cmd('test', ($) => {})
+    bot.cmd('test', $ => {})
   })
 })
 
 test('Behavior#regex() error when missing parameters', t => {
   t.throws(() => {
     var bot = new ChatBot(botParams)
-    bot.regex('.*')
+    bot.regex(/.*/)
   })
 })
 
 test('Behavior#regex() no error when everything\'s right', t => {
   t.notThrows(() => {
     var bot = new ChatBot(botParams)
-    bot.regex('.*', ($) => {})
+    bot.regex(/.*/, $ => {})
   })
 })
 
 test('Behavior#help() should return a proper help message', t => {
   var bot = new ChatBot(botParams)
 
-  bot.cmd('test', 'sure thing tests something', ($) => {})
-  bot.cmd('help', 'shows the help message', ($) => {})
+  bot.cmd('test', $ => {}, 'sure thing tests something')
+  bot.cmd('help', $ => {}, 'shows the help message')
 
   var message = '\n/test - sure thing tests something\n/help - shows the help message\n'
   t.is(bot.help(), message)

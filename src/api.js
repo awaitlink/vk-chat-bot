@@ -2,11 +2,11 @@ const request = require('request-promise')
 const log = new (require('./log.js'))()
 
 class API {
-  constructor (vkApiKey) {
-    log.requireParams('API.constructor', vkApiKey)
+  constructor (vkToken) {
+    log.requireParam('API.constructor', vkToken, 'VK API token')
 
-    this.vkApiKey = vkApiKey
-    this.isInTestMode = vkApiKey === 'test'
+    this.vkToken = vkToken
+    this.isInTestMode = vkToken === 'test'
 
     this.API_VERSION = '5.80'
     this.API_QUOTA = 20
@@ -26,6 +26,10 @@ class API {
   checkPermissions () {
     // Check if the token has the required permissions
     this.scheduleCall('groups.getTokenPermissions', {}, json => {
+      if (!json.response) {
+        log.error('While checking token permission "messages", an error occured.\nThis is likely caused by an invalid VK API token.')
+      }
+
       var permissions = json.response.permissions
       var ok = false
       for (var permission of permissions) {
@@ -36,7 +40,7 @@ class API {
       }
 
       if (!ok) {
-        log.log(log.type.error, 'Token permission "messages" is missing. Bot will be unable to send any messages.')
+        log.error('Token permission "messages" is missing. Bot will be unable to send any messages.')
       } else {
         log.log(log.type.information, 'Token permission "messages" is present.')
       }
@@ -82,7 +86,7 @@ class API {
     var promise = request(options)
 
     promise.catch((err) => {
-      log.log(log.type.error, `Error occured when calling ${method}: ${err}`)
+      log.error(`Error occured when calling ${method}: ${err}`)
     })
 
     return promise

@@ -3,8 +3,8 @@ const API = require('./api.js')
 const APIBuffer = require('./api_buffer.js')
 
 class Behavior {
-  constructor (vkApiKey, cmdPrefix) {
-    this.api = new API(vkApiKey)
+  constructor (vkToken, cmdPrefix) {
+    this.api = new API(vkToken)
     this.cmdPrefix = cmdPrefix
 
     this.isInTestMode = this.api.isInTestMode
@@ -16,15 +16,12 @@ class Behavior {
   }
 
   // On exact command with prefix
-  cmd (command, a, b) {
-    log.requireParams('Behavior.cmd', command, a)
+  cmd (command, callback, description) {
+    log.requireParam('Behavior.cmd', command, 'command')
+    log.requireParam('Behavior.cmd', callback, 'callback')
 
-    var description = a
-    var callback = b
-    if (!b) {
-      // We have only command and callback
-      description = null
-      callback = a
+    if (!description) {
+      description = ''
     }
 
     log.requireFunction(callback)
@@ -38,7 +35,9 @@ class Behavior {
 
   // On matching regex
   regex (regex, callback) {
-    log.requireParams('Behavior.regex', regex, callback)
+    log.requireParam('Behavior.regex', regex, 'regular expression')
+    log.requireParam('Behavior.regex', callback, 'callback')
+
     log.requireFunction(callback)
 
     this.regexHandlers.push({
@@ -49,7 +48,9 @@ class Behavior {
 
   // For special events
   on (e, callback) {
-    log.requireParams('Behavior.on', e, callback)
+    log.requireParam('Behavior.on', e, 'event name')
+    log.requireParam('Behavior.on', callback, 'callback')
+
     log.requireFunction(callback)
 
     if (!this.possibleEvents.includes(e)) {
@@ -133,7 +134,7 @@ class Behavior {
   // Handle a special event
   handleEvent (e, obj) {
     if (!this.possibleEvents.includes(e)) {
-      log.log(log.type.error, 'Received an unsupported event type: ' + e)
+      log.error('Received an unsupported event type: ' + e)
       return
     }
 

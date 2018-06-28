@@ -1,3 +1,5 @@
+var colors = require('colors');
+
 class Log {
   constructor () {
     this.type = {
@@ -8,35 +10,47 @@ class Log {
     }
   }
 
-  getLogMessage (type, text) {
-    return `[${type}] ${text}`
-  }
-
   log (type, text) {
-    console.log(this.getLogMessage(type, text))
+    var text = `[${type}] ${text}`
+
+    switch (type) {
+      case this.type.information:
+        text = text.green
+        break
+      case this.type.error:
+        text = text.red
+        break
+    }
+
+    console.log(text)
   }
 
   error (reason) {
-    throw new Error(this.getLogMessage(this.type.error, reason))
+    var note = `[⋅] An error occured. The messages below may contain
+[⋅] useful information about the problem.
+[⋅] If you believe this is vk-chat-bot's fault,
+[⋅] please report the issue at <https://github.com/u32i64/vk-chat-bot/issues>.`.inverse
+
+    console.log(`\n\n${note}\n\n`)
+
+    throw new Error(`[${this.type.error}] ${reason}`.red)
+
+    // process.exitCode = 1
   }
 
-  requireParams (functionName, ...params) {
-    var i = 1
-    for (let param of params) {
-      if (!param) {
-        throw new Error(this.getLogMessage(
-          this.type.error,
-          `Bad parameter #${i} for function ${functionName}(): '${param}'.`
-        ))
+  requireParam (functionName, param, name) {
+    if (!param) {
+      if (name) {
+        this.error(`In function '${functionName}': expected: '${name}', got: '${param}'.`)
+      } else {
+        this.error(`Bad parameter for function '${functionName}': '${param}'.`)
       }
-
-      i++
     }
   }
 
   requireFunction (param) {
     if (typeof param !== 'function') {
-      throw new Error(this.getLogMessage(this.type.error, `Callback function you specified is not a function.`))
+      this.error(`Callback function that you specified is not a function.`)
     }
   }
 }

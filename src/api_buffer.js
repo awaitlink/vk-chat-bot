@@ -19,7 +19,10 @@ class APIBuffer {
   }
 
   attach (type, ownerId, resId) {
-    log.requireParams('APIBuffer.attach', type, ownerId, resId)
+    log.requireParam('APIBuffer.attach', type, 'attachment type')
+    log.requireParam('APIBuffer.attach', ownerId, 'owner id')
+    log.requireParam('APIBuffer.attach', resId, 'resource id')
+
     this.attachment.push(`${type}${ownerId}_${resId}`)
   }
 

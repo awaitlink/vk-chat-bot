@@ -46,7 +46,7 @@ var bot = new ChatBot(params)
 ###### 2. Behavior setup
 
 See [Setting behavior](https://github.com/u32i64/vk-chat-bot/wiki/Chat-Bot#setting-behavior) wiki to learn more about behavior functions.   
-Here's an example:
+Here's some examples:
 ```js
 bot.on('message_allow', $ => {
   $.text('Hello, thanks for allowing us to send you messages.')
@@ -61,14 +61,14 @@ bot.on('no_match', $ => {
 ```
 ```js
 // Searches for cmd_prefix + 'help', e.g. "/help"
-bot.cmd('help', 'shows the help message', $ => {
+bot.cmd('help', $ => {
   // bot.help() returns the help message
   $.text('Test Bot v1.0' + bot.help())
 
   // Attach an image from
   // https://vk.com/team?z=photo6492_45624077
   $.attach('photo', 6492, 456240778)
-})
+}, 'shows the help message')
 ```
 ```js
 // Use case-insensitive regex to find words "hi", "hello" or "hey"
