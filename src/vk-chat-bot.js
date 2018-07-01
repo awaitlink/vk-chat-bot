@@ -17,7 +17,7 @@ class ChatBot {
     this.secret = params.secret.toString()
 
     var vkToken = params.vk_token.toString()
-    var cmdPrefix = !params.cmd_prefix ? '' : params.cmd_prefix.toString()
+    var cmdPrefix = params.cmd_prefix ? params.cmd_prefix.toString() : ''
 
     this.behavior = new Behavior(vkToken, cmdPrefix)
   }
@@ -31,11 +31,24 @@ class ChatBot {
   start (port) {
     log.requireParam('ChatBot.start', port, 'port')
 
+    this.behavior.lock()
+
+    var eventCount = this.behavior.eventHandlers.length
+    var commandCount = this.behavior.commandHandlers.length
+    var regexCount = this.behavior.regexHandlers.length
+    log.info(`Using ${eventCount} event, ${commandCount} command, and ${regexCount} regex handlers`)
+
+    if ((eventCount + commandCount + regexCount) === 0) {
+      log.warn(`The bot won't do anything without handlers!`)
+    }
+
+    log.info(`Preparing and starting the server...`)
+
     app.use(bodyParser.json())
 
     app.get('/', (req, res) => {
       res.status(400).send('Only POST allowed.')
-      log.log(log.type.request, 'GET request received.')
+      log.warn('GET request received.')
     })
 
     app.post('/', (req, res) => {
@@ -43,19 +56,19 @@ class ChatBot {
 
       if (body.secret !== this.secret) {
         res.status(400).send('Invalid secret key.')
-        log.log(log.type.request, 'Request with an invalid secret key.')
+        log.warn('Request with an invalid secret key.')
         return
       }
 
       if (body.group_id.toString() !== this.groupId) {
         res.status(400).send('Invalid group id.')
-        log.log(log.type.request, 'Request with an invalid group id.')
+        log.warn('Request with an invalid group id.')
         return
       }
 
       if (body.type === 'confirmation') {
         res.status(200).send(this.confirmationToken)
-        log.log(log.type.response, 'Sent confirmation token.')
+        log.res('Sent confirmation token.')
       } else {
         res.status(200).send('ok')
         this.behavior.parseRequest(body)
@@ -67,11 +80,11 @@ class ChatBot {
         log.error('Error occured while starting the server: ' + err)
       }
 
-      log.log(log.type.information, `Server is listening on port ${port}.`)
+      log.info(`Server is listening on port ${port}.`)
 
       // Quit in test mode
       if (this.behavior.isInTestMode) {
-        log.log(log.type.information, `Stopping the server because in test mode.`)
+        log.info(`Stopping the server because in test mode.`)
         server.close()
       }
     })

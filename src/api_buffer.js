@@ -7,7 +7,13 @@ class APIBuffer {
     this.msg = message
     this.eventType = eventType
 
+    this.autoSend = true
+
     this.clear()
+  }
+
+  noAutoSend () {
+    this.autoSend = false
   }
 
   setPid (pid) {
@@ -18,22 +24,26 @@ class APIBuffer {
     this.replyText = txt
   }
 
-  attach (type, ownerId, resId) {
+  attach (type, ownerId, resId, accessKey) {
     log.requireParam('APIBuffer.attach', type, 'attachment type')
     log.requireParam('APIBuffer.attach', ownerId, 'owner id')
     log.requireParam('APIBuffer.attach', resId, 'resource id')
 
-    this.attachment.push(`${type}${ownerId}_${resId}`)
+    if (accessKey) {
+      this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`)
+    } else {
+      this.attachment.push(`${type}${ownerId}_${resId}`)
+    }
   }
 
   send () {
     if (this.eventType === 'message_deny') {
-      log.log(log.type.information, `No message was sent to peer ${this.pid} ("message_deny" event)`)
+      log.info(`No message was sent to peer ${this.pid} ("message_deny" event)`)
       return
     }
 
     if (this.replyText === '' && this.attachment === []) {
-      log.log(log.type.information, `No message was sent to peer ${this.pid} (text or attachment is required)`)
+      log.warn(`No message was sent to peer ${this.pid} (text or attachment is required)`)
       return
     }
 

@@ -19,7 +19,7 @@ class API {
       // Start the queue processing
       setInterval(() => {
         this.processQueue()
-      }, 1000 / this.API_QUOTA)
+      }, 1000)
     }
   }
 
@@ -27,7 +27,7 @@ class API {
     // Check if the token has the required permissions
     this.scheduleCall('groups.getTokenPermissions', {}, json => {
       if (!json.response) {
-        log.error('While checking token permission "messages", an error occured.\nThis is likely caused by an invalid VK API token.')
+        log.error('While checking token permission "messages", an error occured.\nThis may be caused by an invalid VK API token.')
       }
 
       var permissions = json.response.permissions
@@ -40,23 +40,29 @@ class API {
       }
 
       if (!ok) {
-        log.error('Token permission "messages" is missing. Bot will be unable to send any messages.')
+        log.warn('Token permission "messages" is missing. Bot will be unable to send any messages.')
       } else {
-        log.log(log.type.information, 'Token permission "messages" is present.')
+        log.info('Token permission "messages" is present.')
       }
     })
   }
 
   processQueue () {
-    if (this.queue && this.queue.length > 0) {
-      var e = this.queue.shift()
+    if (this.queue) {
+      for (var i = 1; i <= this.API_QUOTA; i++) {
+        if (this.queue.length === 0) {
+          break
+        }
 
-      this.call(e.method, e.params)
-        .then((json) => {
-          if (e.callback) {
-            e.callback(json)
-          }
-        })
+        var e = this.queue.shift()
+
+        this.call(e.method, e.params)
+          .then((json) => {
+            if (e.callback) {
+              e.callback(json)
+            }
+          })
+      }
     }
   }
 
@@ -100,7 +106,7 @@ class API {
     }
 
     this.scheduleCall('messages.send', params, (json) => {
-      log.log(log.type.response, `Sent a message to peer ${pid}.`)
+      log.res(`Sent a message to peer ${pid}.`)
     })
   }
 }

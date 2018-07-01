@@ -10,7 +10,7 @@
 
 ## Features
 - **Easy to use** - setting up behavior is simple - see [Behavior setup](#2-behavior-setup)
-- **Stable** - the library calls VK API not more then 20 times/second, so you don't exceed the quota
+- **Respects the quota** - the library calls VK API not more then 20 times/second, so you don't exceed the quota
 
 ## Usage
 #### Installation
@@ -46,11 +46,12 @@ var bot = new ChatBot(params)
 ###### 2. Behavior setup
 
 See [Setting behavior](https://github.com/u32i64/vk-chat-bot/wiki/Chat-Bot#setting-behavior) wiki to learn more about behavior functions.   
-Here's some examples:
+Here are some examples:
 ```js
 bot.on('message_allow', $ => {
   $.text('Hello, thanks for allowing us to send you messages.')
   // $.send() is added automatically
+  // if you want to prevent automatic sending in this handler, call $.noAutoSend()
 })
 ```
 ```js

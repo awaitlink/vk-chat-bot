@@ -4,9 +4,10 @@ class Log {
   constructor () {
     this.type = {
       information: 'i',
+      warning: '!',
       request: '>',
       response: '<',
-      error: '!'
+      error: '!!'
     }
   }
 
@@ -17,12 +18,23 @@ class Log {
       case this.type.information:
         message = message.green
         break
+      case this.type.warning:
+        message = message.yellow
+        break
       case this.type.error:
         message = message.red
-        break
+        throw new Error(message)
     }
 
     console.log(message)
+  }
+
+  info (info) {
+    this.log(this.type.information, info)
+  }
+
+  warn (info) {
+    this.log(this.type.warning, info)
   }
 
   error (reason) {
@@ -32,10 +44,17 @@ class Log {
 [⋅] please report the issue at <https://github.com/u32i64/vk-chat-bot/issues>.`.inverse
 
     console.log(`\n\n${note}\n\n`)
-
-    throw new Error(`[${this.type.error}] ${reason}`.red)
+    this.log(this.type.error, reason)
 
     // process.exitCode = 1
+  }
+
+  req (info) {
+    this.log(this.type.request, info)
+  }
+
+  res (info) {
+    this.log(this.type.response, info)
   }
 
   requireParam (functionName, param, name) {

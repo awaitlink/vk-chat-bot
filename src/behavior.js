@@ -9,14 +9,32 @@ class Behavior {
 
     this.isInTestMode = this.api.isInTestMode
 
+    this.locked = false
+
     this.commandHandlers = []
     this.regexHandlers = []
     this.eventHandlers = []
     this.possibleEvents = ['message_allow', 'message_deny', 'message_edit', 'message_reply', 'message_typing_state', 'no_match']
   }
 
+  lock () {
+    this.locked = true
+  }
+
+  isLocked () {
+    if (this.locked) {
+      log.warn('You tried to register a handler while the bot is running. This action was prevented for safety reasons.')
+    }
+
+    return this.locked
+  }
+
   // On exact command with prefix
   cmd (command, callback, description) {
+    if (this.isLocked()) {
+      return
+    }
+
     log.requireParam('Behavior.cmd', command, 'command')
     log.requireParam('Behavior.cmd', callback, 'callback')
 
@@ -35,6 +53,10 @@ class Behavior {
 
   // On matching regex
   regex (regex, callback) {
+    if (this.isLocked()) {
+      return
+    }
+
     log.requireParam('Behavior.regex', regex, 'regular expression')
     log.requireParam('Behavior.regex', callback, 'callback')
 
@@ -48,6 +70,10 @@ class Behavior {
 
   // For special events
   on (e, callback) {
+    if (this.isLocked()) {
+      return
+    }
+
     log.requireParam('Behavior.on', e, 'event name')
     log.requireParam('Behavior.on', callback, 'callback')
 
@@ -70,10 +96,10 @@ class Behavior {
     var type = body.type
 
     if (type === 'message_new') {
-      log.log(log.type.request, 'New message in peer: ' + pid)
+      log.req('New message in peer: ' + pid)
       this.handleMessage(obj)
     } else {
-      log.log(log.type.request, 'Received event: ' + type)
+      log.req('Received event: ' + type)
       this.handleEvent(type, obj)
     }
   }
@@ -97,7 +123,10 @@ class Behavior {
       if (cmdRegex.test(msg)) {
         var $ = new APIBuffer(this.api, 'message_new', obj, cleanMessage)
         cmdHandler.callback($)
-        $.send()
+
+        if ($.autoSend) {
+          $.send()
+        }
 
         return true
       }
@@ -116,7 +145,10 @@ class Behavior {
       if (regexHandler.regex.test(msg)) {
         var $ = new APIBuffer(this.api, 'message_new', obj, msg)
         regexHandler.callback($)
-        $.send()
+
+        if ($.autoSend) {
+          $.send()
+        }
 
         return true
       }
@@ -127,7 +159,7 @@ class Behavior {
 
   noMatchFound (obj) {
     // Call the no_match event
-    log.log(log.type.information, "Don't know how to respond to: \"" + obj.text + "\"; calling 'no_match' event")
+    log.warn("Don't know how to respond to: \"" + obj.text + "\"; calling 'no_match' event")
     this.handleEvent('no_match', obj)
   }
 
@@ -143,13 +175,16 @@ class Behavior {
       if (eventHandler.event === e) {
         var $ = new APIBuffer(this.api, e, obj, obj.text)
         eventHandler.callback($)
-        $.send()
+
+        if ($.autoSend) {
+          $.send()
+        }
 
         return
       }
     }
 
-    log.log(log.type.information, 'No handler found for event: ' + e)
+    log.warn('No handler found for event: ' + e)
   }
 
   help () {
