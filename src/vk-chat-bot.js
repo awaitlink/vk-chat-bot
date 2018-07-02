@@ -22,7 +22,11 @@ class ChatBot {
     this.behavior = new Behavior(vkToken, cmdPrefix)
   }
 
-  noEventWarnings () { this.behavior.noEventWarnings = true }
+  noEventWarnings () {
+    this.behavior.noEventWarnings = true
+    log.warn('Warnings about "no matching event ... handler found" were disabled')
+  }
+
   cmd (command, callback, description) { this.behavior.cmd(command, callback, description) }
   regex (regex, callback) { this.behavior.regex(regex, callback) }
   on (e, callback) { this.behavior.on(e, callback) }

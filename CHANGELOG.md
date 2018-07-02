@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
+## [8.3.1] - 2018-07-02
+### Changed
+- [`ChatBot#noEventWarnings`](https://github.com/u32i64/vk-chat-bot/wiki/Chat-Bot#noeventwarnings) function now warns that warnings are disabled (once)
+
 ## [8.3.0] - 2018-07-02
 ### Added
 - [`ChatBot#noEventWarnings`](https://github.com/u32i64/vk-chat-bot/wiki/Chat-Bot#noeventwarnings) function to suppress warnings about "no matching **event** ... handler found"
