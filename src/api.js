@@ -1,4 +1,4 @@
-const request = require('request-promise-native')
+const request = require('request-promise')
 const log = new (require('./log.js'))()
 
 class API {

@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-**Note:** Patch versions prior to 8.0.0 are not listed (I plan on adding them here too, but that won't be easy, since they're not documented anywhere except commit messages).
+**Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
+
+## [8.2.1] - 2018-07-02
+### Fixed
+- Revert to using bluebird promises
 
 ## [8.2.0] - 2018-07-02
 ### Changed
