@@ -53,21 +53,21 @@ class Stats {
   }
 
   print () {
-    var rx = this.rx.toString().black.bgGreen
-    var tx = this.tx.toString().black.bgCyan
+    var rx = this.rx.toString().green
+    var tx = this.tx.toString().cyan
 
     var mn = this.mn.toString().green
     var ma = this.ma.toString().green
-    var md = this.md.toString().green
+    var md = this.md.toString().red
     var me = this.me.toString().green
-    var mr = this.mr.toString().green
+    var mr = this.mr.toString().cyan
     var mts = this.mts.toString().green
 
     var nm = this.nm.toString().magenta
 
     var up = process.uptime().toString()
 
-    var message = `[up: ${up}s] rx: ${rx} tx: ${tx} evt: mn ${mn} ma ${ma} md ${md} me ${me} mr ${mr} mts ${mts} nm ${nm}`
+    var message = `[up:${up}s] rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn} edit:${me} reply:${mr} | no match ${nm}`
 
     console.log(message)
   }

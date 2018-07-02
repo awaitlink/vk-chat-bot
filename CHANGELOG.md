@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed (I plan on adding them here too, but that won't be easy, since they're not documented anywhere except commit messages).
 
+## [8.2.0] - 2018-07-02
+### Changed
+- Now using native promises instead of bluebird (`request-promise` -> `request-promise-native`)
+- In promises, emit warnings, not errors
+- Statistics formatting and colors
+
+### Fixed
+- Check if the message was actually sent, and if that is not the case, emit a warning
+
 ## [8.1.0] - 2018-07-02
 ### Changed
 - Now, instead of spamming the log like crazy, the bot will collect some stats and log them each **~10s** (see [Logging](https://github.com/u32i64/vk-chat-bot/wiki/Logging) wiki for more information).

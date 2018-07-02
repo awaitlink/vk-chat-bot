@@ -36,13 +36,13 @@ class ChatBot {
     var eventCount = this.behavior.eventHandlers.length
     var commandCount = this.behavior.commandHandlers.length
     var regexCount = this.behavior.regexHandlers.length
-    log.info(`Using ${eventCount} event, ${commandCount} command, and ${regexCount} regex handlers`)
+    log.info(`Using ${eventCount} event, ${commandCount} command, and ${regexCount} regex handlers.`)
 
     if ((eventCount + commandCount + regexCount) === 0) {
       log.warn(`The bot won't do anything without handlers!`)
     }
 
-    log.info(`Preparing and starting the server...`)
+    log.progress(`Preparing the server...`)
 
     app.use(bodyParser.json())
 
@@ -74,6 +74,8 @@ class ChatBot {
         this.behavior.parseRequest(body)
       }
     })
+
+    log.progress('Starting the server...')
 
     var server = app.listen(port, (err) => {
       if (err) {

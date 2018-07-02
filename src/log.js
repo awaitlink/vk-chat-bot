@@ -3,6 +3,7 @@ require('colors')
 class Log {
   constructor () {
     this.type = {
+      progress: ':',
       information: 'i',
       warning: '!',
       response: '<',
@@ -14,6 +15,9 @@ class Log {
     var message = `[${type}] ${text}`
 
     switch (type) {
+      case this.type.progress:
+        message = message.cyan
+        break
       case this.type.information:
         message = message.green
         break
@@ -30,6 +34,10 @@ class Log {
 
   info (info) {
     this.log(this.type.information, info)
+  }
+
+  progress (info) {
+    this.log(this.type.progress, info)
   }
 
   warn (info) {

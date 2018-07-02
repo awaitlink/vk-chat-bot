@@ -1,4 +1,4 @@
-const request = require('request-promise')
+const request = require('request-promise-native')
 const log = new (require('./log.js'))()
 
 class API {
@@ -95,7 +95,7 @@ class API {
     var promise = request(options)
 
     promise.catch((err) => {
-      log.error(`Error occured when calling ${method}: ${err}`)
+      log.warn(`Error occured when calling ${method}: ${err}`)
     })
 
     return promise
@@ -109,7 +109,15 @@ class API {
     }
 
     this.scheduleCall('messages.send', params, (json) => {
-      this.stats.sent()
+      if (json.response) {
+        this.stats.sent()
+      } else {
+        if (json.error) {
+          log.warn(`The message was not sent to peer ${pid} due to an API error: ${json.error.toString()}`)
+        } else {
+          log.warn(`The message was not sent to peer ${pid} due to an unknown API error.`)
+        }
+      }
     })
   }
 }
