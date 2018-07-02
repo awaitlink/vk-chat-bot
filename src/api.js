@@ -95,7 +95,7 @@ class API {
     var promise = request(options)
 
     promise.catch((err) => {
-      log.warn(`Error occured when calling ${method}: ${err}`)
+      log.warn(`Error occured while calling API method '${method}': ${err}`)
     })
 
     return promise
@@ -113,9 +113,12 @@ class API {
         this.stats.sent()
       } else {
         if (json.error) {
-          log.warn(`The message was not sent to peer ${pid} due to an API error: ${json.error.toString()}`)
+          var error_code = json.error.error_code
+          var error_msg = json.error.error_msg
+
+          log.warn(`A message was not sent to peer ${pid} due to an API error #${error_code}: ${error_msg}`)
         } else {
-          log.warn(`The message was not sent to peer ${pid} due to an unknown API error.`)
+          log.warn(`A message was not sent to peer ${pid} due to an unknown API error. The API responded with: ${json.toString()}`)
         }
       }
     })

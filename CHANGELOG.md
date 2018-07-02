@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
+## [8.3.2] - 2018-07-02
+### Added
+- Some package keywords
+
+### Changed
+- Show only error code and message when API error happens
+- Log the full JSON if it's neither a `response` nor an `error`
+- When no message is sent due to `message_deny` event, make a warning instead of information
+- The name of the main library file changed from `vk-chat-bot.js` to `main.js` (`package.json` changed accordingly)
+
+### Fixed
+- When receiving an unsupported event, do not produce an error, just make a warning (this is not fatal)
+
 ## [8.3.1] - 2018-07-02
 ### Changed
 - [`ChatBot#noEventWarnings`](https://github.com/u32i64/vk-chat-bot/wiki/Chat-Bot#noeventwarnings) function now warns that warnings are disabled (once)

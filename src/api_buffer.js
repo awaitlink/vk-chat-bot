@@ -38,7 +38,7 @@ class APIBuffer {
 
   send () {
     if (this.eventType === 'message_deny') {
-      log.info(`No message was sent to peer ${this.pid} ("message_deny" event)`)
+      log.warn(`No message was sent to peer ${this.pid} ("message_deny" event)`)
       return
     }
 

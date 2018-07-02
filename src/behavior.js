@@ -171,7 +171,7 @@ class Behavior {
   // Handle a special event
   handleEvent (e, obj) {
     if (!this.possibleEvents.includes(e)) {
-      log.error('Received an unsupported event type: ' + e)
+      log.warn('Received an unsupported event type: ' + e)
       return
     }
 
