@@ -3,10 +3,10 @@
 [![Downloads](https://img.shields.io/npm/dt/vk-chat-bot.svg?style=flat-square)](https://www.npmjs.com/package/vk-chat-bot)
 [![Travis build status](https://img.shields.io/travis/u32i64/vk-chat-bot/master.svg?style=flat-square&logo=travis)](https://travis-ci.org/u32i64/vk-chat-bot)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)    
-<sub>[CHANGELOG](https://github.com/u32i64/vk-chat-bot/blob/master/CHANGELOG.md)</sub>
 
-> This is a **chat bot library** for **VK** *communities*.    
-> See the [wiki](https://github.com/u32i64/vk-chat-bot/wiki) for description of all features.
+> This is a **chat bot library** for **VK** *communities* (*groups*).    
+> See the [wiki](https://github.com/u32i64/vk-chat-bot/wiki) for description of all features.    
+> Changelog is available [here](https://github.com/u32i64/vk-chat-bot/blob/master/CHANGELOG.md).
 
 ## Features
 - **Easy to use** - setting up behavior is simple - see [Behavior setup](#2-behavior-setup)
