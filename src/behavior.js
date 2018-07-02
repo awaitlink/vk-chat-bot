@@ -18,6 +18,8 @@ class Behavior {
     this.regexHandlers = []
     this.eventHandlers = []
     this.possibleEvents = ['message_allow', 'message_deny', 'message_edit', 'message_reply', 'message_typing_state', 'no_match']
+
+    this.noEventWarnings = false
   }
 
   lock () {
@@ -161,7 +163,7 @@ class Behavior {
 
   noMatchFound (obj) {
     // Call the no_match event
-    log.warn("Don't know how to respond to: \"" + obj.text + "\"; calling 'no_match' event")
+    log.warn(`Don't know how to respond to: '${obj.text.toString().replace(/\n/g, '\\n')}' - calling 'no_match' event`)
     this.stats.event('no_match')
     this.handleEvent('no_match', obj)
   }
@@ -187,7 +189,9 @@ class Behavior {
       }
     }
 
-    log.warn('No handler found for event: ' + e)
+    if (!this.noEventWarnings) {
+      log.warn('No handler found for event: ' + e)
+    }
   }
 
   help () {

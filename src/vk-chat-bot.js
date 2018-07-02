@@ -22,6 +22,7 @@ class ChatBot {
     this.behavior = new Behavior(vkToken, cmdPrefix)
   }
 
+  noEventWarnings () { this.behavior.noEventWarnings = true }
   cmd (command, callback, description) { this.behavior.cmd(command, callback, description) }
   regex (regex, callback) { this.behavior.regex(regex, callback) }
   on (e, callback) { this.behavior.on(e, callback) }
