@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
+## [8.2.2] - 2018-07-02
+### Changed
+- Improve token permission check error message
+
 ## [8.2.1] - 2018-07-02
 ### Fixed
 - Revert to using bluebird promises

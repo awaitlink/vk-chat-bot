@@ -30,7 +30,7 @@ class API {
     // Check if the token has the required permissions
     this.scheduleCall('groups.getTokenPermissions', {}, json => {
       if (!json.response) {
-        log.error('While checking token permission "messages", an error occured.\nThis may be caused by an invalid VK API token.')
+        log.error(`While checking token permission "messages", an error occured: ${json.error}`)
       }
 
       var permissions = json.response.permissions
