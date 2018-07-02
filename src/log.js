@@ -5,7 +5,6 @@ class Log {
     this.type = {
       information: 'i',
       warning: '!',
-      request: '>',
       response: '<',
       error: '!!'
     }
@@ -47,10 +46,6 @@ class Log {
     this.log(this.type.error, reason)
 
     // process.exitCode = 1
-  }
-
-  req (info) {
-    this.log(this.type.request, info)
   }
 
   res (info) {

@@ -2,11 +2,14 @@ const request = require('request-promise')
 const log = new (require('./log.js'))()
 
 class API {
-  constructor (vkToken) {
+  constructor (vkToken, stats) {
     log.requireParam('API.constructor', vkToken, 'VK API token')
+    log.requireParam('API.constructor', stats, 'statistics object')
 
     this.vkToken = vkToken
     this.isInTestMode = vkToken === 'test'
+
+    this.stats = stats
 
     this.API_VERSION = '5.80'
     this.API_QUOTA = 20
@@ -106,7 +109,7 @@ class API {
     }
 
     this.scheduleCall('messages.send', params, (json) => {
-      log.res(`Sent a message to peer ${pid}.`)
+      this.stats.sent()
     })
   }
 }

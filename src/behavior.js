@@ -1,10 +1,13 @@
 const log = new (require('./log.js'))()
 const API = require('./api.js')
 const APIBuffer = require('./api_buffer.js')
+const Stats = require('./stats.js')
 
 class Behavior {
   constructor (vkToken, cmdPrefix) {
-    this.api = new API(vkToken)
+    this.stats = new Stats()
+
+    this.api = new API(vkToken, this.stats)
     this.cmdPrefix = cmdPrefix
 
     this.isInTestMode = this.api.isInTestMode
@@ -92,14 +95,13 @@ class Behavior {
   // Parse Callback API's message
   parseRequest (body) {
     var obj = body.object
-    var pid = obj.peer_id
     var type = body.type
 
+    this.stats.event(type)
+
     if (type === 'message_new') {
-      log.req('New message in peer: ' + pid)
       this.handleMessage(obj)
     } else {
-      log.req('Received event: ' + type)
       this.handleEvent(type, obj)
     }
   }
@@ -160,6 +162,7 @@ class Behavior {
   noMatchFound (obj) {
     // Call the no_match event
     log.warn("Don't know how to respond to: \"" + obj.text + "\"; calling 'no_match' event")
+    this.stats.event('no_match')
     this.handleEvent('no_match', obj)
   }
 

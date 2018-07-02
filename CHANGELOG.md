@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed (I plan on adding them here too, but that won't be easy, since they're not documented anywhere except commit messages).
 
+## [8.1.0] - 2018-07-02
+### Changed
+- Now, instead of spamming the log like crazy, the bot will collect some stats and log them each **~10s** (see [Logging](https://github.com/u32i64/vk-chat-bot/wiki/Logging) wiki for more information).
+
 ## [8.0.0] - 2018-07-01
 ### Added
 - [`APIBuffer#noAutoSend`](https://github.com/u32i64/vk-chat-bot/wiki/API-Buffer#noautosend) function
