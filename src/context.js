@@ -1,6 +1,6 @@
 const log = new (require('./log.js'))()
 
-class APIBuffer {
+class Context {
   constructor (api, eventType, object, message) {
     this.api = api
     this.obj = object
@@ -25,9 +25,9 @@ class APIBuffer {
   }
 
   attach (type, ownerId, resId, accessKey) {
-    log.requireParam('APIBuffer.attach', type, 'attachment type')
-    log.requireParam('APIBuffer.attach', ownerId, 'owner id')
-    log.requireParam('APIBuffer.attach', resId, 'resource id')
+    log.requireParam('Context.attach', type, 'attachment type')
+    log.requireParam('Context.attach', ownerId, 'owner id')
+    log.requireParam('Context.attach', resId, 'resource id')
 
     if (accessKey) {
       this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`)
@@ -36,7 +36,7 @@ class APIBuffer {
     }
   }
 
-  send () {
+  async send () {
     if (this.eventType === 'message_deny') {
       log.warn(`No message was sent to peer ${this.pid} ("message_deny" event)`)
       return
@@ -48,7 +48,7 @@ class APIBuffer {
     }
 
     var attachmentList = this.attachment.join(',')
-    this.api.send(this.pid, this.replyText, attachmentList)
+    return this.api.send(this.pid, this.replyText, attachmentList)
   }
 
   clear () {
@@ -65,4 +65,4 @@ class APIBuffer {
   }
 }
 
-module.exports = APIBuffer
+module.exports = Context

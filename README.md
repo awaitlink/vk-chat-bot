@@ -33,7 +33,7 @@ Then, initialize your bot (see [Params object](https://github.com/u32i64/vk-chat
 ```js
 var params = {
   vk_api_key: 'your_vk_api_key_here',
-  confirmation_token: 'f123321',
+  confirmation_token: 'f123456',
   group_id: 1234567,
   secret: 's3r10us1y_s3cr3t_phr4s3',
 

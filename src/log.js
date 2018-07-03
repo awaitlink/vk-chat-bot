@@ -12,6 +12,10 @@ class Log {
   }
 
   log (type, text) {
+    if (text === '') {
+      return
+    }
+
     var message = `[${type}] ${text}`
 
     switch (type) {
@@ -41,16 +45,25 @@ class Log {
   }
 
   warn (info) {
+    if (info instanceof Error) {
+      info = info.message
+    }
+
     this.log(this.type.warning, info)
   }
 
   error (reason) {
+    if (reason instanceof Error) {
+      reason = reason.message
+    }
+
     var note = `[⋅] An error occured. The messages below may contain
 [⋅] useful information about the problem.
 [⋅] If you believe this is vk-chat-bot's fault,
 [⋅] please report the issue at <https://github.com/u32i64/vk-chat-bot/issues>.`.inverse
 
     console.log(`\n\n${note}\n\n`)
+
     this.log(this.type.error, reason)
 
     // process.exitCode = 1

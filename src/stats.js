@@ -14,6 +14,10 @@ class Stats {
 
     this.nm = 0 // no_match
 
+    this.previous = ''
+
+    this.print()
+
     setInterval(() => {
       this.print()
     }, 10000)
@@ -65,8 +69,15 @@ class Stats {
 
     var nm = this.nm.toString().magenta
 
-    var up = process.uptime().toString()
+    var hash = `${rx}|${tx}|${ma}/${md}|${mts}|${mn}|${me}|${mr}|${nm}`
 
+    if (hash === this.previous) {
+      return
+    } else {
+      this.previous = hash
+    }
+
+    var up = process.uptime().toString()
     var message = `[up:${up}s] rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn} edit:${me} reply:${mr} | no match ${nm}`
 
     console.log(message)

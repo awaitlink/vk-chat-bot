@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
+## [9.0.0] - 2018-07-03
+### Added
+- Log errors in handlers as warnings
+- `handler_error` event, which gets called if an error is thrown in a handler
+
+### Changed
+- Renamed `APIBuffer` to [`Context`](https://github.com/u32i64/vk-chat-bot/wiki/Context)
+- Use `async`/`await` in `API`, `Context` and `Behavior`. See the [wiki page for `API#scheduleCall`](https://github.com/u32i64/vk-chat-bot/wiki/API#schedulecall) to learn more about the new usage
+- [`API#scheduleCall`](https://github.com/u32i64/vk-chat-bot/wiki/API#schedulecall) now, instead of returning the full JSON, returns a `Promise`, which, if the call was completed successfully, resolves with `json.response`
+- No duplicate stats anymore. The bot will log stats only if they changed (not taking uptime into account)
+- Empty stats are printed right after Stats object initializes
+
+### Fixed
+- Check if the API call was successful now rejects only if `response` is `null` or `undefined`, because values like `0` or `false` are ok
+
 ## [8.3.2] - 2018-07-02
 ### Added
 - Some package keywords
