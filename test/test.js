@@ -1,6 +1,6 @@
 import test from 'ava'
 
-const ChatBot = require('../src/vk-chat-bot.js')
+const ChatBot = require('../src/main.js')
 const log = new (require('../src/log.js'))()
 
 var botParams = {

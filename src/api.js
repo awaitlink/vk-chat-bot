@@ -113,10 +113,10 @@ class API {
         this.stats.sent()
       } else {
         if (json.error) {
-          var error_code = json.error.error_code
-          var error_msg = json.error.error_msg
+          var errorCode = json.error.error_code
+          var errorMsg = json.error.error_msg
 
-          log.warn(`A message was not sent to peer ${pid} due to an API error #${error_code}: ${error_msg}`)
+          log.warn(`A message was not sent to peer ${pid} due to an API error #${errorCode}: ${errorMsg}`)
         } else {
           log.warn(`A message was not sent to peer ${pid} due to an unknown API error. The API responded with: ${json.toString()}`)
         }
