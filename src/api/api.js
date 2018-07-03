@@ -1,5 +1,5 @@
 const request = require('request-promise')
-const log = new (require('./log.js'))()
+const log = new (require('../extra/log.js'))()
 
 class API {
   constructor (vkToken, stats) {

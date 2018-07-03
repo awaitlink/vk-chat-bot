@@ -13,6 +13,7 @@ class Stats {
     this.mts = 0 // message_typing_state
 
     this.nm = 0 // no_match
+    this.he = 0 // handler_error
 
     this.previous = ''
 
@@ -53,6 +54,10 @@ class Stats {
         this.rx-- // Not from Callback API
         this.nm++
         break
+      case 'handler_error':
+        this.rx-- // Not from Callback API
+        this.he++
+        break
     }
   }
 
@@ -68,8 +73,9 @@ class Stats {
     var mts = this.mts.toString().green
 
     var nm = this.nm.toString().magenta
+    var he = this.he.toString().magenta
 
-    var hash = `${rx}|${tx}|${ma}/${md}|${mts}|${mn}|${me}|${mr}|${nm}`
+    var hash = `${rx}|${tx}|${ma}/${md}|${mts}|${mn}|${me}|${mr}|${nm}|${he}`
 
     if (hash === this.previous) {
       return
@@ -78,7 +84,7 @@ class Stats {
     }
 
     var up = process.uptime().toString()
-    var message = `[up:${up}s] rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn} edit:${me} reply:${mr} | no match ${nm}`
+    var message = `[up:${up}s] rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn} edit:${me} reply:${mr} | no_match:${nm} err:${he}`
 
     console.log(message)
   }

@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
+## [9.0.1] - 2018-07-03
+### Added
+- `handler_error` events to the statistics
+
+### Changed
+- Moved files around in `src`
+
 ## [9.0.0] - 2018-07-03
 ### Added
 - Log errors in handlers as warnings
