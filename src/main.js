@@ -1,8 +1,8 @@
 const app = require('express')()
 const bodyParser = require('body-parser')
 
-const Behavior = require('./behavior.js')
-const log = new (require('./extra/log.js'))()
+const Behavior = require('./behavior')
+const log = new (require('./extra/log'))()
 
 class ChatBot {
   constructor (params) {

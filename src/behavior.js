@@ -1,7 +1,7 @@
-const log = new (require('./extra/log.js'))()
-const Stats = require('./extra/stats.js')
-const API = require('./api/api.js')
-const Context = require('./api/context.js')
+const log = new (require('./extra/log'))()
+const Stats = require('./extra/stats')
+const API = require('./api/api')
+const Context = require('./api/context')
 
 class Behavior {
   constructor (vkToken, cmdPrefix) {

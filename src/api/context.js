@@ -1,4 +1,4 @@
-const log = new (require('../extra/log.js'))()
+const log = new (require('../extra/log'))()
 
 class Context {
   constructor (api, eventType, object, message) {
