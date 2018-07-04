@@ -122,12 +122,14 @@ export default class API {
     return promise
   }
 
-  async send (pid, msg, attachment) {
+  async send (pid, message, attachment, keyboard) {
     var params = {
-      peer_id: pid,
-      message: msg,
-      attachment: attachment
+      peer_id: pid
     }
+
+    if (message) params.message = message
+    if (attachment) params.attachment = attachment
+    if (keyboard) params.keyboard = keyboard
 
     return new Promise((resolve, reject) => {
       this.scheduleCall('messages.send', params)

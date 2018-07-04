@@ -1,3 +1,4 @@
+import * as kbd from './keyboard'
 import {warn, requireParam} from '../extra/log'
 import '@babel/polyfill'
 
@@ -7,6 +8,8 @@ export default class Context {
     this.obj = object
     this.msg = message
     this.eventType = eventType
+
+    this.kbd = kbd
 
     this.autoSend = true
 
@@ -37,6 +40,14 @@ export default class Context {
     }
   }
 
+  keyboard (kbd) {
+    this.kbd_object = JSON.stringify(kbd.getJSON())
+  }
+
+  removeKeyboard () {
+    this.keyboard(new kbd.Keyboard())
+  }
+
   async send () {
     if (this.eventType === 'message_deny') {
       warn(`No message was sent to peer ${this.pid} ("message_deny" event)`)
@@ -49,12 +60,13 @@ export default class Context {
     }
 
     var attachmentList = this.attachment.join(',')
-    return this.api.send(this.pid, this.replyText, attachmentList)
+    return this.api.send(this.pid, this.replyText, attachmentList, this.kbd_object)
   }
 
   clear () {
     this.replyText = ''
     this.attachment = []
+    this.kbd_object = ''
 
     if (this.eventType === 'message_allow') {
       this.pid = this.obj.user_id

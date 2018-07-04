@@ -45,18 +45,13 @@ export default class Behavior {
   }
 
   // On exact command with prefix
-  cmd (command, callback, description) {
+  cmd (command, callback, description = '') {
     if (this.isLocked()) {
       return
     }
 
     requireParam('Behavior.cmd', command, 'command')
     requireParam('Behavior.cmd', callback, 'callback')
-
-    if (!description) {
-      description = ''
-    }
-
     requireFunction(callback)
 
     this.commandHandlers.push({
