@@ -88,3 +88,28 @@ bot.start(port)
 ```
 
 The bot will log some useful information, see [Logging](https://github.com/u32i64/vk-chat-bot/wiki/Logging) wiki for more information.
+
+## Contributing
+- Having issues?    
+  Found a bug?    
+  Something does not seem right?    
+  Or you have a feature request?    
+  **Open an [issue](https://github.com/u32i64/vk-chat-bot/issues).**
+
+- You know how to make `vk-chat-bot` better?
+  1. Fork the repository.
+  1. Clone the fork to your computer:
+    ```bash
+    git clone git@github.com:username/vk-chat-bot
+    ```
+  1. Make your changes.
+  1. Stage files, commit them, and push the commit to your fork:
+    ```bash
+    git add *
+    git commit -m "Small description of what you changed"
+    git push -u origin master
+    ```
+  1. Open a [pull request](https://github.com/u32i64/vk-chat-bot/pulls)!
+
+## License
+This project is licensed under the terms of the **[MIT](https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE)** license.
