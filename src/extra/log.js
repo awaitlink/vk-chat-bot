@@ -1,93 +1,87 @@
 require('colors')
 
-class Log {
-  constructor () {
-    this.type = {
-      progress: ':',
-      information: 'i',
-      warning: '!',
-      response: '<',
-      error: '!!'
-    }
+export var types = {
+  progress: ':',
+  information: 'i',
+  warning: '!',
+  response: '<',
+  error: '!!'
+}
+
+export default function log (type, text) {
+  if (text === '') {
+    return
   }
 
-  log (type, text) {
-    if (text === '') {
-      return
-    }
+  var message = `[${type}] ${text}`
 
-    var message = `[${type}] ${text}`
-
-    switch (type) {
-      case this.type.progress:
-        message = message.cyan
-        break
-      case this.type.information:
-        message = message.green
-        break
-      case this.type.warning:
-        message = message.yellow
-        break
-      case this.type.error:
-        message = message.red
-        throw new Error(message)
-    }
-
-    console.log(message)
+  switch (type) {
+    case types.progress:
+      message = message.cyan
+      break
+    case types.information:
+      message = message.green
+      break
+    case types.warning:
+      message = message.yellow
+      break
+    case types.error:
+      message = message.red
+      throw new Error(message)
   }
 
-  info (info) {
-    this.log(this.type.information, info)
+  console.log(message)
+}
+
+export function info (info) {
+  log(types.information, info)
+}
+
+export function progress (info) {
+  log(types.progress, info)
+}
+
+export function warn (info) {
+  if (info instanceof Error) {
+    info = info.message
   }
 
-  progress (info) {
-    this.log(this.type.progress, info)
+  log(types.warning, info)
+}
+
+export function error (reason) {
+  if (reason instanceof Error) {
+    reason = reason.message
   }
 
-  warn (info) {
-    if (info instanceof Error) {
-      info = info.message
-    }
-
-    this.log(this.type.warning, info)
-  }
-
-  error (reason) {
-    if (reason instanceof Error) {
-      reason = reason.message
-    }
-
-    var note = `[⋅] An error occured. The messages below may contain
+  var note = `[⋅] An error occured. The messages below may contain
 [⋅] useful information about the problem.
 [⋅] If you believe this is vk-chat-bot's fault,
 [⋅] please report the issue at <https://github.com/u32i64/vk-chat-bot/issues>.`.inverse
 
-    console.log(`\n\n${note}\n\n`)
+  console.log(`\n\n${note}\n\n`)
 
-    this.log(this.type.error, reason)
+  log(types.error, reason)
 
-    // process.exitCode = 1
-  }
+  // process.exitCode = 1
+}
 
-  res (info) {
-    this.log(this.type.response, info)
-  }
+export function response (info) {
+  log(types.response, info)
+}
 
-  requireParam (functionName, param, name) {
-    if (!param) {
-      if (name) {
-        this.error(`In function '${functionName}': expected: '${name}', got: '${param}'.`)
-      } else {
-        this.error(`Bad parameter for function '${functionName}': '${param}'.`)
-      }
-    }
-  }
-
-  requireFunction (param) {
-    if (typeof param !== 'function') {
-      this.error(`Callback function that you specified is not a function.`)
+export function requireParam (functionName, param, name) {
+  if (!param) {
+    if (name) {
+      error(`In function '${functionName}': expected: '${name}', got: '${param}'.`)
+    } else {
+      error(`Bad parameter for function '${functionName}': '${param}'.`)
     }
   }
 }
 
-module.exports = Log
+export function requireFunction (param) {
+  if (typeof param !== 'function') {
+    error(`Callback function that you specified is not a function.`)
+  }
+}

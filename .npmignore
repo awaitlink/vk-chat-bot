@@ -1,1 +1,14 @@
+# Heroku Guide images
 heroku_guide/
+
+# Source files
+src/
+test/
+
+# Build configuration
+rollup.config.js
+.babelrc
+.travis.yml
+
+# Tarballs
+*.tgz

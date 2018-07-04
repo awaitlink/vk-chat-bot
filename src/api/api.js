@@ -1,10 +1,11 @@
+import {info, warn, requireParam} from '../extra/log'
+import 'babel-polyfill'
 const request = require('request-promise')
-const log = new (require('../extra/log'))()
 
-class API {
+export default class API {
   constructor (vkToken, stats) {
-    log.requireParam('API.constructor', vkToken, 'VK API token')
-    log.requireParam('API.constructor', stats, 'statistics object')
+    requireParam('API.constructor', vkToken, 'VK API token')
+    requireParam('API.constructor', stats, 'statistics object')
 
     this.vkToken = vkToken
     this.isInTestMode = vkToken === 'test'
@@ -19,17 +20,17 @@ class API {
       // Check permissions
       this.checkPermissions()
         .then(e => {
-          log.info(e)
+          info(e)
         })
         .catch(e => {
-          log.warn(e)
+          warn(e)
         })
 
       // Start the queue processing
       setInterval(() => {
         this.processQueue()
           .catch(e => {
-            log.warn(e)
+            warn(e)
           })
       }, 1000)
     }
@@ -115,7 +116,7 @@ class API {
     var promise = request(options)
 
     promise.catch((err) => {
-      log.warn(`Error occured while calling API method '${method}': ${err}`)
+      warn(`Error occured while calling API method '${method}': ${err}`)
     })
 
     return promise
@@ -135,11 +136,9 @@ class API {
           resolve()
         })
         .catch(e => {
-          log.warn(e)
+          warn(e)
           resolve()
         })
     })
   }
 }
-
-module.exports = API

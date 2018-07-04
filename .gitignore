@@ -1,2 +1,9 @@
+# NPM stuff
 node_modules/
 npm-debug.log
+
+# Built library
+lib/
+
+# Tarballs
+*.tgz

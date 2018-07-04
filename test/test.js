@@ -1,7 +1,7 @@
 import test from 'ava'
 
-const ChatBot = require('../src/main')
-const log = new (require('../src/extra/log'))()
+import ChatBot from '../src/main'
+import {error, requireParam, requireFunction} from '../src/extra/log'
 
 var botParams = {
   vk_token: 'test',
@@ -13,31 +13,31 @@ var botParams = {
 
 test('Log#error() throws error', t => {
   t.throws(() => {
-    log.error('Test error')
+    error('Test error')
   })
 })
 
 test('Log#requireFunction() error when argument is not a function', t => {
   t.throws(() => {
-    log.requireFunction('not-a-function')
+    requireFunction('not-a-function')
   })
 })
 
 test('Log#requireFunction() no error when argument is a function', t => {
   t.notThrows(() => {
-    log.requireFunction($ => {})
+    requireFunction($ => {})
   })
 })
 
 test('Log#requireParams() error when at least one argument is invalid', t => {
   t.throws(() => {
-    log.requireParam('test', undefined, 'something')
+    requireParam('test', undefined, 'something')
   })
 })
 
 test('Log#requireParams() no error when all arguments are valid', t => {
   t.notThrows(() => {
-    log.requireParam('test', 'thing', 'something')
+    requireParam('test', 'thing', 'something')
   })
 })
 

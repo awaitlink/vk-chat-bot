@@ -1,14 +1,43 @@
 {
   "name": "vk-chat-bot",
-  "version": "9.0.1",
-  "description": "A library to easily create chat bots for VK communities (uses Callback API).",
-  "main": "src/main.js",
-  "scripts": {
-    "test": "standard --verbose | snazzy && ava"
+  "version": "9.1.0",
+  "description": "A library for easy creation of chat bots for VK communities (uses Callback API).",
+  "keywords": [
+    "api",
+    "bot",
+    "callback",
+    "chat",
+    "community",
+    "conversation",
+    "es6",
+    "group",
+    "message",
+    "sdk",
+    "vk"
+  ],
+  "bugs": "https://github.com/u32i64/vk-chat-bot/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/u32i64/vk-chat-bot.git"
   },
-  "author": "u32i64",
   "license": "MIT",
+  "author": {
+    "name": "Artem Varaksa (u32i64)",
+    "email": "aymfst@gmail.com"
+  },
+  "main": "lib/lib.min.js",
+  "scripts": {
+    "build": "npm run clean && mkdir lib && rollup -c",
+    "clean": "rm -rf lib *.tgz",
+    "minify": "uglifyjs lib/lib.js -c -o lib/lib.min.js --source-map 'content=inline'",
+    "prepare": "npm run test && npm run build && npm run minify && rm lib/lib.js",
+    "test": "npm run test:lint && npm run test:ava",
+    "test:ava": "ava",
+    "test:lint": "standard --verbose | snazzy"
+  },
   "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.51",
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "colors": "^1.3.0",
     "express": "^4.16.3",
@@ -16,25 +45,24 @@
     "request-promise": "^4.2.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/register": "^7.0.0-beta.51",
     "ava": "^1.0.0-beta.6",
+    "rollup": "^0.62.0",
+    "rollup-plugin-babel": "^4.0.0-beta.7",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "snazzy": "^7.1.1",
-    "standard": "^10.0.3"
+    "standard": "^10.0.3",
+    "uglify-js": "^3.4.3"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/u32i64/vk-chat-bot.git"
+  "engines": {
+    "node": ">=8.0.0"
   },
-  "keywords": [
-    "vk",
-    "chat",
-    "bot",
-    "api",
-    "sdk",
-    "callback",
-    "message",
-    "community",
-    "group",
-    "conversation",
-    "es6"
-  ]
+  "ava": {
+    "require": [
+      "@babel/register"
+    ]
+  }
 }

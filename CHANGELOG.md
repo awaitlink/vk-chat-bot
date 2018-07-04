@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
+## [9.1.0] - 2018-07-04
+### Changed
+- Now using `babel`, `rollup`, and `uglify-js` to be able to use latest ES features.
+
 ## [9.0.1] - 2018-07-03
 ### Added
 - `handler_error` events to the statistics

@@ -1,9 +1,10 @@
-const log = new (require('./extra/log'))()
-const Stats = require('./extra/stats')
-const API = require('./api/api')
-const Context = require('./api/context')
+import {error, warn, requireParam, requireFunction} from './extra/log'
+import Stats from './extra/stats'
+import API from './api/api'
+import Context from './api/context'
+import 'babel-polyfill'
 
-class Behavior {
+export default class Behavior {
   constructor (vkToken, cmdPrefix) {
     this.stats = new Stats()
 
@@ -37,7 +38,7 @@ class Behavior {
 
   isLocked () {
     if (this.locked) {
-      log.warn('You tried to register a handler while the bot is running. This action was prevented for safety reasons.')
+      warn('You tried to register a handler while the bot is running. This action was prevented for safety reasons.')
     }
 
     return this.locked
@@ -49,14 +50,14 @@ class Behavior {
       return
     }
 
-    log.requireParam('Behavior.cmd', command, 'command')
-    log.requireParam('Behavior.cmd', callback, 'callback')
+    requireParam('Behavior.cmd', command, 'command')
+    requireParam('Behavior.cmd', callback, 'callback')
 
     if (!description) {
       description = ''
     }
 
-    log.requireFunction(callback)
+    requireFunction(callback)
 
     this.commandHandlers.push({
       command: command,
@@ -71,10 +72,10 @@ class Behavior {
       return
     }
 
-    log.requireParam('Behavior.regex', regex, 'regular expression')
-    log.requireParam('Behavior.regex', callback, 'callback')
+    requireParam('Behavior.regex', regex, 'regular expression')
+    requireParam('Behavior.regex', callback, 'callback')
 
-    log.requireFunction(callback)
+    requireFunction(callback)
 
     this.regexHandlers.push({
       regex: regex,
@@ -88,13 +89,13 @@ class Behavior {
       return
     }
 
-    log.requireParam('Behavior.on', e, 'event name')
-    log.requireParam('Behavior.on', callback, 'callback')
+    requireParam('Behavior.on', e, 'event name')
+    requireParam('Behavior.on', callback, 'callback')
 
-    log.requireFunction(callback)
+    requireFunction(callback)
 
     if (!this.possibleEvents.includes(e)) {
-      log.error('Tried to register a handler for an unsupported event type: ' + e)
+      error('Tried to register a handler for an unsupported event type: ' + e)
     }
 
     this.eventHandlers.push({
@@ -117,7 +118,11 @@ class Behavior {
         await this.handleHandlerError(obj, e)
       }
     } else {
-      this.handleEvent(type, obj)
+      try {
+        await this.handleEvent(type, obj)
+      } catch (e) {
+        warn(e)
+      }
     }
   }
 
@@ -184,13 +189,13 @@ class Behavior {
 
   async noMatchFound (obj) {
     // Call the no_match event
-    log.warn(`Don't know how to respond to: '${obj.text.toString().replace(/\n/g, '\\n')}' - calling 'no_match' event`)
+    warn(`Don't know how to respond to: '${obj.text.toString().replace(/\n/g, '\\n')}' - calling 'no_match' event`)
     this.stats.event('no_match')
     return this.handleEvent('no_match', obj)
   }
 
   async handleHandlerError (obj, e) {
-    log.warn(`Error happened in handler, calling 'handler_error' event: ${e}`)
+    warn(`Error happened in handler, calling 'handler_error' event: ${e}`)
     this.stats.event('handler_error')
     return this.handleEvent('handler_error', obj)
   }
@@ -223,7 +228,7 @@ class Behavior {
       }
     } catch (err) {
       if (e === 'handler_error') {
-        log.warn(`Error happened in 'handler_error' handler!`)
+        warn(`Error happened in 'handler_error' handler!`)
       } else {
         this.handleHandlerError(obj, err)
       }
@@ -254,5 +259,3 @@ class Behavior {
     return s.replace(/[-|/\\^$*+?.()|[\]{}]/g, '\\$&')
   }
 }
-
-module.exports = Behavior

@@ -1,6 +1,7 @@
-const log = new (require('../extra/log'))()
+import {warn, requireParam} from '../extra/log'
+import 'babel-polyfill'
 
-class Context {
+export default class Context {
   constructor (api, eventType, object, message) {
     this.api = api
     this.obj = object
@@ -25,9 +26,9 @@ class Context {
   }
 
   attach (type, ownerId, resId, accessKey) {
-    log.requireParam('Context.attach', type, 'attachment type')
-    log.requireParam('Context.attach', ownerId, 'owner id')
-    log.requireParam('Context.attach', resId, 'resource id')
+    requireParam('Context.attach', type, 'attachment type')
+    requireParam('Context.attach', ownerId, 'owner id')
+    requireParam('Context.attach', resId, 'resource id')
 
     if (accessKey) {
       this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`)
@@ -38,12 +39,12 @@ class Context {
 
   async send () {
     if (this.eventType === 'message_deny') {
-      log.warn(`No message was sent to peer ${this.pid} ("message_deny" event)`)
+      warn(`No message was sent to peer ${this.pid} ("message_deny" event)`)
       return
     }
 
     if (this.replyText === '' && this.attachment === []) {
-      log.warn(`No message was sent to peer ${this.pid} (text or attachment is required)`)
+      warn(`No message was sent to peer ${this.pid} (text or attachment is required)`)
       return
     }
 
@@ -64,5 +65,3 @@ class Context {
     }
   }
 }
-
-module.exports = Context

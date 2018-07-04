@@ -1,6 +1,6 @@
 require('colors')
 
-class Stats {
+export default class Stats {
   constructor () {
     this.rx = 0 // requests from the Callback API
     this.tx = 0 // messages sent
@@ -89,5 +89,3 @@ class Stats {
     console.log(message)
   }
 }
-
-module.exports = Stats
