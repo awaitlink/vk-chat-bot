@@ -1,5 +1,5 @@
 import {info, warn, requireParam} from '../extra/log'
-import 'babel-polyfill'
+import '@babel/polyfill'
 const request = require('request-promise')
 
 export default class API {

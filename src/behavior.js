@@ -2,7 +2,7 @@ import {error, warn, requireParam, requireFunction} from './extra/log'
 import Stats from './extra/stats'
 import API from './api/api'
 import Context from './api/context'
-import 'babel-polyfill'
+import '@babel/polyfill'
 
 export default class Behavior {
   constructor (vkToken, cmdPrefix) {

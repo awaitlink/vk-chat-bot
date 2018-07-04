@@ -1,5 +1,5 @@
 import {warn, requireParam} from '../extra/log'
-import 'babel-polyfill'
+import '@babel/polyfill'
 
 export default class Context {
   constructor (api, eventType, object, message) {
