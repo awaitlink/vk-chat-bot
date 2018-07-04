@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
 ## [9.1.1] - 2018-07-04
+### Fixed
+- Fixed `vk_api_key` -> `vk_token` in [`README.md`](https://github.com/u32i64/vk-chat-bot#readme) (this was changed in back in [`v7.0.0`](#700---2018-06-28))
+
+## [9.1.1] - 2018-07-04
 ### Changed
 - Updated `babel-polyfill` **->** `@babel/polyfill`
 
