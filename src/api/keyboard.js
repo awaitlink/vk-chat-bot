@@ -6,8 +6,8 @@ export class Keyboard {
 
   getJSON () {
     var json = {
-      'one_time': this.oneTime,
-      'buttons': this.items
+      one_time: this.oneTime,
+      buttons: this.items
     }
 
     return json
@@ -17,8 +17,8 @@ export class Keyboard {
 export class Button {
   constructor (label = 'Button', color = 'default', payload = '') {
     this.action = {
-      'type': 'text',
-      'label': label.toString()
+      type: 'text',
+      label: label.toString()
     }
     this.color = color
 

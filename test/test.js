@@ -1,6 +1,7 @@
 import test from 'ava'
 
 import ChatBot from '../src/main'
+import {Keyboard, Button, colors} from '../src/api/keyboard'
 import {error, requireParam, requireFunction} from '../src/extra/log'
 
 var botParams = {
@@ -138,4 +139,40 @@ test('Behavior#help() should return a proper help message', t => {
 
   var message = '\n/test - sure thing tests something\n/help - shows the help message\n'
   t.is(bot.help(), message)
+})
+
+test('Keyboard#getJSON should return valid keyboard JSON (no parameters)', t => {
+  var kbd = new Keyboard()
+
+  t.is(
+    JSON.stringify(kbd.getJSON()),
+    JSON.stringify({
+      one_time: false,
+      buttons: []
+    })
+  )
+})
+
+test('Keyboard#getJSON should return valid keyboard JSON (2 rows, 2 buttons, one time)', t => {
+  var kbd = new Keyboard([
+    [new Button('1'), new Button('2', colors.primary, {pay: 'load'})],
+    [new Button('3', colors.negative), new Button('4', colors.positive)]
+  ], true)
+
+  t.is(
+    JSON.stringify(kbd.getJSON()),
+    JSON.stringify({
+      one_time: true,
+      buttons: [
+        [
+          {action: {type: 'text', label: '1'}, color: 'default'},
+          {action: {type: 'text', label: '2', payload: '{"pay":"load"}'}, color: 'primary'}
+        ],
+        [
+          {action: {type: 'text', label: '3'}, color: 'negative'},
+          {action: {type: 'text', label: '4'}, color: 'positive'}
+        ]
+      ]
+    })
+  )
 })
