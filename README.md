@@ -48,16 +48,33 @@ var bot = new ChatBot(params)
 See [Setting behavior](https://github.com/u32i64/vk-chat-bot/wiki/Chat-Bot#setting-behavior) wiki to learn more about behavior functions.   
 Here are some examples:
 ```js
-bot.on('message_allow', $ => {
-  $.text('Hello, thanks for allowing us to send you messages.')
-  // $.send() is added automatically
-  // if you want to prevent automatic sending in this handler, call $.noAutoSend()
-})
-```
-```js
 // No matching handler is found
 bot.on('no_match', $ => {
   $.text("I don't know how to respond to your message.")
+})
+```
+```js
+bot.cmd('keyboard', $ => {
+  var Keyboard = $.kbd.Keyboard
+  var Button = $.kbd.Button
+  var colors = $.kbd.colors
+
+  // Set 'true' instead of 'false' to make it disapper after a button was pressed
+  var kbd = new Keyboard([
+    // Rows
+    [
+      new Button('Default'),
+      new Button('Primary', colors.primary),
+      new Button('Negative', colors.negative),
+      new Button('Positive', colors.positive)
+    ],
+    [
+      new Button('Maximum rows is 10, columns - 4.')
+    ],
+  ], false)
+
+  $.text('Here is your keyboard, as promised.')
+  $.keyboard(kbd)
 })
 ```
 ```js
@@ -109,7 +126,7 @@ The bot will log some useful information, see [Logging](https://github.com/u32i6
     git commit -m "Small description of what you changed"
     git push -u origin master
     ```
-  1. Open a [pull request](https://github.com/u32i64/vk-chat-bot/pulls)!
+  1. **Open a [pull request](https://github.com/u32i64/vk-chat-bot/pulls)!**
 
 ## License
 This project is licensed under the terms of the **[MIT](https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE)** license.
