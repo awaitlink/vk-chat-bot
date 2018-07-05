@@ -17,11 +17,13 @@ export default class Stats {
 
     this.previous = ''
 
-    this.print()
-
-    setInterval(() => {
+    if (!process.env.TEST_MODE) {
       this.print()
-    }, 10000)
+
+      setInterval(() => {
+        this.print()
+      }, 10000)
+    }
   }
 
   sent () {

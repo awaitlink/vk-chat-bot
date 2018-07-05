@@ -12,6 +12,8 @@ var botParams = {
   cmd_prefix: '/'
 }
 
+process.env.TEST_MODE = true
+
 test('Log#error() throws error', t => {
   t.throws(() => {
     error('Test error')

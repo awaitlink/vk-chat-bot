@@ -11,8 +11,6 @@ export default class Behavior {
     this.api = new API(vkToken, this.stats)
     this.cmdPrefix = cmdPrefix
 
-    this.isInTestMode = this.api.isInTestMode
-
     this.locked = false
 
     this.commandHandlers = []

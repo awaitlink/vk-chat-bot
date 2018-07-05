@@ -13,6 +13,10 @@ export default function log (type, text) {
     return
   }
 
+  if (process.env.TEST_MODE && type !== types.error) {
+    return
+  }
+
   var message = `[${type}] ${text}`
 
   switch (type) {
@@ -54,16 +58,16 @@ export function error (reason) {
     reason = reason.message
   }
 
-  var note = `[⋅] An error occured. The messages below may contain
+  if (!process.env.TEST_MODE) {
+    var note = `[⋅] An error occured. The messages below may contain
 [⋅] useful information about the problem.
 [⋅] If you believe this is vk-chat-bot's fault,
 [⋅] please report the issue at <https://github.com/u32i64/vk-chat-bot/issues>.`.inverse
 
-  console.log(`\n\n${note}\n\n`)
+    console.log(`\n\n${note}\n\n`)
+  }
 
   log(types.error, reason)
-
-  // process.exitCode = 1
 }
 
 export function response (info) {

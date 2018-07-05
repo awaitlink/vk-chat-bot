@@ -8,15 +8,13 @@ export default class API {
     requireParam('API.constructor', stats, 'statistics object')
 
     this.vkToken = vkToken
-    this.isInTestMode = vkToken === 'test'
-
     this.stats = stats
 
     this.API_VERSION = '5.80'
     this.API_QUOTA = 20
 
     this.queue = []
-    if (!this.isInTestMode) {
+    if (!process.env.TEST_MODE) {
       // Check permissions
       this.checkPermissions()
         .then(e => {
