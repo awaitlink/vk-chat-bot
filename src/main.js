@@ -1,5 +1,5 @@
 import {info, progress, response, warn, error, requireParam} from './extra/log'
-import Behavior from './behavior'
+import Core from './core'
 const express = require('express')
 const bodyParser = require('body-parser')
 
@@ -18,28 +18,28 @@ export default class ChatBot {
     var vkToken = params.vk_token.toString()
     var cmdPrefix = params.cmd_prefix ? params.cmd_prefix.toString() : ''
 
-    this.behavior = new Behavior(vkToken, cmdPrefix)
+    this.core = new Core(vkToken, cmdPrefix)
   }
 
   noEventWarnings () {
-    this.behavior.noEventWarnings = true
+    this.core.noEventWarnings = true
     warn('Warnings about "no matching event ... handler found" were disabled')
   }
 
-  on (e, callback) { this.behavior.on(e, callback) }
-  cmd (command, callback, description) { this.behavior.cmd(command, callback, description) }
-  regex (regex, callback) { this.behavior.regex(regex, callback) }
+  on (e, callback) { this.core.on(e, callback) }
+  cmd (command, callback, description) { this.core.cmd(command, callback, description) }
+  regex (regex, callback) { this.core.regex(regex, callback) }
 
-  help () { return this.behavior.help() }
+  help () { return this.core.help() }
 
   start (port) {
     requireParam('ChatBot.start', port, 'port')
 
-    this.behavior.lock()
+    this.core.lock()
 
-    var eventCount = this.behavior.eventHandlers.length
-    var commandCount = this.behavior.commandHandlers.length
-    var regexCount = this.behavior.regexHandlers.length
+    var eventCount = this.core.eventHandlers.length
+    var commandCount = this.core.commandHandlers.length
+    var regexCount = this.core.regexHandlers.length
     info(`Using ${eventCount} event, ${commandCount} command, and ${regexCount} regex handlers.`)
 
     if ((eventCount + commandCount + regexCount) === 0) {
@@ -77,7 +77,7 @@ export default class ChatBot {
         response('Sent confirmation token.')
       } else {
         res.status(200).send('ok')
-        this.behavior.parseRequest(body)
+        this.core.parseRequest(body)
       }
     })
 
@@ -91,8 +91,7 @@ export default class ChatBot {
       info(`Server is listening on port ${port}.`)
 
       // Quit in test mode
-      if (this.behavior.isInTestMode) {
-        info(`Stopping the server because in test mode.`)
+      if (process.env.TEST_MODE) {
         server.close()
       }
     })

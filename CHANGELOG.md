@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
+## [Unreleased]
+## Added
+- Keyboard tests
+
+## Changed
+- No log messages while `process.env.TEST_MODE` is `true` (it is set by `test/test.js`)
+- Renamed `Behavior` to `Core`
+
 ## [9.2.0] - 2018-07-04
 ### Added
 - Keyboard support! (see [`Context`](https://github.com/u32i64/vk-chat-bot/wiki/Context#keyboard) and [`Keyboard`](https://github.com/u32i64/vk-chat-bot/wiki/Keyboard) wiki pages for usage guide)

@@ -4,7 +4,7 @@ import API from './api/api'
 import Context from './api/context'
 import '@babel/polyfill'
 
-export default class Behavior {
+export default class Core {
   constructor (vkToken, cmdPrefix) {
     this.stats = new Stats()
 
@@ -48,8 +48,8 @@ export default class Behavior {
       return
     }
 
-    requireParam('Behavior.cmd', command, 'command')
-    requireParam('Behavior.cmd', callback, 'callback')
+    requireParam('Core.cmd', command, 'command')
+    requireParam('Core.cmd', callback, 'callback')
     requireFunction(callback)
 
     this.commandHandlers.push({
@@ -65,8 +65,8 @@ export default class Behavior {
       return
     }
 
-    requireParam('Behavior.regex', regex, 'regular expression')
-    requireParam('Behavior.regex', callback, 'callback')
+    requireParam('Core.regex', regex, 'regular expression')
+    requireParam('Core.regex', callback, 'callback')
 
     requireFunction(callback)
 
@@ -82,8 +82,8 @@ export default class Behavior {
       return
     }
 
-    requireParam('Behavior.on', e, 'event name')
-    requireParam('Behavior.on', callback, 'callback')
+    requireParam('Core.on', e, 'event name')
+    requireParam('Core.on', callback, 'callback')
 
     requireFunction(callback)
 
