@@ -118,7 +118,7 @@ export default class Core {
       try {
         await this.eventHandlers[name]($)
 
-        if ($.autoSend) {
+        if ($.autoSend && name !== 'message_new') {
           await $.send()
         }
       } catch (error) {
@@ -144,7 +144,12 @@ export default class Core {
 
         if (!isRegexHandled) {
           await this.event('no_match', $)
+          return
         }
+      }
+
+      if ($.autoSend) {
+        await $.send()
       }
     })
     this.eventCount-- // Do not count 'message_new' event
