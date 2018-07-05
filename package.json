@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "9.2.0",
+  "version": "9.3.0",
   "description": "A library for easy creation of chat bots for VK communities (uses Callback API).",
   "keywords": [
     "api",
@@ -30,7 +30,7 @@
     "build": "npm run clean && mkdir lib && rollup -c",
     "clean": "rm -rf lib *.tgz",
     "minify": "uglifyjs lib/lib.js -c -o lib/lib.min.js --source-map 'content=inline'",
-    "prepare": "npm run test && npm run build && npm run minify && rm lib/lib.js",
+    "prepare": "npm run test && npm run build && npm run minify",
     "test": "npm run test:lint && npm run test:ava",
     "test:ava": "ava",
     "test:lint": "standard --verbose | snazzy"

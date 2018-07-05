@@ -4,19 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-**Note:** Patch versions prior to 8.0.0 are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
+**Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
 
-## [Unreleased]
-## Added
+## [9.3.0] - 2018-07-05
+### Added
 - Keyboard tests
 
-## Changed
-- No log messages while `process.env.TEST_MODE` is `true` (it is set by `test/test.js`)
+### Changed
+- Refactored **event handling** code in `Core` - it **should be faster now**
+- Improved API call queue processing. Now processing does not start when another is already in progress
 - Renamed `Behavior` to `Core`
+- No log messages while `process.env.TEST_MODE` is `true` (it is set by `test/test.js`)
+
+### Fixed
+- Only one handler per event is allowed (it already was so, but now, when you try to add another one, it throws an error)
 
 ## [9.2.0] - 2018-07-04
 ### Added
-- Keyboard support! (see [`Context`](https://github.com/u32i64/vk-chat-bot/wiki/Context#keyboard) and [`Keyboard`](https://github.com/u32i64/vk-chat-bot/wiki/Keyboard) wiki pages for usage guide)
+- Keyboard support :tada: (see [`Context`](https://github.com/u32i64/vk-chat-bot/wiki/Context#keyboard) and [`Keyboard`](https://github.com/u32i64/vk-chat-bot/wiki/Keyboard) wiki pages for usage guide)
 
 ## [9.1.1] - 2018-07-04
 ### Fixed

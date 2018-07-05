@@ -12,3 +12,6 @@ rollup.config.js
 
 # Tarballs
 *.tgz
+
+# Non-minified lib
+lib/lib.js

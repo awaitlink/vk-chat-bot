@@ -14,22 +14,26 @@ export default class API {
     this.API_QUOTA = 20
 
     this.queue = []
+    this.isQueueProcessing = false
     if (!process.env.TEST_MODE) {
       // Check permissions
       this.checkPermissions()
-        .then(e => {
-          info(e)
-        })
-        .catch(e => {
-          warn(e)
-        })
+        .then(e => { info(e) })
+        .catch(e => { warn(e) })
 
       // Start the queue processing
       setInterval(() => {
-        this.processQueue()
-          .catch(e => {
-            warn(e)
-          })
+        if (!this.isQueueProcessing) {
+          this.isQueueProcessing = true
+          this.processQueue()
+            .then(r => {
+              this.isQueueProcessing = false
+            })
+            .catch(e => {
+              warn(e)
+              this.isQueueProcessing = false
+            })
+        }
       }, 1000)
     }
   }

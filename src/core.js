@@ -13,21 +13,25 @@ export default class Core {
 
     this.locked = false
 
+    this.eventCount = 0
+    this.eventHandlers = {
+      message_new: null,
+      message_reply: null,
+      message_edit: null,
+      message_typing_state: null,
+      message_allow: null,
+      message_deny: null,
+
+      no_match: null,
+      handler_error: null
+    }
+
     this.commandHandlers = []
     this.regexHandlers = []
-    this.eventHandlers = []
-    this.possibleEvents = [
-      'message_allow',
-      'message_deny',
-      'message_edit',
-      'message_reply',
-      'message_typing_state',
-
-      'no_match',
-      'handler_error'
-    ]
 
     this.noEventWarnings = false
+
+    this.registerMessageNewHandler()
   }
 
   lock () {
@@ -42,6 +46,29 @@ export default class Core {
     return this.locked
   }
 
+  // For special events
+  on (event, callback) {
+    if (this.isLocked()) {
+      return
+    }
+
+    requireParam('Core.on', event, 'event name')
+    requireParam('Core.on', callback, 'callback')
+
+    requireFunction(callback)
+
+    if (!Object.keys(this.eventHandlers).includes(event)) {
+      error(`Tried to register a handler for an unsupported event type: ${event}`)
+    }
+
+    if (!this.eventHandlers[event]) {
+      this.eventHandlers[event] = callback
+      this.eventCount++
+    } else {
+      error(`Tried to register a second handler for ${event}. Only the first handler will work.`)
+    }
+  }
+
   // On exact command with prefix
   cmd (command, callback, description = '') {
     if (this.isLocked()) {
@@ -53,9 +80,9 @@ export default class Core {
     requireFunction(callback)
 
     this.commandHandlers.push({
-      command: command,
-      description: description,
-      callback: callback
+      command,
+      description,
+      callback
     })
   }
 
@@ -71,161 +98,87 @@ export default class Core {
     requireFunction(callback)
 
     this.regexHandlers.push({
-      regex: regex,
-      callback: callback
+      regex,
+      callback
     })
   }
 
-  // For special events
-  on (e, callback) {
-    if (this.isLocked()) {
-      return
-    }
-
-    requireParam('Core.on', e, 'event name')
-    requireParam('Core.on', callback, 'callback')
-
-    requireFunction(callback)
-
-    if (!this.possibleEvents.includes(e)) {
-      error('Tried to register a handler for an unsupported event type: ' + e)
-    }
-
-    this.eventHandlers.push({
-      event: e,
-      callback: callback
-    })
-  }
-
-  // Parse Callback API's message
   async parseRequest (body) {
     var obj = body.object
-    var type = body.type
+    var event = body.type
 
-    this.stats.event(type)
+    var $ = new Context(this.api, event, obj, obj.text)
+    await this.event(event, $)
+  }
 
-    if (type === 'message_new') {
+  async event (name, $) {
+    this.stats.event(name)
+
+    if (this.eventHandlers[name]) {
       try {
-        await this.handleMessage(obj)
-      } catch (e) {
-        await this.handleHandlerError(obj, e)
+        await this.eventHandlers[name]($)
+
+        if ($.autoSend) {
+          await $.send()
+        }
+      } catch (error) {
+        warn(`Error in handler: ${error}`)
+
+        if (name !== 'handler_error') {
+          await this.event('handler_error', $)
+        }
       }
     } else {
-      try {
-        await this.handleEvent(type, obj)
-      } catch (e) {
-        warn(e)
+      if (!this.noEventWarnings) {
+        warn(`No handler for event: ${name}`)
       }
     }
   }
 
-  // Handles message_new
-  async handleMessage (obj) {
-    var result = await this.handleWithCommand(obj)
+  registerMessageNewHandler () {
+    this.on('message_new', async $ => {
+      var isCommandHandled = await this.handleCommand($)
 
-    if (result === 'no') {
-      result = await this.handleWithRegex(obj)
+      if (!isCommandHandled) {
+        var isRegexHandled = await this.handleRegex($)
 
-      if (result === 'no') {
-        await this.noMatchFound(obj)
+        if (!isRegexHandled) {
+          await this.event('no_match', $)
+        }
       }
-    }
+    })
+    this.eventCount-- // Do not count 'message_new' event
   }
 
-  async handleWithCommand (obj) {
-    var msg = obj.text
+  async handleCommand ($) {
+    var prefix = this.escapeRegex(this.cmdPrefix || '')
 
-    // See if there is a matching command
     for (var i = 0; i < this.commandHandlers.length; i++) {
       var cmdHandler = this.commandHandlers[i]
       var cmd = this.escapeRegex(cmdHandler.command)
-      var prefix = this.escapeRegex(this.cmdPrefix || '')
       var cmdRegex = new RegExp(`^(${prefix}${cmd})( +${prefix}${cmd})*`, 'gi')
-      var cleanMessage = msg.replace(cmdRegex, '')
 
-      if (cmdRegex.test(msg)) {
-        var $ = new Context(this.api, 'message_new', obj, cleanMessage)
+      if (cmdRegex.test($.msg)) {
+        $.msg = $.msg.replace(cmdRegex, '')
         await cmdHandler.callback($)
-
-        if ($.autoSend) {
-          await $.send()
-        }
-
-        return Promise.resolve()
+        return true
       }
     }
 
-    return Promise.resolve('no')
+    return false
   }
 
-  async handleWithRegex (obj) {
-    var msg = obj.text
-
-    // Try to use a regex handler
+  async handleRegex ($) {
     for (var i = 0; i < this.regexHandlers.length; i++) {
       var regexHandler = this.regexHandlers[i]
 
-      if (regexHandler.regex.test(msg)) {
-        var $ = new Context(this.api, 'message_new', obj, msg)
+      if (regexHandler.regex.test($.msg)) {
         await regexHandler.callback($)
-
-        if ($.autoSend) {
-          await $.send()
-        }
-
-        return Promise.resolve()
+        return true
       }
     }
 
-    return Promise.resolve('no')
-  }
-
-  async noMatchFound (obj) {
-    // Call the no_match event
-    warn(`Don't know how to respond to: '${obj.text.toString().replace(/\n/g, '\\n')}' - calling 'no_match' event`)
-    this.stats.event('no_match')
-    return this.handleEvent('no_match', obj)
-  }
-
-  async handleHandlerError (obj, e) {
-    warn(`Error happened in handler, calling 'handler_error' event: ${e}`)
-    this.stats.event('handler_error')
-    return this.handleEvent('handler_error', obj)
-  }
-
-  // Handle a special event
-  async handleEvent (e, obj) {
-    try {
-      if (!this.possibleEvents.includes(e)) {
-        return Promise.reject(new Error('Received an unsupported event type: ' + e))
-      }
-
-      for (var i = 0; i < this.eventHandlers.length; i++) {
-        var eventHandler = this.eventHandlers[i]
-        if (eventHandler.event === e) {
-          var $ = new Context(this.api, e, obj, obj.text)
-          await eventHandler.callback($)
-
-          if ($.autoSend) {
-            await $.send()
-          }
-
-          return Promise.resolve()
-        }
-      }
-
-      if (this.noEventWarnings) {
-        return Promise.resolve()
-      } else {
-        return Promise.reject(new Error('No handler found for event: ' + e))
-      }
-    } catch (err) {
-      if (e === 'handler_error') {
-        warn(`Error happened in 'handler_error' handler!`)
-      } else {
-        this.handleHandlerError(obj, err)
-      }
-    }
+    return false
   }
 
   help () {

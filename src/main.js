@@ -37,7 +37,7 @@ export default class ChatBot {
 
     this.core.lock()
 
-    var eventCount = this.core.eventHandlers.length
+    var eventCount = this.core.eventCount
     var commandCount = this.core.commandHandlers.length
     var regexCount = this.core.regexHandlers.length
     info(`Using ${eventCount} event, ${commandCount} command, and ${regexCount} regex handlers.`)
