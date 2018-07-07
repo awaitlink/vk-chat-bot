@@ -4,8 +4,8 @@ const request = require('request-promise')
 
 export default class API {
   constructor (vkToken, stats) {
-    requireParam('API.constructor', vkToken, 'VK API token')
-    requireParam('API.constructor', stats, 'statistics object')
+    requireParam('API#constructor', vkToken, 'VK API token')
+    requireParam('API#constructor', stats, 'statistics object')
 
     this.vkToken = vkToken
     this.stats = stats

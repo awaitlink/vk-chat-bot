@@ -20,41 +20,42 @@ npm i vk-chat-bot
 
 #### Example
 You can find the example in the [`vk-chat-bot-example`](https://github.com/u32i64/vk-chat-bot-example) repository.    
-Also, you can take a look at the **step-by-step** [Heroku Chat Bot](https://github.com/u32i64/vk-chat-bot/wiki/Heroku-Deploy-Guide) creation guide.
+Also, you can take a look at the **step-by-step [Heroku Deploy Guide](https://github.com/u32i64/vk-chat-bot/wiki/Heroku-Deploy-Guide)**.
 
 #### Quick Start
 ###### 1. Preparation
-First, `require()` the `ChatBot` class from `vk-chat-bot`:
+First, `require()` the library:
 ```js
-const ChatBot = require('vk-chat-bot')
+const vk = require('vk-chat-bot')
 ```
 
-Then, initialize your bot (see [Params object](https://github.com/u32i64/vk-chat-bot/wiki/Chat-Bot#params-object) for more information about `params`):
+Then, create your bot using the `vk.bot` function (see [Params object](https://github.com/u32i64/vk-chat-bot/wiki/Main#params-object) for more information about `params`):
 ```js
 var params = {
   vk_token: 'your_vk_access_token',
   confirmation_token: 'f123456',
   group_id: 1234567,
   secret: 's3r10us1y_s3cr3t_phr4s3',
+  port: 12345,
 
   cmd_prefix: "/"
 }
 
-var bot = new ChatBot(params)
+var {bot, core} = vk.bot(params)
 ```
 
 ###### 2. Behavior setup
 
-See [Setting behavior](https://github.com/u32i64/vk-chat-bot/wiki/Chat-Bot#setting-behavior) wiki to learn more about behavior functions.   
+See [`Core`](https://github.com/u32i64/vk-chat-bot/wiki/Core) wiki to learn more about behavior functions.   
 Here are some examples:
 ```js
 // No matching handler is found
-bot.on('no_match', $ => {
+core.on('no_match', $ => {
   $.text("I don't know how to respond to your message.")
 })
 ```
 ```js
-bot.cmd('keyboard', $ => {
+core.cmd('keyboard', $ => {
   var Keyboard = $.kbd.Keyboard
   var Button = $.kbd.Button
   var colors = $.kbd.colors
@@ -79,9 +80,9 @@ bot.cmd('keyboard', $ => {
 ```
 ```js
 // Searches for cmd_prefix + 'help', e.g. "/help"
-bot.cmd('help', $ => {
+core.cmd('help', $ => {
   // bot.help() returns the help message
-  $.text('Test Bot v1.0' + bot.help())
+  $.text('Test Bot v1.0' + core.help())
 
   // Attach an image from
   // https://vk.com/team?z=photo6492_45624077
@@ -90,18 +91,16 @@ bot.cmd('help', $ => {
 ```
 ```js
 // Use case-insensitive regex to find words "hi", "hello" or "hey"
-bot.regex(/h(i|ello|ey)/i, $ => {
+core.regex(/h(i|ello|ey)/i, $ => {
   $.text('Hello, I am a test bot. You said: ' + $.msg)
 })
 ```
 
 ###### 3. Start it!
-Specify the server port and start the bot:
+Start the bot:
 
 ```js
-var port = 12345
-
-bot.start(port)
+bot.start()
 ```
 
 The bot will log some useful information, see [Logging](https://github.com/u32i64/vk-chat-bot/wiki/Logging) wiki for more information.

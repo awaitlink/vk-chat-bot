@@ -1,18 +1,24 @@
 import test from 'ava'
 
-import ChatBot from '../src/main'
-import {Keyboard, Button, colors} from '../src/api/keyboard'
+import vk from '../src/main'
 import {error, requireParam, requireFunction} from '../src/extra/log'
+
+var Keyboard = vk.kbd.Keyboard
+var Button = vk.kbd.Button
+var colors = vk.kbd.colors
 
 var botParams = {
   vk_token: 'test',
   confirmation_token: 'test',
   group_id: 'test',
   secret: 'test',
+  port: 12345,
   cmd_prefix: '/'
 }
 
 process.env.TEST_MODE = true
+
+// Log
 
 test('Log#error() throws error', t => {
   t.throws(() => {
@@ -32,118 +38,106 @@ test('Log#requireFunction() no error when argument is a function', t => {
   })
 })
 
-test('Log#requireParams() error when at least one argument is invalid', t => {
+test('Log#requireParams() error when argument is invalid', t => {
   t.throws(() => {
     requireParam('test', undefined, 'something')
   })
 })
 
-test('Log#requireParams() no error when all arguments are valid', t => {
+test('Log#requireParams() no error when argument is valid', t => {
   t.notThrows(() => {
     requireParam('test', 'thing', 'something')
   })
 })
 
-test('ChatBot#constructor() error when missing required params', t => {
+// Bot
+
+test('vk.bot() error when missing required params', t => {
   t.throws(() => {
-    /* eslint-disable no-new */
-    new ChatBot({
+    vk.bot({
       group_id: 'test',
       cmd_prefix: 'test'
     })
-    /* eslint-enable no-new */
   })
 })
 
-test('ChatBot#constructor() no error when everything\'s right', t => {
+test('Bot#constructor() no error when everything\'s right', t => {
   t.notThrows(() => {
-    /* eslint-disable no-new */
-    new ChatBot(botParams)
-    /* eslint-enable no-new */
+    vk.bot(botParams)
   })
 })
 
-test('ChatBot#start() error when no port specified', t => {
+// Core
+
+test('Core#on() error when event name is wrong', t => {
   t.throws(() => {
-    var bot = new ChatBot(botParams)
-    bot.start()
+    var obj = vk.bot(botParams)
+    obj.core.on('', () => {})
   })
 })
 
-test('ChatBot#start() no error when everything\'s right', t => {
-  t.notThrows(() => {
-    var bot = new ChatBot(botParams)
-    bot.start(12345)
-  })
-})
-
-test('Behavior#on() error when event name is wrong', t => {
+test('Core#on() error when missing parameters', t => {
   t.throws(() => {
-    var bot = new ChatBot(botParams)
-    bot.on('', () => {})
+    var obj = vk.bot(botParams)
+    obj.core.on('no_match')
   })
 })
 
-test('Behavior#on() error when missing parameters', t => {
+test('Core#on() no error when everything\'s right', t => {
+  t.notThrows(() => {
+    var obj = vk.bot(botParams)
+    obj.core.on('no_match', $ => {})
+  })
+})
+
+test('Core#cmd() error missing parameters', t => {
   t.throws(() => {
-    var bot = new ChatBot(botParams)
-    bot.on('no_match')
+    var obj = vk.bot(botParams)
+    obj.core.cmd('test')
   })
 })
 
-test('Behavior#on() no error when everything\'s right', t => {
+test('Core#cmd() no error when everything\'s right (3 params)', t => {
   t.notThrows(() => {
-    var bot = new ChatBot(botParams)
-    bot.on('no_match', $ => {})
+    var obj = vk.bot(botParams)
+    obj.core.cmd('test', $ => {}, 'sure thing tests something')
   })
 })
 
-test('Behavior#cmd() error missing parameters', t => {
+test('Core#cmd() no error when everything\'s right (2 params)', t => {
+  t.notThrows(() => {
+    var obj = vk.bot(botParams)
+    obj.core.cmd('test', $ => {})
+  })
+})
+
+test('Core#regex() error when missing parameters', t => {
   t.throws(() => {
-    var bot = new ChatBot(botParams)
-    bot.cmd('test')
+    var obj = vk.bot(botParams)
+    obj.core.regex(/.*/)
   })
 })
 
-test('Behavior#cmd() no error when everything\'s right (3 params)', t => {
+test('Core#regex() no error when everything\'s right', t => {
   t.notThrows(() => {
-    var bot = new ChatBot(botParams)
-    bot.cmd('test', $ => {}, 'sure thing tests something')
+    var obj = vk.bot(botParams)
+    obj.core.regex(/.*/, $ => {})
   })
 })
 
-test('Behavior#cmd() no error when everything\'s right (2 params)', t => {
-  t.notThrows(() => {
-    var bot = new ChatBot(botParams)
-    bot.cmd('test', $ => {})
-  })
-})
+test('Core#help() should return a proper help message', t => {
+  var obj = vk.bot(botParams)
 
-test('Behavior#regex() error when missing parameters', t => {
-  t.throws(() => {
-    var bot = new ChatBot(botParams)
-    bot.regex(/.*/)
-  })
-})
-
-test('Behavior#regex() no error when everything\'s right', t => {
-  t.notThrows(() => {
-    var bot = new ChatBot(botParams)
-    bot.regex(/.*/, $ => {})
-  })
-})
-
-test('Behavior#help() should return a proper help message', t => {
-  var bot = new ChatBot(botParams)
-
-  bot.cmd('test', $ => {}, 'sure thing tests something')
-  bot.cmd('help', $ => {}, 'shows the help message')
+  obj.core.cmd('test', $ => {}, 'sure thing tests something')
+  obj.core.cmd('help', $ => {}, 'shows the help message')
 
   var message = '\n/test - sure thing tests something\n/help - shows the help message\n'
-  t.is(bot.help(), message)
+  t.is(obj.core.help(), message)
 })
 
-test('Keyboard#getJSON should return valid keyboard JSON (no parameters)', t => {
+// Keyboard
+
+test('Keyboard#getJSON should return valid keyboard JSON (empty keyboard)', t => {
   var kbd = new Keyboard()
 
   t.is(

@@ -1,10 +1,72 @@
 # Changelog
-All notable changes to this project will be documented in this file.
-
+All notable changes to this project will be documented in this file.    
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-**Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here (adding them won't be easy, since they're not documented anywhere except commit messages).
+**Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
+
+## [10.0.0] - 2018-07-07
+### Changed
+- The way how the bot is created is a little different (see [wiki](https://github.com/u32i64/vk-chat-bot/wiki/) for details or below for migration guide)
+
+### Fixed
+- Put warning when calling `no_match` event back in
+
+### Migration Guide (from [v9.3.1](#931---2018-07-05))
+**Instead of:**
+```js
+const ChatBot = require('vk-chat-bot')
+```
+```js
+var params = {/* ... */}
+```
+```js
+var bot = new ChatBot(params)
+```
+```js
+bot.on(/* ... */)
+bot.cmd(/* ... */)
+bot.regex(/* ... */)
+
+bot.noEventWarnings()
+var helpMessage = bot.help()
+```
+```js
+bot.start(/* port */)
+```
+
+**Use:**
+```js
+const vk = require('vk-chat-bot')
+```
+```js
+var params = {
+  /* ... */,
+  port: 12345
+}
+```
+```js
+var {bot, core} = vk.bot(params)
+```
+```js
+core.on(/* ... */)
+core.cmd(/* ... */)
+core.regex(/* ... */)
+
+core.noEventWarnings()
+var helpMessage = core.help()
+```
+```js
+bot.start()
+```
+
+**Also, to get the keyboard classes and object, now use:**
+
+```js
+var Keyboard = vk.kbd.Keyboard
+var Button = vk.kbd.Button
+var colors = vk.kbd.colors
+```
 
 ## [9.3.1] - 2018-07-05
 ### Fixed

@@ -1,14 +1,15 @@
 import {error, warn, requireParam, requireFunction} from './extra/log'
-import Stats from './extra/stats'
-import API from './api/api'
 import Context from './api/context'
 import '@babel/polyfill'
 
 export default class Core {
-  constructor (vkToken, cmdPrefix) {
-    this.stats = new Stats()
+  constructor (api, stats, cmdPrefix) {
+    requireParam('Core#constructor', api, 'API object')
+    requireParam('Core#constructor', stats, 'statistics object')
+    requireParam('Core#constructor', cmdPrefix, 'command prefix')
 
-    this.api = new API(vkToken, this.stats)
+    this.api = api
+    this.stats = stats
     this.cmdPrefix = cmdPrefix
 
     this.locked = false
@@ -29,9 +30,14 @@ export default class Core {
     this.commandHandlers = []
     this.regexHandlers = []
 
-    this.noEventWarnings = false
+    this.eventWarnings = true
 
     this.registerMessageNewHandler()
+  }
+
+  noEventWarnings () {
+    this.eventWarnings = false
+    warn('Warnings about missing event handlers were disabled')
   }
 
   lock () {
@@ -129,7 +135,7 @@ export default class Core {
         }
       }
     } else {
-      if (!this.noEventWarnings) {
+      if (this.eventWarnings) {
         warn(`No handler for event: ${name}`)
       }
     }
@@ -143,6 +149,7 @@ export default class Core {
         var isRegexHandled = await this.handleRegex($)
 
         if (!isRegexHandled) {
+          warn(`Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
           await this.event('no_match', $)
           return
         }

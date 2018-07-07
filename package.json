@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "9.3.1",
+  "version": "10.0.0",
   "description": "A library for easy creation of chat bots for VK communities (uses Callback API).",
   "keywords": [
     "api",

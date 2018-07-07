@@ -1,4 +1,4 @@
-import * as kbd from './keyboard'
+import {Keyboard} from './keyboard'
 import {warn, requireParam} from '../extra/log'
 import '@babel/polyfill'
 
@@ -8,8 +8,6 @@ export default class Context {
     this.obj = object
     this.msg = message
     this.eventType = eventType
-
-    this.kbd = kbd
 
     this.autoSend = true
 
@@ -45,7 +43,7 @@ export default class Context {
   }
 
   removeKeyboard () {
-    this.keyboard(new kbd.Keyboard())
+    this.keyboard(new Keyboard())
   }
 
   async send () {
