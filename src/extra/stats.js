@@ -1,4 +1,4 @@
-require('colors')
+import 'colors'
 
 export default class Stats {
   constructor () {

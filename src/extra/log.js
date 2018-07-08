@@ -1,4 +1,4 @@
-require('colors')
+import 'colors'
 
 export var types = {
   progress: ':',
