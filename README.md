@@ -55,11 +55,11 @@ core.on('no_match', $ => {
 })
 ```
 ```js
-core.cmd('keyboard', $ => {
-  var Keyboard = $.kbd.Keyboard
-  var Button = $.kbd.Button
-  var colors = $.kbd.colors
+var Keyboard = vk.kbd.Keyboard
+var Button = vk.kbd.Button
+var colors = vk.kbd.colors
 
+core.cmd('keyboard', $ => {
   // Set 'true' instead of 'false' to make it disapper after a button was pressed
   var kbd = new Keyboard([
     // Rows

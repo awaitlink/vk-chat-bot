@@ -5,9 +5,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
+## [10.0.1] - 2018-07-08
+### Changed
+- Now using `import 'colors'` instead of `require('colors')`
+
+### Fixed
+- README example issue
+
 ## [10.0.0] - 2018-07-07
 ### Changed
-- The way how the bot is created is a little different (see [wiki](https://github.com/u32i64/vk-chat-bot/wiki/) for details or below for migration guide)
+- The way how the bot is created is a bit different (see [wiki](https://github.com/u32i64/vk-chat-bot/wiki/) for details or below for migration guide)
 
 ### Fixed
 - Put warning when calling `no_match` event back in
