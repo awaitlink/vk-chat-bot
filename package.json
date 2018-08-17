@@ -64,5 +64,12 @@
     "require": [
       "@babel/register"
     ]
-  }
+  },
+  "files": [
+    "lib/lib.min.js",
+    "lib/lib.min.js.map",
+    "LICENSE",
+    "CHANGELOG.md",
+    "README.md"
+  ]
 }
