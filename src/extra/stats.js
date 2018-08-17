@@ -1,3 +1,4 @@
+import {info} from './log'
 require('colors')
 
 export default class Stats {
@@ -5,20 +6,22 @@ export default class Stats {
     this.rx = 0 // requests from the Callback API
     this.tx = 0 // messages sent
 
-    this.mn = 0 // message_new
-    this.ma = 0 // message_allow
-    this.md = 0 // message_deny
-    this.me = 0 // message_edit
-    this.mr = 0 // message_reply
-    this.mts = 0 // message_typing_state
+    this.eventCounters = {
+      'message_new': 0,
+      'message_reply': 0,
+      'message_edit': 0,
+      'message_typing_state': 0,
+      'message_allow': 0,
+      'message_deny': 0,
 
-    this.nm = 0 // no_match
-    this.he = 0 // handler_error
+      'no_match': 0,
+      'handler_error': 0
+    }
 
     this.previous = ''
 
     if (!process.env.TEST_MODE) {
-      this.print()
+      info('Stats initialized')
 
       setInterval(() => {
         this.print()
@@ -32,34 +35,10 @@ export default class Stats {
 
   event (name) {
     this.rx++
+    this.eventCounters[name]++
 
-    switch (name) {
-      case 'message_new':
-        this.mn++
-        break
-      case 'message_allow':
-        this.ma++
-        break
-      case 'message_deny':
-        this.md++
-        break
-      case 'message_edit':
-        this.me++
-        break
-      case 'message_reply':
-        this.mr++
-        break
-      case 'message_typing_state':
-        this.mts++
-        break
-      case 'no_match':
-        this.rx-- // Not from Callback API
-        this.nm++
-        break
-      case 'handler_error':
-        this.rx-- // Not from Callback API
-        this.he++
-        break
+    if ((name === 'no_match') || (name === 'handler_error')) {
+      this.rx-- // Not from Callback API
     }
   }
 
@@ -67,15 +46,15 @@ export default class Stats {
     var rx = this.rx.toString().green
     var tx = this.tx.toString().cyan
 
-    var mn = this.mn.toString().green
-    var ma = this.ma.toString().green
-    var md = this.md.toString().red
-    var me = this.me.toString().green
-    var mr = this.mr.toString().cyan
-    var mts = this.mts.toString().green
+    var mn = this.eventCounters['message_new'].toString().green
+    var ma = this.eventCounters['message_allow'].toString().green
+    var md = this.eventCounters['message_deny'].toString().red
+    var me = this.eventCounters['message_edit'].toString().green
+    var mr = this.eventCounters['message_reply'].toString().cyan
+    var mts = this.eventCounters['message_typing_state'].toString().green
 
-    var nm = this.nm.toString().magenta
-    var he = this.he.toString().magenta
+    var nm = this.eventCounters['no_match'].toString().magenta
+    var he = this.eventCounters['handler_error'].toString().magenta
 
     var hash = `${rx}|${tx}|${ma}/${md}|${mts}|${mn}|${me}|${mr}|${nm}|${he}`
 
