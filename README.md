@@ -49,33 +49,37 @@ var {bot, core} = vk.bot(params)
 See [`Core`][wiki/Core] wiki to learn more about behavior functions.   
 Here are some examples:
 ```js
-// No matching handler is found
-core.on('no_match', $ => {
-  $.text("I don't know how to respond to your message.")
-})
-```
-```js
+// Use stuff from the library...
 var Keyboard = vk.kbd.Keyboard
 var Button = vk.kbd.Button
 var colors = vk.kbd.colors
 
-core.cmd('keyboard', $ => {
-  // Set 'true' instead of 'false' to make it disapper after a button was pressed
-  var kbd = new Keyboard([
-    // Rows
-    [
-      new Button('Default'),
-      new Button('Primary', colors.primary),
-      new Button('Negative', colors.negative),
-      new Button('Positive', colors.positive)
-    ],
-    [
-      new Button('Maximum rows is 10, columns - 4.')
-    ],
-  ], false)
+// ...to create a keyboard like this.
+// +---------+---------+----------+----------+
+// | Default | Primary | Negative | Positive |
+// +---------+---------+----------+----------+
+// |     Maximum rows is 10, columns - 4.    |
+// +-----------------------------------------+
+var kbd = new Keyboard([
+  [ /* Row (array of buttons) */
+    new Button('Default'),
+    new Button('Primary', colors.primary),
+    new Button('Negative', colors.negative),
+    new Button('Positive', colors.positive)
+  ],
+  [
+    new Button('Maximum rows is 10, columns - 4.')
+  ],
+])
 
-  $.text('Here is your keyboard, as promised.')
+// When user presses the `Start` button...
+// (you have to enable the button in community settings)
+core.on('start', $ => {
+  // ...send them our keyboard.
+  $.text("Thanks for messaging us! Choose from the options below:")
   $.keyboard(kbd)
+
+  // Here, $.send() is added automatically.
 })
 ```
 ```js
@@ -90,7 +94,7 @@ core.cmd('help', $ => {
 }, 'shows the help message')
 ```
 ```js
-// Use case-insensitive regex to find words "hi", "hello" or "hey"
+// Use case-insensitive regular expression to find words "hi", "hello" or "hey"
 core.regex(/h(i|ello|ey)/i, $ => {
   $.text('Hello, I am a test bot. You said: ' + $.msg)
 })
