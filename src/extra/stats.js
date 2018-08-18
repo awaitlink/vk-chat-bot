@@ -14,6 +14,8 @@ export default class Stats {
       'message_allow': 0,
       'message_deny': 0,
 
+      'start': 0,
+
       'no_match': 0,
       'handler_error': 0
     }
@@ -37,7 +39,8 @@ export default class Stats {
     this.rx++
     this.eventCounters[name]++
 
-    if ((name === 'no_match') || (name === 'handler_error')) {
+    var internalEvents = ['start', 'no_match', 'handler_error']
+    if (internalEvents.includes(name)) {
       this.rx-- // Not from Callback API
     }
   }
@@ -53,20 +56,21 @@ export default class Stats {
     var mr = this.eventCounters['message_reply'].toString().cyan
     var mts = this.eventCounters['message_typing_state'].toString().green
 
+    var st = this.eventCounters['start'].toString().green
+
     var nm = this.eventCounters['no_match'].toString().magenta
     var he = this.eventCounters['handler_error'].toString().magenta
 
-    var hash = `${rx}|${tx}|${ma}/${md}|${mts}|${mn}|${me}|${mr}|${nm}|${he}`
+    var up = process.uptime().toString()
+    var message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`
 
-    if (hash === this.previous) {
+    if (message === this.previous) {
       return
     } else {
-      this.previous = hash
+      this.previous = message
     }
 
-    var up = process.uptime().toString()
-    var message = `[up:${up}s] rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn} edit:${me} reply:${mr} | no_match:${nm} err:${he}`
-
+    message = `[up:${up}s] ` + message
     console.log(message)
   }
 }

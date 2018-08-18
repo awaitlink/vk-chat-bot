@@ -23,6 +23,7 @@ export default class Core {
       message_allow: null,
       message_deny: null,
 
+      start: null,
       no_match: null,
       handler_error: null
     }
@@ -143,6 +144,16 @@ export default class Core {
 
   registerMessageNewHandler () {
     this.on('message_new', async $ => {
+      var payload = $.obj.payload
+      if (payload) {
+        try {
+          if (JSON.parse(payload).command === 'start') {
+            await this.event('start', $)
+            return
+          }
+        } catch (e) { /* JSON Parse Error */ }
+      }
+
       var isCommandHandled = await this.handleCommand($)
 
       if (!isCommandHandled) {
