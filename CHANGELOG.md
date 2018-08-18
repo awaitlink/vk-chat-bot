@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Statistics no longer show empty at startup, instead `Stats initialized` shows up
 - Use `package.json` `"files"` field instead of `.npmignore`
 - Tarball will now include the source map
+- Update dependencies
 
 ## [10.0.4] - 2018-08-07
 ### Changed
