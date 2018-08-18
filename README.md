@@ -14,8 +14,8 @@
 
 ## Usage
 #### Installation
-```bash
-npm i vk-chat-bot
+```console
+$ npm i vk-chat-bot
 ```
 
 #### Example
@@ -106,33 +106,15 @@ bot.start()
 The bot will log some useful information, see [Logging][wiki/Logging] wiki for more information.
 
 ## Contributing
-- Having issues?    
-  Found a bug?    
-  Something does not seem right?    
-  Or you have a feature request?    
-  **Open an [issue][issues].**
-
-- You know how to make `vk-chat-bot` better?
-  - Fork the repository.
-  - Clone the fork to your computer:
-    ```bash
-    git clone git@github.com:username/vk-chat-bot
-    ```
-  - Make your changes.
-  - Stage files, commit them, and push the commit to your fork:
-    ```bash
-    git add *
-    git commit -m "Small description of what you changed"
-    git push -u origin master
-    ```
-  - **Open a [pull request][pulls]!**
+- Something does not seem right or you have a feature request? **Open an [issue][issues].**
+- You know how to make `vk-chat-bot` better? **Open a [pull request][pulls]!**
 
 ## License
 This project is licensed under the terms of the **[MIT](https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE)** license.
 
 <!-- LINKS -->
 
-[badges/standard]:  https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=for-the-badge
+[badges/standard]:  https://img.shields.io/badge/code_style-standard-6200ea.svg?style=for-the-badge
 [badges/travis]:    https://img.shields.io/travis/u32i64/vk-chat-bot/master.svg?style=for-the-badge&logo=travis
 [badges/npm]:       https://img.shields.io/npm/v/vk-chat-bot.svg?style=for-the-badge
 [badges/downloads]: https://img.shields.io/npm/dt/vk-chat-bot.svg?style=for-the-badge
