@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use `package.json` `"files"` field instead of `.npmignore`
 - Tarball will now include the source map
 
+## [10.0.4] - 2018-08-07
+### Changed
+- Update dependencies
+
+## [10.0.3] - 2018-07-19
+### Changed
+- Update dependencies
+
 ## [10.0.2] - 2018-07-08
 ### Fixed
 - Revert to using `require('colors')`
