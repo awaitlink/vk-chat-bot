@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
-## [Unreleased] - ????-??-??
+## [10.1.0] - 2018-08-19
 ### Added
 - Event `start`: triggers when the message's payload is `{"command":"start"}` (when user pressed the `Start` button)
 - Accordingly, added the `start` event to stats
