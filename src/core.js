@@ -1,4 +1,4 @@
-import {error, warn, requireParam, requireFunction} from './extra/log'
+import {err, warn, requireParam, requireFunction} from './extra/log'
 import Context from './api/context'
 import '@babel/polyfill'
 
@@ -47,7 +47,7 @@ export default class Core {
 
   isLocked () {
     if (this.locked) {
-      warn('You tried to register a handler while the bot is running. This action was prevented for safety reasons.')
+      warn('You tried to register a handler while the bot is running. This action was prevented for safety reasons')
     }
 
     return this.locked
@@ -65,14 +65,14 @@ export default class Core {
     requireFunction(callback)
 
     if (!Object.keys(this.eventHandlers).includes(event)) {
-      error(`Tried to register a handler for an unsupported event type: ${event}`)
+      err(`Tried to register a handler for an unsupported event type: ${event}`)
     }
 
     if (!this.eventHandlers[event]) {
       this.eventHandlers[event] = callback
       this.eventCount++
     } else {
-      error(`Tried to register a second handler for ${event}. Only the first handler will work.`)
+      err(`Tried to register a second handler for ${event}. Only the first handler will work`)
     }
   }
 

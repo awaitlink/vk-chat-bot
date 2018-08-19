@@ -71,6 +71,7 @@ export default class Stats {
     }
 
     message = `[up:${up}s] ` + message
-    console.log(message)
+
+    info(message)
   }
 }

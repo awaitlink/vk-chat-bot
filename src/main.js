@@ -9,6 +9,11 @@ import * as log from './extra/log'
 import Stats from './extra/stats'
 
 function bot (params) {
+  process.on('uncaughtException', err => {
+    console.log(err)
+    process.exit(1)
+  })
+
   log.requireParam('bot', params, 'parameters for the bot')
   log.requireParam('bot', params.vk_token, 'VK API token')
   log.requireParam('bot', params.confirmation_token, 'confirmation token (from Callback API settings)')

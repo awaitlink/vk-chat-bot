@@ -1,11 +1,11 @@
 require('colors')
 
 export var types = {
-  progress: ':',
-  information: 'i',
-  warning: '!',
-  response: '<',
-  error: '!!'
+  progress: 'progress'.cyan,
+  info: 'info'.blue,
+  warn: 'warn'.yellow,
+  res: 'response'.green,
+  err: 'err!'.red
 }
 
 export default function log (type, text) {
@@ -13,32 +13,22 @@ export default function log (type, text) {
     return
   }
 
-  if (process.env.TEST_MODE && type !== types.error) {
+  if (process.env.TEST_MODE && type !== types.err) {
     return
   }
 
-  var message = `[${type}] ${text}`
+  var message = `vk-chat-bot ${type} ${text}`
 
-  switch (type) {
-    case types.progress:
-      message = message.cyan
-      break
-    case types.information:
-      message = message.green
-      break
-    case types.warning:
-      message = message.yellow
-      break
-    case types.error:
-      message = message.red
-      throw new Error(message)
+  if (type === types.err) {
+    text = message.red
+    throw new Error(message)
+  } else {
+    console.log(message)
   }
-
-  console.log(message)
 }
 
 export function info (info) {
-  log(types.information, info)
+  log(types.info, info)
 }
 
 export function progress (info) {
@@ -50,10 +40,10 @@ export function warn (info) {
     info = info.message
   }
 
-  log(types.warning, info)
+  log(types.warn, info)
 }
 
-export function error (reason) {
+export function err (reason) {
   if (reason instanceof Error) {
     reason = reason.message
   }
@@ -61,31 +51,31 @@ export function error (reason) {
   if (!process.env.TEST_MODE) {
     var note = `[⋅] An error occured. The messages below may contain
 [⋅] useful information about the problem.
-[⋅] If you believe this is vk-chat-bot's fault,
-[⋅] please report the issue at <https://github.com/u32i64/vk-chat-bot/issues>.`.inverse
+[⋅] If you think this is an issue with 'vk-chat-bot' itself,
+[⋅] please report it at <https://github.com/u32i64/vk-chat-bot/issues>.`.inverse
 
     console.log(`\n\n${note}\n\n`)
   }
 
-  log(types.error, reason)
+  log(types.err, reason)
 }
 
-export function response (info) {
-  log(types.response, info)
+export function res (info) {
+  log(types.res, info)
 }
 
 export function requireParam (functionName, param, name) {
   if (!param) {
     if (name) {
-      error(`In function '${functionName}': expected: '${name}', got: '${param}'.`)
+      err(`In function '${functionName}': expected: '${name}', got: '${param}'.`)
     } else {
-      error(`Bad parameter for function '${functionName}': '${param}'.`)
+      err(`Bad parameter for function '${functionName}': '${param}'.`)
     }
   }
 }
 
 export function requireFunction (param) {
   if (typeof param !== 'function') {
-    error(`Callback function that you specified is not a function.`)
+    err(`Callback function that you specified is not a function.`)
   }
 }

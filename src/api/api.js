@@ -52,9 +52,9 @@ export default class API {
     }
 
     if (!ok) {
-      return Promise.reject(new Error('Token permission "messages" is missing. Bot will be unable to send any messages.'))
+      return Promise.reject(new Error('Token permission "messages" is missing. Bot will be unable to send any messages'))
     } else {
-      return Promise.resolve('Token permission "messages" is present.')
+      return Promise.resolve('Token permission "messages" is present')
     }
   }
 
