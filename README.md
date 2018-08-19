@@ -20,7 +20,7 @@ $ npm i vk-chat-bot
 
 #### Example
 You can find the example in the [`vk-chat-bot-example`][example] repository.    
-Also, you can take a look at the **step-by-step [Heroku Deploy Guide][wiki/Heroku-Deploy-Guide]**.
+Also, you can take a look at the **step-by-step [Heroku Deploy Guide][wiki/Heroku-Deploy-Guide]**, which will guide you through the process of deploying [`vk-chat-bot-example`][example] to Heroku.
 
 #### Quick Start
 ###### 1. Preparation
@@ -85,7 +85,7 @@ core.on('start', $ => {
 ```js
 // Searches for cmd_prefix + 'help', e.g. "/help"
 core.cmd('help', $ => {
-  // bot.help() returns the help message
+  // core.help() returns the help message
   $.text('Test Bot v1.0' + core.help())
 
   // Attach an image from
