@@ -1,12 +1,16 @@
-# VK Chat Bot
+# ❮vk-chat-bot❯
 [![npm version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
 [![Travis build status][badges/travis]][travis]
 [![code style][badges/standard]][standard]  
 
-> This is a **chat bot library** for **VK** *communities* (*groups*).    
-> See the [wiki] for description of all features.    
-> Changelog is available [here][changelog].
+> **A chat bot library for VK communities (*groups*).**    
+> **[documentation »][wiki]** ⋅
+> **[changelog »][changelog]** ⋅
+> [features](#features) ⋅
+> [usage](#usage) ⋅
+> [contributing](#contributing) ⋅
+> [license](#license)
 
 ## Features
 - **Easy to use** - setting up behavior is simple - see [Behavior setup](#2-behavior-setup)
