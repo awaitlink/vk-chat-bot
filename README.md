@@ -4,7 +4,7 @@
 [![Travis build status][badges/travis]][travis]
 [![code style][badges/standard]][standard]  
 
-> **A chat bot library for VK communities (*groups*).**    
+> **A chat bot framework for VK communities (*groups*).**    
 > **[documentation »][wiki]** ⋅
 > **[changelog »][changelog]** ⋅
 > [features](#features) ⋅
@@ -14,7 +14,7 @@
 
 ## Features
 - **Easy to use** - setting up behavior is simple - see [Behavior setup](#2-behavior-setup)
-- **Respects the quota** - the library calls VK API not more then 20 times/second, so you don't exceed the quota
+- **Respects the quota** - the framework calls VK API not more then 20 times/second, so you don't exceed the quota
 
 ## Usage
 #### Installation
@@ -28,7 +28,7 @@ Also, you can take a look at the **step-by-step [Heroku Deploy Guide][wiki/Herok
 
 #### Quick Start
 ###### 1. Preparation
-First, `require()` the library:
+First, `require()` the framework:
 ```js
 const vk = require('vk-chat-bot')
 ```
@@ -53,7 +53,7 @@ var {bot, core} = vk.bot(params)
 See [`Core`][wiki/Core] wiki to learn more about behavior functions.   
 Here are some examples:
 ```js
-// Use stuff from the library...
+// Use stuff from the framework...
 var Keyboard = vk.kbd.Keyboard
 var Button = vk.kbd.Button
 var colors = vk.kbd.colors
