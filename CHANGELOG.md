@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
+## [Unreleased] - ????-??-??
+### Changed
+- Improve log messages
+- Fix name: `vk-chat-bot` is more framework than a library
+
 ## [10.1.1] - 2018-08-19
 ### Changed
 - New log style

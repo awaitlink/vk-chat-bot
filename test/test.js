@@ -1,7 +1,7 @@
 import test from 'ava'
 
 import vk from '../src/main'
-import {error, requireParam, requireFunction} from '../src/extra/log'
+import {err, requireParam, requireFunction} from '../src/extra/log'
 
 var Keyboard = vk.kbd.Keyboard
 var Button = vk.kbd.Button
@@ -20,9 +20,9 @@ process.env.TEST_MODE = true
 
 // Log
 
-test('Log#error() throws error', t => {
+test('Log#err() throws error', t => {
   t.throws(() => {
-    error('Test error')
+    err('test', 'Test error')
   })
 })
 

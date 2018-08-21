@@ -48,12 +48,12 @@ export default class Context {
 
   async send () {
     if (this.eventType === 'message_deny') {
-      warn(`No message was sent to peer ${this.pid} ("message_deny" event)`)
+      warn('ctx', `No message was sent to peer ${this.pid} ("message_deny" event)`)
       return
     }
 
     if (this.replyText === '' && this.attachment === []) {
-      warn(`No message was sent to peer ${this.pid} (text or attachment is required)`)
+      warn('ctx', `No message was sent to peer ${this.pid} (text or attachment is required)`)
       return
     }
 

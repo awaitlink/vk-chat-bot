@@ -38,7 +38,7 @@ export default class Core {
 
   noEventWarnings () {
     this.eventWarnings = false
-    warn('Warnings about missing event handlers were disabled')
+    warn('bot', 'Warnings about missing event handlers were disabled')
   }
 
   lock () {
@@ -47,7 +47,7 @@ export default class Core {
 
   isLocked () {
     if (this.locked) {
-      warn('You tried to register a handler while the bot is running. This action was prevented for safety reasons')
+      warn('bot', 'You tried to register a handler while the bot is running. This action was prevented for safety reasons')
     }
 
     return this.locked
@@ -65,14 +65,18 @@ export default class Core {
     requireFunction(callback)
 
     if (!Object.keys(this.eventHandlers).includes(event)) {
-      err(`Tried to register a handler for an unsupported event type: ${event}`)
+      err('bot', `Cannot register a handler: unsupported event type '${event}'`)
     }
 
     if (!this.eventHandlers[event]) {
       this.eventHandlers[event] = callback
       this.eventCount++
     } else {
-      err(`Tried to register a second handler for ${event}. Only the first handler will work`)
+      if (event === 'message_new') {
+        err('bot', `Cannot register a handler: handler for 'message_new' is defined internally`)
+      } else {
+        err('bot', `Cannot register a handler: duplicate handler for '${event}'`)
+      }
     }
   }
 
@@ -129,7 +133,7 @@ export default class Core {
           await $.send()
         }
       } catch (error) {
-        warn(`Error in handler: ${error}`)
+        warn('bot', `Error in handler: ${error}`)
 
         if (name !== 'handler_error') {
           await this.event('handler_error', $)
@@ -137,7 +141,7 @@ export default class Core {
       }
     } else {
       if (this.eventWarnings) {
-        warn(`No handler for event: ${name}`)
+        warn('bot', `No handler for event '${name}'`)
       }
     }
   }
@@ -160,7 +164,7 @@ export default class Core {
         var isRegexHandled = await this.handleRegex($)
 
         if (!isRegexHandled) {
-          warn(`Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
+          warn('bot', `Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
           await this.event('no_match', $)
           return
         }

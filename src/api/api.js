@@ -18,8 +18,8 @@ export default class API {
     if (!process.env.TEST_MODE) {
       // Check permissions
       this.checkPermissions()
-        .then(e => { info(e) })
-        .catch(e => { warn(e) })
+        .then(e => { info('api', e) })
+        .catch(e => { warn('api', e) })
 
       // Start the queue processing
       setInterval(() => {
@@ -30,7 +30,7 @@ export default class API {
               this.isQueueProcessing = false
             })
             .catch(e => {
-              warn(e)
+              warn('api', e)
               this.isQueueProcessing = false
             })
         }
@@ -118,7 +118,7 @@ export default class API {
     var promise = request(options)
 
     promise.catch((err) => {
-      warn(`Error occured while calling API method '${method}': ${err}`)
+      warn('api', `Error occured while calling API method '${method}': ${err}`)
     })
 
     return promise
@@ -140,7 +140,7 @@ export default class API {
           resolve()
         })
         .catch(e => {
-          warn(e)
+          warn('api', e)
           resolve()
         })
     })
