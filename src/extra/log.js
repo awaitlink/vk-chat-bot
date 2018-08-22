@@ -3,23 +3,22 @@ require('colors')
 export var types = {
   info: 'info'.blue,
   warn: 'warn'.yellow,
-  res: 'response'.green,
+  res: 'resp'.green,
   err: 'err!'.red
 }
 
+const SRC_SPACING = 5
+
 export default function log (src, type, text) {
-  if (text === '') {
-    return
-  }
+  if (text === '') return
+  if (process.env.TEST_MODE && type !== types.err) return
 
-  if (process.env.TEST_MODE && type !== types.err) {
-    return
-  }
+  var spacing = ''
+  for (var i = 0; i < (SRC_SPACING - src.length); i++) spacing += ' '
 
-  var message = `${src} ${type} ${text}`
+  var message = `${spacing}${src} ${type} ${text}`
 
   if (type === types.err) {
-    text = message.red
     throw new Error(message)
   } else {
     console.log(message)

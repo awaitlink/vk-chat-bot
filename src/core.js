@@ -38,7 +38,7 @@ export default class Core {
 
   noEventWarnings () {
     this.eventWarnings = false
-    warn('bot', 'Warnings about missing event handlers were disabled')
+    warn('core', 'Warnings about missing event handlers were disabled')
   }
 
   lock () {
@@ -47,7 +47,7 @@ export default class Core {
 
   isLocked () {
     if (this.locked) {
-      warn('bot', 'You tried to register a handler while the bot is running. This action was prevented for safety reasons')
+      warn('core', 'You tried to register a handler while the bot is running. This action was prevented for safety reasons')
     }
 
     return this.locked
@@ -59,13 +59,13 @@ export default class Core {
       return
     }
 
-    requireParam('Core.on', event, 'event name')
-    requireParam('Core.on', callback, 'callback')
+    requireParam('Core#on', event, 'event name')
+    requireParam('Core#on', callback, 'callback')
 
     requireFunction(callback)
 
     if (!Object.keys(this.eventHandlers).includes(event)) {
-      err('bot', `Cannot register a handler: unsupported event type '${event}'`)
+      err('core', `Cannot register a handler: unsupported event type '${event}'`)
     }
 
     if (!this.eventHandlers[event]) {
@@ -73,9 +73,9 @@ export default class Core {
       this.eventCount++
     } else {
       if (event === 'message_new') {
-        err('bot', `Cannot register a handler: handler for 'message_new' is defined internally`)
+        err('core', `Cannot register a handler: handler for 'message_new' is defined internally`)
       } else {
-        err('bot', `Cannot register a handler: duplicate handler for '${event}'`)
+        err('core', `Cannot register a handler: duplicate handler for '${event}'`)
       }
     }
   }
@@ -86,8 +86,8 @@ export default class Core {
       return
     }
 
-    requireParam('Core.cmd', command, 'command')
-    requireParam('Core.cmd', callback, 'callback')
+    requireParam('Core#cmd', command, 'command')
+    requireParam('Core#cmd', callback, 'callback')
     requireFunction(callback)
 
     this.commandHandlers.push({
@@ -103,8 +103,8 @@ export default class Core {
       return
     }
 
-    requireParam('Core.regex', regex, 'regular expression')
-    requireParam('Core.regex', callback, 'callback')
+    requireParam('Core#regex', regex, 'regular expression')
+    requireParam('Core#regex', callback, 'callback')
 
     requireFunction(callback)
 
@@ -133,7 +133,7 @@ export default class Core {
           await $.send()
         }
       } catch (error) {
-        warn('bot', `Error in handler: ${error}`)
+        warn('core', `Error in handler: ${error}`)
 
         if (name !== 'handler_error') {
           await this.event('handler_error', $)
@@ -141,7 +141,7 @@ export default class Core {
       }
     } else {
       if (this.eventWarnings) {
-        warn('bot', `No handler for event '${name}'`)
+        warn('core', `No handler for event '${name}'`)
       }
     }
   }
@@ -164,7 +164,7 @@ export default class Core {
         var isRegexHandled = await this.handleRegex($)
 
         if (!isRegexHandled) {
-          warn('bot', `Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
+          warn('core', `Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
           await this.event('no_match', $)
           return
         }

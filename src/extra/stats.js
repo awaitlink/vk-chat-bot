@@ -23,7 +23,7 @@ export default class Stats {
     this.previous = ''
 
     if (!process.env.TEST_MODE) {
-      info('stt', 'Stats initialized')
+      info('stat', 'Stats initialized')
 
       setInterval(() => {
         this.print()
@@ -72,6 +72,6 @@ export default class Stats {
 
     message = `[up:${up}s] ` + message
 
-    info('stt', message)
+    info('stat', message)
   }
 }

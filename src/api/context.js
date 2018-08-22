@@ -27,9 +27,9 @@ export default class Context {
   }
 
   attach (type, ownerId, resId, accessKey) {
-    requireParam('Context.attach', type, 'attachment type')
-    requireParam('Context.attach', ownerId, 'owner id')
-    requireParam('Context.attach', resId, 'resource id')
+    requireParam('Context#attach', type, 'attachment type')
+    requireParam('Context#attach', ownerId, 'owner id')
+    requireParam('Context#attach', resId, 'resource id')
 
     if (accessKey) {
       this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`)
