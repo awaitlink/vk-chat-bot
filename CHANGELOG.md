@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Improve log messages
+- Statistics show HH:MM:SS instead of seconds
 - Fix name: `vk-chat-bot` is more framework than a library
 
 ## [10.1.1] - 2018-08-19

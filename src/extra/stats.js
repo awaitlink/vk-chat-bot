@@ -1,5 +1,6 @@
 import {info} from './log'
 require('colors')
+const moment = require('moment')
 
 export default class Stats {
   constructor () {
@@ -7,18 +8,18 @@ export default class Stats {
     this.tx = 0 // messages sent
 
     this.eventCounters = {
-      'message_new': 0,
-      'message_reply': 0,
-      'message_edit': 0,
-      'message_typing_state': 0,
-      'message_allow': 0,
-      'message_deny': 0,
+      message_new: 0,
+      message_reply: 0,
+      message_edit: 0,
+      message_typing_state: 0,
+      message_allow: 0,
+      message_deny: 0,
 
-      'start': 0,
-      'service_action': 0,
+      start: 0,
+      service_action: 0,
 
-      'no_match': 0,
-      'handler_error': 0
+      no_match: 0,
+      handler_error: 0
     }
 
     this.previous = ''
@@ -46,24 +47,28 @@ export default class Stats {
     }
   }
 
+  getEventCount (name) {
+    return this.eventCounters[name].toString()
+  }
+
   print () {
     var rx = this.rx.toString().green
     var tx = this.tx.toString().cyan
 
-    var mn = this.eventCounters['message_new'].toString().green
-    var ma = this.eventCounters['message_allow'].toString().green
-    var md = this.eventCounters['message_deny'].toString().red
-    var me = this.eventCounters['message_edit'].toString().green
-    var mr = this.eventCounters['message_reply'].toString().cyan
-    var mts = this.eventCounters['message_typing_state'].toString().green
+    var mn = this.getEventCount('message_new').green
+    var ma = this.getEventCount('message_allow').green
+    var md = this.getEventCount('message_deny').red
+    var me = this.getEventCount('message_edit').green
+    var mr = this.getEventCount('message_reply').cyan
+    var mts = this.getEventCount('message_typing_state').green
 
-    var st = this.eventCounters['start'].toString().green
-    var sa = this.eventCounters['service_action'].toString().green
+    var st = this.getEventCount('start').green
+    var sa = this.getEventCount('service_action').green
 
-    var nm = this.eventCounters['no_match'].toString().magenta
-    var he = this.eventCounters['handler_error'].toString().magenta
+    var nm = this.getEventCount('no_match').magenta
+    var he = this.getEventCount('handler_error').magenta
 
-    var up = process.uptime().toString()
+    var up = moment(process.uptime(), 'ss').format('HH:mm:ss')
     var message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st} action:${sa}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`
 
     if (message === this.previous) {
@@ -72,7 +77,7 @@ export default class Stats {
       this.previous = message
     }
 
-    message = `[up:${up}s] ` + message
+    message = `[${up}] ` + message
 
     info('stat', message)
   }
