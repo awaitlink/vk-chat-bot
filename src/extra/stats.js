@@ -1,6 +1,8 @@
 import {info} from './log'
 require('colors')
+
 const moment = require('moment')
+require('moment-duration-format')(moment)
 
 export default class Stats {
   constructor () {
@@ -68,7 +70,7 @@ export default class Stats {
     var nm = this.getEventCount('no_match').magenta
     var he = this.getEventCount('handler_error').magenta
 
-    var up = moment(process.uptime(), 'ss').format('HH:mm:ss')
+    var up = moment.duration(process.uptime(), 'seconds').format('HH[h] mm[m] ss[s]')
     var message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st} action:${sa}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`
 
     if (message === this.previous) {
