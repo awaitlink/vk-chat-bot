@@ -48,11 +48,12 @@ export default class Core {
 
   lock () {
     this.locked = true
+    this.generateHelpMessage()
   }
 
   isLocked () {
     if (this.locked) {
-      warn('core', 'You tried to register a handler while the bot is running. This action was prevented for safety reasons')
+      warn('core', 'Registering a handler while the bot is running is not allowed')
     }
 
     return this.locked
@@ -70,7 +71,7 @@ export default class Core {
     requireFunction(callback)
 
     if (!Object.keys(this.eventHandlers).includes(event)) {
-      err('core', `Cannot register a handler: unsupported event type '${event}'`)
+      err('core', `Cannot register a handler: unknown event type '${event}'`)
     }
 
     if (!this.eventHandlers[event]) {
@@ -171,22 +172,17 @@ export default class Core {
       }
 
       // Handle regular message
-      var isCommandHandled = await this.handleCommand($)
-
-      if (!isCommandHandled) {
-        var isRegexHandled = await this.handleRegex($)
-
-        if (!isRegexHandled) {
+      if (!await this.handleCommand($)) {
+        if (!await this.handleRegex($)) {
           warn('core', `Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
           await this.event('no_match', $)
           return
         }
       }
 
-      if ($.autoSend) {
-        await $.send()
-      }
+      if ($.autoSend) await $.send()
     })
+
     this.eventCount-- // Do not count 'message_new' event
   }
 
@@ -221,7 +217,7 @@ export default class Core {
     return false
   }
 
-  help () {
+  generateHelpMessage () {
     var helpMessage = '\n'
 
     for (var i = 0; i < this.commandHandlers.length; i++) {
@@ -238,7 +234,11 @@ export default class Core {
       helpMessage += commandHelpEntry + '\n'
     }
 
-    return helpMessage
+    this.helpMessage = helpMessage
+  }
+
+  help () {
+    return this.helpMessage
   }
 
   escapeRegex (s) {
