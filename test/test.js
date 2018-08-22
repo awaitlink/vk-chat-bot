@@ -131,6 +131,8 @@ test('Core#help() should return a proper help message', t => {
   obj.core.cmd('test', $ => {}, 'sure thing tests something')
   obj.core.cmd('help', $ => {}, 'shows the help message')
 
+  obj.core.lock()
+
   var message = '\n/test - sure thing tests something\n/help - shows the help message\n'
   t.is(obj.core.help(), message)
 })
