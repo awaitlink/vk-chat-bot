@@ -5,9 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
-## [Unreleased] - ????-??-??
+## [10.2.0] - 2018-08-22
 ### Added
-- Event `service_action` - see [wiki](#coming-soon) for details
+- Event `service_action` - see [wiki](https://github.com/u32i64/vk-chat-bot/wiki/Special-events) for details
+- Added the `service_action` event to stats
 
 ### Changed
 - Improve log messages
