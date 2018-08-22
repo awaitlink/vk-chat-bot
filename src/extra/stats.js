@@ -15,6 +15,7 @@ export default class Stats {
       'message_deny': 0,
 
       'start': 0,
+      'service_action': 0,
 
       'no_match': 0,
       'handler_error': 0
@@ -39,7 +40,7 @@ export default class Stats {
     this.rx++
     this.eventCounters[name]++
 
-    var internalEvents = ['start', 'no_match', 'handler_error']
+    var internalEvents = ['start', 'service_action', 'no_match', 'handler_error']
     if (internalEvents.includes(name)) {
       this.rx-- // Not from Callback API
     }
@@ -57,12 +58,13 @@ export default class Stats {
     var mts = this.eventCounters['message_typing_state'].toString().green
 
     var st = this.eventCounters['start'].toString().green
+    var sa = this.eventCounters['service_action'].toString().green
 
     var nm = this.eventCounters['no_match'].toString().magenta
     var he = this.eventCounters['handler_error'].toString().magenta
 
     var up = process.uptime().toString()
-    var message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`
+    var message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st} action:${sa}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`
 
     if (message === this.previous) {
       return

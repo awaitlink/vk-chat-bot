@@ -16,6 +16,7 @@ export default class Core {
 
     this.eventCount = 0
     this.eventHandlers = {
+      // Callback API
       message_new: null,
       message_reply: null,
       message_edit: null,
@@ -23,7 +24,11 @@ export default class Core {
       message_allow: null,
       message_deny: null,
 
+      // Detected when parsing 'message_new' event
       start: null,
+      service_action: null,
+
+      // Internal events
       no_match: null,
       handler_error: null
     }
@@ -148,6 +153,7 @@ export default class Core {
 
   registerMessageNewHandler () {
     this.on('message_new', async $ => {
+      // Check for 'start' event
       var payload = $.obj.payload
       if (payload) {
         try {
@@ -158,6 +164,13 @@ export default class Core {
         } catch (e) { /* JSON Parse Error */ }
       }
 
+      // Check for 'service_action' event
+      if ($.obj.action) {
+        await this.event('service_action', $)
+        return
+      }
+
+      // Handle regular message
       var isCommandHandled = await this.handleCommand($)
 
       if (!isCommandHandled) {
