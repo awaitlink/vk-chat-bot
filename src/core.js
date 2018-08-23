@@ -3,14 +3,18 @@ import Context from './api/context'
 import '@babel/polyfill'
 
 export default class Core {
-  constructor (api, stats, cmdPrefix) {
+  constructor (api, stats, cmdPrefix, groupId) {
     requireParam('Core#constructor', api, 'API object')
     requireParam('Core#constructor', stats, 'statistics object')
     requireParam('Core#constructor', cmdPrefix, 'command prefix')
+    requireParam('Core#constructor', groupId, 'group id')
 
     this.api = api
     this.stats = stats
+
     this.cmdPrefix = cmdPrefix
+    this.escapedCmdPrefix = this.escapeRegex(this.cmdPrefix || '')
+    this.groupId = this.escapeRegex(groupId) // Just in case
 
     this.locked = false
 
@@ -32,6 +36,9 @@ export default class Core {
       no_match: null,
       handler_error: null
     }
+
+    this.payloadCount = 0
+    this.payloadHandlers = {}
 
     this.commandHandlers = []
     this.regexHandlers = []
@@ -61,13 +68,10 @@ export default class Core {
 
   // For special events
   on (event, callback) {
-    if (this.isLocked()) {
-      return
-    }
+    if (this.isLocked()) return
 
     requireParam('Core#on', event, 'event name')
     requireParam('Core#on', callback, 'callback')
-
     requireFunction(callback)
 
     if (!Object.keys(this.eventHandlers).includes(event)) {
@@ -79,18 +83,32 @@ export default class Core {
       this.eventCount++
     } else {
       if (event === 'message_new') {
-        err('core', `Cannot register a handler: handler for 'message_new' is defined internally`)
+        err('core', `Cannot register a handler: handler for the 'message_new' event is defined internally`)
       } else {
-        err('core', `Cannot register a handler: duplicate handler for '${event}'`)
+        err('core', `Cannot register a handler: duplicate handler for event '${event}'`)
       }
+    }
+  }
+
+  // For exact payload match
+  payload (payload, callback) {
+    if (this.isLocked()) return
+
+    requireParam('Core#payload', payload, 'target payload')
+    requireParam('Core#payload', callback, 'callback')
+    requireFunction(callback)
+
+    if (!this.payloadHandlers[JSON.stringify(payload)]) {
+      this.payloadHandlers[JSON.stringify(payload)] = callback
+      this.payloadCount++
+    } else {
+      err('core', `Cannot register a handler: duplicate handler for payload '${payload}'`)
     }
   }
 
   // On exact command with prefix
   cmd (command, callback, description = '') {
-    if (this.isLocked()) {
-      return
-    }
+    if (this.isLocked()) return
 
     requireParam('Core#cmd', command, 'command')
     requireParam('Core#cmd', callback, 'callback')
@@ -105,13 +123,10 @@ export default class Core {
 
   // On matching regex
   regex (regex, callback) {
-    if (this.isLocked()) {
-      return
-    }
+    if (this.isLocked()) return
 
     requireParam('Core#regex', regex, 'regular expression')
     requireParam('Core#regex', callback, 'callback')
-
     requireFunction(callback)
 
     this.regexHandlers.push({
@@ -154,17 +169,6 @@ export default class Core {
 
   registerMessageNewHandler () {
     this.on('message_new', async $ => {
-      // Check for 'start' event
-      var payload = $.obj.payload
-      if (payload) {
-        try {
-          if (JSON.parse(payload).command === 'start') {
-            await this.event('start', $)
-            return
-          }
-        } catch (e) { /* JSON Parse Error */ }
-      }
-
       // Check for 'service_action' event
       if ($.obj.action) {
         await this.event('service_action', $)
@@ -172,11 +176,13 @@ export default class Core {
       }
 
       // Handle regular message
-      if (!await this.handleCommand($)) {
-        if (!await this.handleRegex($)) {
-          warn('core', `Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
-          await this.event('no_match', $)
-          return
+      if (!await this.tryHandlePayload($)) {
+        if (!await this.tryHandleCommand($)) {
+          if (!await this.tryHandleRegex($)) {
+            warn('core', `Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
+            await this.event('no_match', $)
+            return
+          }
         }
       }
 
@@ -186,13 +192,32 @@ export default class Core {
     this.eventCount-- // Do not count 'message_new' event
   }
 
-  async handleCommand ($) {
-    var prefix = this.escapeRegex(this.cmdPrefix || '')
+  async tryHandlePayload ($) {
+    var payload = $.obj.payload
+    if (payload) {
+      // Check for 'start' event
+      try {
+        if (JSON.parse(payload).command === 'start') {
+          await this.event('start', $)
+          $.noAutoSend() // Message sending was already handled by event
+          return true
+        }
+      } catch (e) { /* JSON Parse Error */ }
 
+      // Check for payload handler
+      if (this.payloadHandlers[payload]) {
+        await this.payloadHandlers[payload]($)
+        return true
+      }
+    }
+  }
+
+  async tryHandleCommand ($) {
     for (var i = 0; i < this.commandHandlers.length; i++) {
       var cmdHandler = this.commandHandlers[i]
       var cmd = this.escapeRegex(cmdHandler.command)
-      var cmdRegex = new RegExp(`^(${prefix}${cmd})( +${prefix}${cmd})*`, 'gi')
+
+      var cmdRegex = new RegExp(`^( *\\[club${this.groupId}\\|.*\\])?( *${this.escapedCmdPrefix}${cmd})+`, 'i')
 
       if (cmdRegex.test($.msg)) {
         $.msg = $.msg.replace(cmdRegex, '')
@@ -204,7 +229,7 @@ export default class Core {
     return false
   }
 
-  async handleRegex ($) {
+  async tryHandleRegex ($) {
     for (var i = 0; i < this.regexHandlers.length; i++) {
       var regexHandler = this.regexHandlers[i]
 

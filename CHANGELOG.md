@@ -5,6 +5,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
+## [10.3.0] - 2018-08-23
+### Added
+- Payload handlers: see [`payload`](https://github.com/u32i64/vk-chat-bot/wiki/Core#payload) wiki.
+
+### Changed
+- Now statistics will show uptime in the format `??y ??d ??h ??m ??s`
+
+### Fixed
+- Since the keyboard in group chats is so smart that it is mentioning the bot automatically when pressing a button, the [`cmd`](https://github.com/u32i64/vk-chat-bot/wiki/Core#cmd) handlers did not want to count it as a proper command. This is now fixed.
+
 ## [10.2.0] - 2018-08-22
 ### Added
 - Event `service_action` - see [wiki](https://github.com/u32i64/vk-chat-bot/wiki/Special-events) for details

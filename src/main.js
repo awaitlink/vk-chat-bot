@@ -31,7 +31,7 @@ function bot (params) {
 
   var stats = new Stats()
   var api = new API(vkToken, stats)
-  var core = new Core(api, stats, cmdPrefix)
+  var core = new Core(api, stats, cmdPrefix, groupId)
   var bot = new Bot(core, groupId, confirmationToken, secret, port)
 
   return {
