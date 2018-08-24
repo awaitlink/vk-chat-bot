@@ -23,8 +23,8 @@ $ npm i vk-chat-bot
 ```
 
 #### Example
-You can find the example in the [`vk-chat-bot-example`][example] repository.    
-Also, you can take a look at the **step-by-step [Heroku Deploy Guide][wiki/Heroku-Deploy-Guide]**, which will guide you through the process of deploying [`vk-chat-bot-example`][example] to Heroku.
+You can find an example bot in the [`u32i64/vk-chat-bot-example`][example] repository.    
+Also, a **step-by-step [Heroku Deploy Guide][wiki/Heroku-Deploy-Guide]** can guide you through the process of deploying [`u32i64/vk-chat-bot-example`][example] to Heroku.
 
 #### Quick Start
 ###### 1. Preparation
