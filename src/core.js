@@ -38,7 +38,8 @@ export default class Core {
     }
 
     this.payloadCount = 0
-    this.payloadHandlers = {}
+    this.exactPayloadHandlers = {}
+    this.dynPayloadHandlers = []
 
     this.commandHandlers = []
     this.regexHandlers = []
@@ -90,7 +91,7 @@ export default class Core {
     }
   }
 
-  // For exact payload match
+  // For payloads
   payload (payload, callback) {
     if (this.isLocked()) return
 
@@ -98,11 +99,24 @@ export default class Core {
     requireParam('Core#payload', callback, 'callback')
     requireFunction(callback)
 
-    if (!this.payloadHandlers[JSON.stringify(payload)]) {
-      this.payloadHandlers[JSON.stringify(payload)] = callback
-      this.payloadCount++
+    if (typeof payload !== 'function') {
+      // Exact payload match:
+
+      if (!this.exactPayloadHandlers[JSON.stringify(payload)]) {
+        this.exactPayloadHandlers[JSON.stringify(payload)] = callback
+        this.payloadCount++
+      } else {
+        err('core', `Cannot register a handler: duplicate handler for payload '${payload}'`)
+      }
     } else {
-      err('core', `Cannot register a handler: duplicate handler for payload '${payload}'`)
+      // Dynamic payload match:
+
+      this.dynPayloadHandlers.push({
+        tester: payload,
+        callback
+      })
+
+      this.payloadCount++
     }
   }
 
@@ -204,12 +218,25 @@ export default class Core {
         }
       } catch (e) { /* JSON Parse Error */ }
 
-      // Check for payload handler
-      if (this.payloadHandlers[payload]) {
-        await this.payloadHandlers[payload]($)
+      // Check for exact payload handler
+      if (this.exactPayloadHandlers[payload]) {
+        await this.exactPayloadHandlers[payload]($)
         return true
       }
+
+      // Check for dynamic payload handler
+      for (var handler of this.dynPayloadHandlers) {
+        var parsed = null
+        try { parsed = JSON.parse(payload) } catch (e) { /* JSON Parse Error */ }
+
+        if (handler.tester(payload, parsed)) {
+          await handler.callback($)
+          return true
+        }
+      }
     }
+
+    return false
   }
 
   async tryHandleCommand ($) {

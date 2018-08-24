@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
 ## [Unreleased] - ????-??-??
+### Added
+- Now [`payload`](https://github.com/u32i64/vk-chat-bot/wiki/Core#payload) handlers can handle not only exactly matching payloads, but also provide a function which, given a payload, will determine whether this handler is the one that needs to handle a specific payload. See the [wiki](https://github.com/u32i64/vk-chat-bot/wiki/Core#payload) for details.
+
 ### Fixed
 - Added the payload handlers count to initialization log message
 
