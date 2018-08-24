@@ -21,12 +21,13 @@ export default class Bot {
   start () {
     this.core.lock()
 
-    var eventCount = this.core.eventCount
-    var commandCount = this.core.commandHandlers.length
-    var regexCount = this.core.regexHandlers.length
-    info('bot', `Using ${eventCount} event, ${commandCount} command, and ${regexCount} regex handlers`)
+    var evt = this.core.eventCount
+    var pld = this.core.payloadCount
+    var cmd = this.core.commandHandlers.length
+    var reg = this.core.regexHandlers.length
+    info('bot', `Handlers count: on:${evt} cmd:${cmd} regex:${reg} payload:${pld}`)
 
-    if ((eventCount + commandCount + regexCount) === 0) {
+    if ((evt + cmd + reg + pld) === 0) {
       warn('bot', `The bot won't do anything without handlers!`)
     }
 
@@ -38,7 +39,7 @@ export default class Bot {
 
     app.get('/', (req, res) => {
       res.status(400).send('Only POST allowed.')
-      warn('bot', 'GET request received')
+      warn('bot', 'Received a GET request')
     })
 
     app.post('/', (req, res) => {
@@ -46,13 +47,13 @@ export default class Bot {
 
       if (body.secret !== this.secret) {
         res.status(400).send('Invalid secret key.')
-        warn('bot', 'Request with an invalid secret key')
+        warn('bot', 'Received a request with an invalid secret key')
         return
       }
 
       if (body.group_id.toString() !== this.groupId) {
         res.status(400).send('Invalid group id.')
-        warn('bot', 'Request with an invalid group id')
+        warn('bot', 'Received a request with an invalid group id')
         return
       }
 

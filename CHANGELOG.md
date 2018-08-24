@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
+## [Unreleased] - ????-??-??
+### Fixed
+- Added the payload handlers count to initialization log message
+
 ## [10.3.0] - 2018-08-23
 ### Added
 - Payload handlers: see [`payload`](https://github.com/u32i64/vk-chat-bot/wiki/Core#payload) wiki.
