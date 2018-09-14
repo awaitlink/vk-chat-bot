@@ -1,4 +1,4 @@
-import {info, warn, requireParam} from '../extra/log'
+import { info, warn, requireParam } from '../extra/log'
 import '@babel/polyfill'
 const request = require('request-promise')
 
@@ -10,7 +10,7 @@ export default class API {
     this.vkToken = vkToken
     this.stats = stats
 
-    this.API_VERSION = '5.80'
+    this.API_VERSION = '5.85'
     this.API_QUOTA = 20
 
     this.queue = []

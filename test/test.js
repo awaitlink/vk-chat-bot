@@ -1,7 +1,7 @@
 import test from 'ava'
 
 import vk from '../src/main'
-import {err, requireParam, requireFunction} from '../src/extra/log'
+import { err, requireParam, requireFunction } from '../src/extra/log'
 
 var Keyboard = vk.kbd.Keyboard
 var Button = vk.kbd.Button
@@ -153,7 +153,7 @@ test('Keyboard#getJSON should return valid keyboard JSON (empty keyboard)', t =>
 
 test('Keyboard#getJSON should return valid keyboard JSON (2 rows, 2 buttons, one time)', t => {
   var kbd = new Keyboard([
-    [new Button('1'), new Button('2', colors.primary, {pay: 'load'})],
+    [new Button('1'), new Button('2', colors.primary, { pay: 'load' })],
     [new Button('3', colors.negative), new Button('4', colors.positive)]
   ], true)
 
@@ -163,12 +163,12 @@ test('Keyboard#getJSON should return valid keyboard JSON (2 rows, 2 buttons, one
       one_time: true,
       buttons: [
         [
-          {action: {type: 'text', label: '1'}, color: 'default'},
-          {action: {type: 'text', label: '2', payload: '{"pay":"load"}'}, color: 'primary'}
+          { action: { type: 'text', label: '1' }, color: 'default' },
+          { action: { type: 'text', label: '2', payload: '{"pay":"load"}' }, color: 'primary' }
         ],
         [
-          {action: {type: 'text', label: '3'}, color: 'negative'},
-          {action: {type: 'text', label: '4'}, color: 'positive'}
+          { action: { type: 'text', label: '3' }, color: 'negative' },
+          { action: { type: 'text', label: '4' }, color: 'positive' }
         ]
       ]
     })

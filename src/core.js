@@ -1,4 +1,4 @@
-import {err, warn, requireParam, requireFunction} from './extra/log'
+import { err, warn, requireParam, requireFunction } from './extra/log'
 import Context from './api/context'
 import '@babel/polyfill'
 

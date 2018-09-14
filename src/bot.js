@@ -1,4 +1,4 @@
-import {info, res as response, warn, err as error, requireParam} from './extra/log'
+import { info, res as response, warn, err as error, requireParam } from './extra/log'
 const express = require('express')
 const bodyParser = require('body-parser')
 

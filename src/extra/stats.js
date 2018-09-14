@@ -1,4 +1,4 @@
-import {info} from './log'
+import { info } from './log'
 require('colors')
 
 const moment = require('moment')

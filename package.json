@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "10.4.1",
+  "version": "10.5.0",
   "description": "Framework for easy creation of chat bots for VK communities (uses Callback API).",
   "keywords": [
     "api",
@@ -40,7 +40,8 @@
     "prepare": "npm run test && npm run build && npm run minify",
     "test": "npm run test:lint && npm run test:ava",
     "test:ava": "ava",
-    "test:lint": "standard --verbose | snazzy"
+    "test:lint": "standard --verbose | snazzy",
+    "fix": "standard --fix"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -54,17 +55,17 @@
     "request-promise": "^4.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.0.1",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
-    "ava": "^1.0.0-beta.7",
-    "rollup": "^0.65.0",
-    "rollup-plugin-babel": "^4.0.2",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "snazzy": "^7.1.1",
-    "standard": "^11.0.1",
-    "uglify-js": "^3.4.8"
+    "ava": "^1.0.0-beta.8",
+    "rollup": "^0.65.2",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "snazzy": "^8.0.0",
+    "standard": "^12.0.1",
+    "uglify-js": "^3.4.9"
   },
   "engines": {
     "node": ">=8.0.0"

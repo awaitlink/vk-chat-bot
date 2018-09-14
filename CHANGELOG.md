@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
+## [10.5.0] - 2018-09-14
+### Changed
+- Update to VK API **v5.85**
+
 ## [10.4.1] - 2018-08-28
 ### Changed
 - Update dependencies

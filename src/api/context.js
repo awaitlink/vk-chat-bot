@@ -1,5 +1,5 @@
-import {Keyboard} from './keyboard'
-import {warn, requireParam} from '../extra/log'
+import { Keyboard } from './keyboard'
+import { warn, requireParam } from '../extra/log'
 import '@babel/polyfill'
 
 export default class Context {
