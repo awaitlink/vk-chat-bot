@@ -1,8 +1,8 @@
 # ❮vk-chat-bot❯
-[![npm version][badges/npm]][npm]
+[![version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
-[![Travis build status][badges/travis]][travis]
-[![code style][badges/standard]][standard]  
+[![travis][badges/travis]][travis]
+[![style][badges/standard]][standard]  
 
 > **A chat bot framework for VK communities (*groups*).**    
 > **[documentation »][wiki]** ⋅
@@ -18,9 +18,10 @@
 
 ## Usage
 #### Installation
-```console
-$ npm i vk-chat-bot
-```
+|          yarn          |         npm         |
+|:----------------------:|:-------------------:|
+| `yarn add vk-chat-bot` | `npm i vk-chat-bot` |
+
 
 #### Example
 You can find an example bot in the [`u32i64/vk-chat-bot-example`][example] repository.    
