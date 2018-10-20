@@ -1,3 +1,9 @@
+/**
+ * @file A part of `vk-chat-bot` node.js framework
+ * @author Artem Varaksa <aymfst@gmail.com>
+ * @copyright Artem Varaksa 2017-2018
+ */
+
 import Bot from './bot'
 import Core from './core'
 
@@ -8,6 +14,17 @@ import * as kbd from './api/keyboard'
 import * as log from './extra/log'
 import Stats from './extra/stats'
 
+/**
+ * Creates all the necessary objects for the bot and the [Bot]{@link module:bot~Bot} object itself
+ * @param {Object} params - parameters object
+ * @param {string} params.vk_token - an API token of a VK community
+ * @param {string} params.confirmation_token - confirmation token from Callback API settings
+ * @param {string} params.group_id - group ID from Callback API settings
+ * @param {string} params.secret - secret key (can be set in Callback API settings)
+ * @param {number} params.port - the port bot will run at
+ * @param {string} [params.cmd_prefix = ""] - each command (for [Core#cmd]{@link module:core~Core#cmd} handlers) should start with this prefix to be recognized
+ * @return {{core: Core, bot: Bot}} core and bot objects
+ */
 function bot (params) {
   process.on('uncaughtException', err => {
     console.log(err)

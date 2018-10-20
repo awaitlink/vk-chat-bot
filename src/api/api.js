@@ -1,20 +1,90 @@
+/**
+ * @file A part of `vk-chat-bot` node.js framework
+ * @author Artem Varaksa <aymfst@gmail.com>
+ * @copyright Artem Varaksa 2017-2018
+ */
+
+/**
+ * @module api/api
+ */
+
 import { info, warn, requireParam } from '../extra/log'
 import '@babel/polyfill'
 const request = require('request-promise')
 
 export default class API {
+  /**
+   * @class API
+   * @classdesc
+   *
+   * Used to call API methods
+   *
+   * You can get the `API` object from a `Context` object:
+   * ```js
+   * // Assuming your Context object is $
+   * var api = $.api
+   * ```
+   *
+   * Or from `core` (after initialization with [bot]{@link bot}:
+   * ```js
+   * var api = core.api
+   * ```
+   *
+   * @param {string} vkToken VK API token
+   * @param {Stats} stats statistics object
+   *
+   * @return {API}
+   */
   constructor (vkToken, stats) {
     requireParam('API#constructor', vkToken, 'VK API token')
     requireParam('API#constructor', stats, 'statistics object')
 
+    /**
+     * VK API token
+     * @private
+     * @type {string}
+     * @memberof module:api/api~API
+     */
     this.vkToken = vkToken
+
+    /**
+     * VK API token
+     * @private
+     * @type {Stats}
+     * @memberof module:api/api~API
+     */
     this.stats = stats
 
+    /**
+     * VK API version used by API
+     * @type {string}
+     * @memberof module:api/api~API
+     */
     this.API_VERSION = '5.85'
+
+    /**
+     * API quota, in requests per second
+     * @type {number}
+     * @memberof module:api/api~API
+     */
     this.API_QUOTA = 20
 
+    /**
+     * Queue of scheduled API calls
+     * @private
+     * @type {Object[]}
+     * @memberof module:api/api~API
+     */
     this.queue = []
+
+    /**
+     * Is the queue being processed now?
+     * @private
+     * @type {boolean}
+     * @memberof module:api/api~API
+     */
     this.isQueueProcessing = false
+
     if (!process.env.TEST_MODE) {
       // Check permissions
       this.checkPermissions()
@@ -38,6 +108,12 @@ export default class API {
     }
   }
 
+  /**
+   * Checks if the required permissions for bot to work properly are present, and emits a warning if that is not the case.
+   * @private
+   * @memberof module:api/api~API
+   * @instance
+   */
   async checkPermissions () {
     // Check if the token has the required permissions
     var response = await this.scheduleCall('groups.getTokenPermissions', {})
@@ -58,6 +134,12 @@ export default class API {
     }
   }
 
+  /**
+   * Move forward through the queue, processing at most [API_QUOTA]{@link module:api/api~API#API_QUOTA} items
+   * @private
+   * @memberof module:api/api~API
+   * @instance
+   */
   async processQueue () {
     if (this.queue) {
       for (var i = 1; i <= this.API_QUOTA; i++) {
@@ -89,6 +171,33 @@ export default class API {
     return Promise.reject(new Error('No queue for API calls found'))
   }
 
+ /**
+  * Schedules a call to a VK API Method
+  *
+  * After the call completes, a check will be performed to see if the call was successful or not, and in the latter case a warning will be logged
+  *
+  * @memberof module:api/api~API
+  * @instance
+  *
+  * @param {string} method VK API method name
+  * @param {Object} params parameters for the method, `access_token` and `v` will be added automatically
+  *
+  * @return {Promise} promise, which resolves with `json.response` when the request is completed and a response is given, and rejects if an error happened
+  *
+  * @example
+  * core.cmd('info', async $ => {
+  *    var uid = $.obj.from_id
+  *
+  *  // Call VK API to get information about the user
+  *    var response = await $.api.scheduleCall('users.get', { user_ids: uid })
+  *    var userInfo = response[0]
+
+  *    var name = userInfo.first_name
+  *    var surname = userInfo.last_name
+  *
+  *  $.text(`User ID: ${uid}\nName: ${name} ${surname}`)
+  * })
+  */
   async scheduleCall (method, params) {
     return new Promise((resolve, reject) => {
       this.queue.push({
@@ -100,6 +209,32 @@ export default class API {
     })
   }
 
+  /**
+   * Call a VK API Method
+   *
+   * **It is highly recommended to use [API#scheduleCall]{@link module:api/api~API#scheduleCall} instead to not exceed the API quota and to check whether the call was successful or not!**
+   * @memberof module:api/api~API
+   * @instance
+   *
+   * @param {string} method VK API method name
+   * @param {Object} params parameters for the method, `access_token` and `v` will be added automatically
+   *
+   * @return {Promise} promise
+   *
+   * @example
+   * core.cmd('info', async $ => {
+   *    var uid = $.obj.from_id
+   *
+   *    // Call VK API to get information about the user
+   *    var json = await $.api.call('users.get', { user_ids: uid })
+   *    var userInfo = json.response[0]
+
+   *    var name = userInfo.first_name
+   *    var surname = userInfo.last_name
+   *
+   *  $.text(`User ID: ${uid}\nName: ${name} ${surname}`)
+   * })
+   */
   async call (method, params) {
     method = encodeURIComponent(method)
     var url = `https://api.vk.com/method/${method}`
@@ -124,6 +259,23 @@ export default class API {
     return promise
   }
 
+  /**
+   * Sends a message to a user via User ID
+   *
+   * **Note that it is much easier to use the [Context]{@link module:api/context~Context} object passed to handlers to compose and send messages, keyboards and attachments!**
+   * @memberof module:api/api~API
+   * @instance
+   *
+   * @param {string|number} pid peer ID
+   * @param {string} [message] message text **(required, if attachment is empty)**
+   * @param {string} [attachment] list of attachments, comma-separated (see [VK API Docs](https://vk.com/dev/messages.send) for further information) **(required, if message is empty)**
+   * @param {string} [keyboard] json of keyboard
+   *
+   * @return {Promise} promise
+   *
+   * @example
+   * await api.send(1, 'Hello!', 'photo6492_456240778')
+   */
   async send (pid, message, attachment, keyboard) {
     var params = {
       peer_id: pid

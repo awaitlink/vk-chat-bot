@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>api/api - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Tutorials</li><li class="nav-item"><a href="tutorial-heroku-deploy-guide.html">Heroku Deploy Guide</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-api_api-API.html">API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#call">call</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#checkPermissions">checkPermissions</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#processQueue">processQueue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#scheduleCall">scheduleCall</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#send">send</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-api_context-Context.html">Context</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#attach">attach</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#clear">clear</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#keyboard">keyboard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#noAutoSend">noAutoSend</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#removeKeyboard">removeKeyboard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#send">send</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#setPid">setPid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#text">text</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-api_keyboard-Button.html">Button</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-api_keyboard-Keyboard.html">Keyboard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_keyboard-Keyboard.html#getJSON">getJSON</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-bot-Bot.html">Bot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-bot-Bot.html#start">start</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-core-Core.html">Core</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#cmd">cmd</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#escapeRegex">escapeRegex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#event">event</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#generateHelpMessage">generateHelpMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#help">help</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#isLocked">isLocked</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#lock">lock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#noEventWarnings">noEventWarnings</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#on">on</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#parseRequest">parseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#payload">payload</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#regex">regex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#registerMessageNewHandler">registerMessageNewHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#tryHandleCommand">tryHandleCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#tryHandlePayload">tryHandlePayload</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#tryHandleRegex">tryHandleRegex</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html">Stats</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html#event">event</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html#getEventCount">getEventCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html#print">print</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html#sent">sent</a></span></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-api_api.html">api/api</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-api_context.html">api/context</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-api_keyboard.html">api/keyboard</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-bot.html">bot</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-core.html">core</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-extra_log.html">extra/log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#.requireFunction">requireFunction</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#.requireParam">requireParam</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~err">err</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~info">info</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~log">log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~res">res</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~warn">warn</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-extra_stats.html">extra/stats</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bot">bot</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">api/api</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="module-api_api-API.html">API</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

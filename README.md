@@ -5,7 +5,7 @@
 [![style][badges/standard]][standard]  
 
 > **A chat bot framework for VK communities (*groups*).**    
-> **[documentation »][wiki]** ⋅
+> **[documentation »][docs]** ⋅
 > **[changelog »][changelog]** ⋅
 > [features](#features) ⋅
 > [usage](#usage) ⋅
@@ -25,7 +25,7 @@
 
 #### Example
 You can find an example bot in the [`u32i64/vk-chat-bot-example`][example] repository.    
-Also, a **step-by-step [Heroku Deploy Guide][wiki/Heroku-Deploy-Guide]** can guide you through the process of deploying [`u32i64/vk-chat-bot-example`][example] to Heroku.
+Also, a **step-by-step [Heroku Deploy Guide][docs/Heroku-Deploy-Guide]** can guide you through the process of deploying [`u32i64/vk-chat-bot-example`][example] to Heroku.
 
 #### Quick Start
 ###### 1. Preparation
@@ -34,7 +34,7 @@ First, `require()` the framework:
 const vk = require('vk-chat-bot')
 ```
 
-Then, create your bot using the `vk.bot` function (see [Params object][wiki/Main#params-object] for more information about `params`):
+Then, create your bot using the `vk.bot` function (see [Params object][docs/bot] for more information about `params`):
 ```js
 var params = {
   vk_token: 'your_vk_access_token',
@@ -51,7 +51,7 @@ var {bot, core} = vk.bot(params)
 
 ###### 2. Behavior setup
 
-See [`Core`][wiki/Core] wiki to learn more about behavior functions.   
+See [`Core`][docs/Core] wiki to learn more about behavior functions.   
 Here are some examples:
 ```js
 // Use stuff from the framework...
@@ -112,14 +112,14 @@ Start the bot:
 bot.start()
 ```
 
-The bot will log some useful information, see [Logging][wiki/Logging] wiki for more information.
+The bot will log some useful information, see [Logging][docs/Stats] documentation for more information.
 
 ## Contributing
 - Something does not seem right or you have a feature request? **Open an [issue][issues].**
 - You know how to make `vk-chat-bot` better? **Open a [pull request][pulls]!**
 
 ## License
-This project is licensed under the terms of the **[MIT](https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE)** license.
+This project is licensed under the terms of the **[MIT][license]** license.
 
 <!-- LINKS -->
 
@@ -134,11 +134,11 @@ This project is licensed under the terms of the **[MIT](https://github.com/u32i6
 [changelog]: https://github.com/u32i64/vk-chat-bot/blob/master/CHANGELOG.md
 [license]:   https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE
 
-[wiki]:                     https://github.com/u32i64/vk-chat-bot/wiki
-[wiki/Core]:                https://github.com/u32i64/vk-chat-bot/wiki/Core
-[wiki/Logging]:             https://github.com/u32i64/vk-chat-bot/wiki/Logging
-[wiki/Heroku-Deploy-Guide]: https://github.com/u32i64/vk-chat-bot/wiki/Heroku-Deploy-Guide
-[wiki/Main#params-object]:  https://github.com/u32i64/vk-chat-bot/wiki/Main#params-object
+[docs]:                     https://u32i64.github.io/vk-chat-bot/
+[docs/Core]:                https://u32i64.github.io/vk-chat-bot/
+[docs/Stats]:               https://u32i64.github.io/vk-chat-bot/
+[docs/Heroku-Deploy-Guide]: https://u32i64.github.io/vk-chat-bot/
+[docs/bot]:                 https://u32i64.github.io/vk-chat-bot/
 
 [example]: https://github.com/u32i64/vk-chat-bot-example
 [issues]:  https://github.com/u32i64/vk-chat-bot/issues

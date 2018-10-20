@@ -1,8 +1,33 @@
+/**
+ * @file A part of `vk-chat-bot` node.js framework
+ * @author Artem Varaksa <aymfst@gmail.com>
+ * @copyright Artem Varaksa 2017-2018
+ */
+
+/**
+ * @module bot
+ */
+
 import { info, res as response, warn, err as error, requireParam } from './extra/log'
 const express = require('express')
 const bodyParser = require('body-parser')
 
 export default class Bot {
+  /**
+   * @constructor Bot
+   *
+   * @return {Bot}
+   *
+   * @param {Core} core - a `Core` object
+   * @param {string|number} groupId - group ID from Callback API settings
+   * @param {string} confirmationToken - confirmation token from Callback API settings
+   * @param {string} secret - secret key (can be set in Callback API settings)
+   * @param {number} port - the port bot will run at
+   *
+   * @classdesc
+   * The `Bot` class responds to incoming events from Callback API,
+   * and figures out what needs to be done.
+   */
   constructor (core, groupId, confirmationToken, secret, port) {
     requireParam('Bot#constructor', core, 'bot core')
     requireParam('Bot#constructor', confirmationToken, 'confirmation token (from Callback API settings)')
@@ -10,14 +35,56 @@ export default class Bot {
     requireParam('Bot#constructor', secret, 'secret key (from Callback API settings)')
     requireParam('Bot#constructor', port, 'port')
 
+    /**
+     * Core
+     *
+     * @private
+     * @type {Core}
+     * @memberof module:bot~Bot
+     */
     this.core = core
 
+    /**
+     * Group ID
+     *
+     * @private
+     * @type {string|number}
+     * @memberof module:bot~Bot
+     */
     this.groupId = groupId
+
+    /**
+     * Confirmation token
+     *
+     * @private
+     * @type {string}
+     * @memberof module:bot~Bot
+     */
     this.confirmationToken = confirmationToken
+
+    /**
+     * Secret
+     * @private
+     * @type {string}
+     * @memberof module:bot~Bot
+     */
     this.secret = secret
+
+    /**
+     * Port
+     *
+     * @private
+     * @type {number}
+     * @memberof module:bot~Bot
+     */
     this.port = port
   }
 
+  /**
+   * Starts the bot
+   * @instance
+   * @memberof module:bot~Bot
+   */
   start () {
     this.core.lock()
 

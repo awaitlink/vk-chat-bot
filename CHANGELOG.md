@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
+## [Unreleased] - ????-??-??
+### Added
+- Documentation!
+
+### Changed
+- Build is now in `dist/vk-chat-bot.min.js`
+
 ## [10.5.1] - 2018-09-14
 ### Changed
 - Use `yarn` instead of `npm`

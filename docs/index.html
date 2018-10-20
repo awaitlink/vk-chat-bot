@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Tutorials</li><li class="nav-item"><a href="tutorial-heroku-deploy-guide.html">Heroku Deploy Guide</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-api_api-API.html">API</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#call">call</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#checkPermissions">checkPermissions</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#processQueue">processQueue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#scheduleCall">scheduleCall</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_api-API.html#send">send</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-api_context-Context.html">Context</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#attach">attach</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#clear">clear</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#keyboard">keyboard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#noAutoSend">noAutoSend</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#removeKeyboard">removeKeyboard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#send">send</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#setPid">setPid</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_context-Context.html#text">text</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-api_keyboard-Button.html">Button</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-api_keyboard-Keyboard.html">Keyboard</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-api_keyboard-Keyboard.html#getJSON">getJSON</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-bot-Bot.html">Bot</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-bot-Bot.html#start">start</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-core-Core.html">Core</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#cmd">cmd</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#escapeRegex">escapeRegex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#event">event</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#generateHelpMessage">generateHelpMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#help">help</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#isLocked">isLocked</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#lock">lock</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#noEventWarnings">noEventWarnings</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#on">on</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#parseRequest">parseRequest</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#payload">payload</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#regex">regex</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#registerMessageNewHandler">registerMessageNewHandler</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#tryHandleCommand">tryHandleCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#tryHandlePayload">tryHandlePayload</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-core-Core.html#tryHandleRegex">tryHandleRegex</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html">Stats</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html#event">event</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html#getEventCount">getEventCount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html#print">print</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_stats-Stats.html#sent">sent</a></span></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-api_api.html">api/api</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-api_context.html">api/context</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-api_keyboard.html">api/keyboard</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-bot.html">bot</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-core.html">core</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-extra_log.html">extra/log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#.requireFunction">requireFunction</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#.requireParam">requireParam</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~err">err</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~info">info</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~log">log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~res">res</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-extra_log.html#~warn">warn</a></span></li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-extra_stats.html">extra/stats</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bot">bot</a></span></li>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>❮vk-chat-bot❯</h1><p><a href="https://www.npmjs.com/package/vk-chat-bot"><img src="https://img.shields.io/npm/v/vk-chat-bot.svg?style=for-the-badge" alt="version"></a>
+<a href="https://www.npmjs.com/package/vk-chat-bot"><img src="https://img.shields.io/npm/dt/vk-chat-bot.svg?style=for-the-badge" alt="downloads"></a>
+<a href="https://travis-ci.org/u32i64/vk-chat-bot"><img src="https://img.shields.io/travis/u32i64/vk-chat-bot/master.svg?style=for-the-badge&amp;logo=travis" alt="travis"></a>
+<a href="https://standardjs.com"><img src="https://img.shields.io/badge/code_style-standard-6200ea.svg?style=for-the-badge" alt="style"></a>  </p>
+<blockquote>
+<p><strong>A chat bot framework for VK communities (<em>groups</em>).</strong><br><strong><a href="https://u32i64.github.io/vk-chat-bot/">documentation »</a></strong> ⋅
+<strong><a href="https://github.com/u32i64/vk-chat-bot/blob/master/CHANGELOG.md">changelog »</a></strong> ⋅
+<a href="#features">features</a> ⋅
+<a href="#usage">usage</a> ⋅
+<a href="#contributing">contributing</a> ⋅
+<a href="#license">license</a></p>
+</blockquote>
+<h2>Features</h2><ul>
+<li><strong>Easy to use</strong> - setting up behavior is simple - see <a href="#2-behavior-setup">Behavior setup</a></li>
+<li><strong>Respects the quota</strong> - the framework calls VK API not more then 20 times/second, so you don't exceed the quota</li>
+</ul>
+<h2>Usage</h2><h4>Installation</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">yarn</th>
+<th style="text-align:center">npm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>yarn add vk-chat-bot</code></td>
+<td style="text-align:center"><code>npm i vk-chat-bot</code></td>
+</tr>
+</tbody>
+</table>
+<h4>Example</h4><p>You can find an example bot in the <a href="https://github.com/u32i64/vk-chat-bot-example"><code>u32i64/vk-chat-bot-example</code></a> repository.<br>Also, a <strong>step-by-step <a href="https://u32i64.github.io/vk-chat-bot/">Heroku Deploy Guide</a></strong> can guide you through the process of deploying <a href="https://github.com/u32i64/vk-chat-bot-example"><code>u32i64/vk-chat-bot-example</code></a> to Heroku.</p>
+<h4>Quick Start</h4><h6>1. Preparation</h6><p>First, <code>require()</code> the framework:</p>
+<pre class="prettyprint source lang-js"><code>const vk = require('vk-chat-bot')</code></pre><p>Then, create your bot using the <code>vk.bot</code> function (see <a href="https://u32i64.github.io/vk-chat-bot/">Params object</a> for more information about <code>params</code>):</p>
+<pre class="prettyprint source lang-js"><code>var params = {
+  vk_token: 'your_vk_access_token',
+  confirmation_token: 'f123456',
+  group_id: 1234567,
+  secret: 's3r10us1y_s3cr3t_phr4s3',
+  port: 12345,
+
+  cmd_prefix: &quot;/&quot;
+}
+
+var {bot, core} = vk.bot(params)</code></pre><h6>2. Behavior setup</h6><p>See <a href="https://u32i64.github.io/vk-chat-bot/"><code>Core</code></a> wiki to learn more about behavior functions.<br>Here are some examples:</p>
+<pre class="prettyprint source lang-js"><code>// Use stuff from the framework...
+var Keyboard = vk.kbd.Keyboard
+var Button = vk.kbd.Button
+var colors = vk.kbd.colors
+
+// ...to create a keyboard like this.
+// +---------+---------+----------+----------+
+// | Default | Primary | Negative | Positive |
+// +---------+---------+----------+----------+
+// |     Maximum rows is 10, columns - 4.    |
+// +-----------------------------------------+
+var kbd = new Keyboard([
+  [ /* Row (array of buttons) */
+    new Button('Default'),
+    new Button('Primary', colors.primary),
+    new Button('Negative', colors.negative),
+    new Button('Positive', colors.positive)
+  ],
+  [
+    new Button('Maximum rows is 10, columns - 4.')
+  ],
+])
+
+// When user presses the `Start` button...
+// (you have to enable the button in community settings)
+core.on('start', $ => {
+  // ...send them our keyboard.
+  $.text(&quot;Thanks for messaging us! Choose from the options below:&quot;)
+  $.keyboard(kbd)
+
+  // Here, $.send() is added automatically.
+})</code></pre><pre class="prettyprint source lang-js"><code>// Searches for cmd_prefix + 'help', e.g. &quot;/help&quot;
+core.cmd('help', $ => {
+  // core.help() returns the help message
+  $.text('Test Bot v1.0' + core.help())
+
+  // Attach an image from
+  // https://vk.com/team?z=photo6492_45624077
+  $.attach('photo', 6492, 456240778)
+}, 'shows the help message')</code></pre><pre class="prettyprint source lang-js"><code>// Use case-insensitive regular expression to find words &quot;hi&quot;, &quot;hello&quot; or &quot;hey&quot;
+core.regex(/h(i|ello|ey)/i, $ => {
+  $.text('Hello, I am a test bot. You said: ' + $.msg)
+})</code></pre><h6>3. Start it!</h6><p>Start the bot:</p>
+<pre class="prettyprint source lang-js"><code>bot.start()</code></pre><p>The bot will log some useful information, see <a href="https://u32i64.github.io/vk-chat-bot/">Logging</a> documentation for more information.</p>
+<h2>Contributing</h2><ul>
+<li>Something does not seem right or you have a feature request? <strong>Open an <a href="https://github.com/u32i64/vk-chat-bot/issues">issue</a>.</strong></li>
+<li>You know how to make <code>vk-chat-bot</code> better? <strong>Open a <a href="https://github.com/u32i64/vk-chat-bot/pulls">pull request</a>!</strong></li>
+</ul>
+<h2>License</h2><p>This project is licensed under the terms of the <strong><a href="https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE">MIT</a></strong> license.</p>
+<!-- LINKS --></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        api/api.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A part of <code>vk-chat-bot</code> node.js framework</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:aymfst@gmail.com">Artem Varaksa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Artem Varaksa 2017-2018</li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_api.js.html">api/api.js</a>, <a href="api_api.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        api/context.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A part of <code>vk-chat-bot</code> node.js framework</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:aymfst@gmail.com">Artem Varaksa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Artem Varaksa 2017-2018</li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_context.js.html">api/context.js</a>, <a href="api_context.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        api/keyboard.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A part of <code>vk-chat-bot</code> node.js framework</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:aymfst@gmail.com">Artem Varaksa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Artem Varaksa 2017-2018</li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_keyboard.js.html">api/keyboard.js</a>, <a href="api_keyboard.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        bot.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A part of <code>vk-chat-bot</code> node.js framework</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:aymfst@gmail.com">Artem Varaksa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Artem Varaksa 2017-2018</li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        core.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A part of <code>vk-chat-bot</code> node.js framework</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:aymfst@gmail.com">Artem Varaksa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Artem Varaksa 2017-2018</li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="core.js.html">core.js</a>, <a href="core.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        extra/log.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A part of <code>vk-chat-bot</code> node.js framework</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:aymfst@gmail.com">Artem Varaksa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Artem Varaksa 2017-2018</li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_log.js.html">extra/log.js</a>, <a href="extra_log.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        extra/stats.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A part of <code>vk-chat-bot</code> node.js framework</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:aymfst@gmail.com">Artem Varaksa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Artem Varaksa 2017-2018</li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        main.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A part of <code>vk-chat-bot</code> node.js framework</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:aymfst@gmail.com">Artem Varaksa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Artem Varaksa 2017-2018</li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="main.js.html">main.js</a>, <a href="main.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

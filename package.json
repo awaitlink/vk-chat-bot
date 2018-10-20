@@ -26,22 +26,24 @@
     "email": "aymfst@gmail.com"
   },
   "files": [
-    "lib/lib.min.js",
-    "lib/lib.min.js.map",
+    "dist/vk-chat-bot.min.js",
+    "dist/vk-chat-bot.min.js.map",
     "LICENSE",
     "CHANGELOG.md",
     "README.md"
   ],
-  "main": "lib/lib.min.js",
+  "main": "dist/vk-chat-bot.min.js",
   "scripts": {
-    "build": "npm run clean && mkdir lib && rollup -c",
-    "clean": "rm -rf lib *.tgz",
-    "minify": "uglifyjs lib/lib.js -c -o lib/lib.min.js --source-map 'content=inline'",
-    "prepare": "yarn run test && yarn run build && yarn run minify",
+    "build": "yarn run clean && rollup -c",
+    "clean": "rm -rf dist *.tgz && yarn run clean:docs",
+    "clean:docs": "rm -rf docs",
+    "minify": "uglifyjs dist/vk-chat-bot.js -c -o dist/vk-chat-bot.min.js --source-map 'content=inline'",
+    "prepare": "yarn run test && yarn run build && yarn run minify && yarn run docs",
     "test": "yarn run test:lint && yarn run test:ava",
     "test:ava": "ava",
     "test:lint": "standard --verbose | snazzy",
-    "fix": "standard --fix"
+    "fix": "standard --fix",
+    "docs": "yarn run clean:docs && jsdoc -c .jsdoc.json --private && mv ./docs/vk-chat-bot/*/* ./docs/ && rm -rf ./docs/vk-chat-bot"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -49,6 +51,8 @@
     "body-parser": "^1.18.3",
     "colors": "^1.3.2",
     "express": "^4.16.3",
+    "jsdoc": "^3.5.5",
+    "minami": "^1.2.3",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
     "request": "^2.88.0",

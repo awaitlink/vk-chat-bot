@@ -3,7 +3,7 @@ node_modules/
 npm-debug.log
 
 # Built library
-lib/
+dist/
 
 # Tarballs
 *.tgz
