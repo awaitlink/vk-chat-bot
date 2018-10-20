@@ -78,9 +78,9 @@
 </tr>
 </tbody>
 </table>
-<h4>Example</h4><p>You can find an example bot in the <a href="https://github.com/u32i64/vk-chat-bot-example"><code>u32i64/vk-chat-bot-example</code></a> repository.<br>Also, a <strong>step-by-step <a href="https://u32i64.github.io/vk-chat-bot/">Heroku Deploy Guide</a></strong> can guide you through the process of deploying <a href="https://github.com/u32i64/vk-chat-bot-example"><code>u32i64/vk-chat-bot-example</code></a> to Heroku.</p>
+<h4>Example</h4><p>You can find an example bot in the <a href="https://github.com/u32i64/vk-chat-bot-example"><code>u32i64/vk-chat-bot-example</code></a> repository.<br>Also, a <strong>step-by-step <a href="https://u32i64.github.io/vk-chat-bot/tutorial-heroku-deploy-guide.html">Heroku Deploy Guide</a></strong> can guide you through the process of deploying <a href="https://github.com/u32i64/vk-chat-bot-example"><code>u32i64/vk-chat-bot-example</code></a> to Heroku.</p>
 <h4>Quick Start</h4><h6>1. Preparation</h6><p>First, <code>require()</code> the framework:</p>
-<pre class="prettyprint source lang-js"><code>const vk = require('vk-chat-bot')</code></pre><p>Then, create your bot using the <code>vk.bot</code> function (see <a href="https://u32i64.github.io/vk-chat-bot/">Params object</a> for more information about <code>params</code>):</p>
+<pre class="prettyprint source lang-js"><code>const vk = require('vk-chat-bot')</code></pre><p>Then, create your bot using the <code>vk.bot</code> function (see <a href="https://u32i64.github.io/vk-chat-bot/global.html#bot">Params object</a> for more information about <code>params</code>):</p>
 <pre class="prettyprint source lang-js"><code>var params = {
   vk_token: 'your_vk_access_token',
   confirmation_token: 'f123456',
@@ -91,7 +91,7 @@
   cmd_prefix: &quot;/&quot;
 }
 
-var {bot, core} = vk.bot(params)</code></pre><h6>2. Behavior setup</h6><p>See <a href="https://u32i64.github.io/vk-chat-bot/"><code>Core</code></a> wiki to learn more about behavior functions.<br>Here are some examples:</p>
+var {bot, core} = vk.bot(params)</code></pre><h6>2. Behavior setup</h6><p>See <a href="https://u32i64.github.io/vk-chat-bot/module-core-Core.html"><code>Core</code></a> wiki to learn more about behavior functions.<br>Here are some examples:</p>
 <pre class="prettyprint source lang-js"><code>// Use stuff from the framework...
 var Keyboard = vk.kbd.Keyboard
 var Button = vk.kbd.Button
@@ -135,7 +135,7 @@ core.cmd('help', $ => {
 core.regex(/h(i|ello|ey)/i, $ => {
   $.text('Hello, I am a test bot. You said: ' + $.msg)
 })</code></pre><h6>3. Start it!</h6><p>Start the bot:</p>
-<pre class="prettyprint source lang-js"><code>bot.start()</code></pre><p>The bot will log some useful information, see <a href="https://u32i64.github.io/vk-chat-bot/">Logging</a> documentation for more information.</p>
+<pre class="prettyprint source lang-js"><code>bot.start()</code></pre><p>The bot will log some useful information, see <a href="https://u32i64.github.io/vk-chat-bot/module-extra_stats-Stats.html">Logging</a> documentation for more information.</p>
 <h2>Contributing</h2><ul>
 <li>Something does not seem right or you have a feature request? <strong>Open an <a href="https://github.com/u32i64/vk-chat-bot/issues">issue</a>.</strong></li>
 <li>You know how to make <code>vk-chat-bot</code> better? <strong>Open a <a href="https://github.com/u32i64/vk-chat-bot/pulls">pull request</a>!</strong></li>
