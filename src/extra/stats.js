@@ -9,7 +9,7 @@
  */
 
 import { info } from './log'
-require('colors')
+const chalk = require('chalk')
 
 const moment = require('moment')
 require('moment-duration-format')(moment)
@@ -160,21 +160,21 @@ export default class Stats {
    * @memberof module:extra/stats~Stats
    */
   print () {
-    var rx = this._rx.toString().green
-    var tx = this._tx.toString().cyan
+    var rx = chalk.underline.green(this._rx.toString())
+    var tx = chalk.underline.cyan(this._tx.toString())
 
-    var mn = this.getEventCount('message_new').green
-    var ma = this.getEventCount('message_allow').green
-    var md = this.getEventCount('message_deny').red
-    var me = this.getEventCount('message_edit').green
-    var mr = this.getEventCount('message_reply').cyan
-    var mts = this.getEventCount('message_typing_state').green
+    var mn = chalk.green(this.getEventCount('message_new'))
+    var ma = chalk.green(this.getEventCount('message_allow'))
+    var md = chalk.red(this.getEventCount('message_deny'))
+    var me = chalk.green(this.getEventCount('message_edit'))
+    var mr = chalk.cyan(this.getEventCount('message_reply'))
+    var mts = chalk.green(this.getEventCount('message_typing_state'))
 
-    var st = this.getEventCount('start').green
-    var sa = this.getEventCount('service_action').green
+    var st = chalk.green(this.getEventCount('start'))
+    var sa = chalk.green(this.getEventCount('service_action'))
 
-    var nm = this.getEventCount('no_match').magenta
-    var he = this.getEventCount('handler_error').magenta
+    var nm = chalk.bold.magenta(this.getEventCount('no_match'))
+    var he = chalk.bold.magenta(this.getEventCount('handler_error'))
 
     var up = moment.duration(process.uptime(), 'seconds').format('y[y] d[d] h[h] m[m] s[s]')
     var message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st} action:${sa}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`

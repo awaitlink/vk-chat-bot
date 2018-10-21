@@ -9,7 +9,7 @@
  * @module extra/log
  */
 
-require('colors')
+const chalk = require('chalk')
 
 /**
  * Types of log messages
@@ -18,14 +18,14 @@ require('colors')
  * @readonly
  * @property {string} info the informational message type
  * @property {string} warn the warning type
- * @property {string} res the response type
  * @property {string} err the error type
+ * @property {string} res the response type
  */
 export var types = {
-  info: 'info'.blue,
-  warn: 'warn'.yellow,
-  res: 'resp'.green,
-  err: 'err!'.red
+  info: chalk.blue('info'),
+  warn: chalk.bold.yellow('warn'),
+  err: chalk.bold.red('err!'),
+  res: chalk.green('resp')
 }
 
 /**
@@ -100,10 +100,10 @@ export function err (src, reason) {
   }
 
   if (!process.env.TEST_MODE) {
-    var note = `[⋅] An error occured. The messages below may contain
+    var note = chalk.inverse(`[⋅] An error occured. The messages below may contain
 [⋅] useful information about the problem.
 [⋅] If you think this is an issue with 'vk-chat-bot' itself,
-[⋅] please report it at <https://github.com/u32i64/vk-chat-bot/issues>.`.inverse
+[⋅] please report it at <https://github.com/u32i64/vk-chat-bot/issues>.`)
 
     console.log(`\n\n${note}\n\n`)
   }
