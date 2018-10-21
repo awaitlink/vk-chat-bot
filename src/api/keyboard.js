@@ -110,28 +110,17 @@ export class Button {
 }
 
 /**
- * Colors of buttons
+ * Colors of buttons in a keyboard
  * @readonly
- * @enum {string}
+ * @type {Object}
+ * @property {string} primary the primary color
+ * @property {string} default the default color
+ * @property {string} negative the negative color
+ * @property {string} positive the positive color
  */
 export var colors = {
-  /**
-   * Primary color
-   */
   primary: 'primary',
-
-  /**
-   * Default color
-   */
   default: 'default',
-
-  /**
-   * Negative color
-   */
   negative: 'negative',
-
-  /**
-   * Positive color
-   */
   positive: 'positive'
 }

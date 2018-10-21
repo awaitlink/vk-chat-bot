@@ -13,7 +13,7 @@
 > [license](#license)
 
 ## Features
-- **Easy to use** - setting up behavior is simple - see [Behavior setup](#2-behavior-setup)
+- **Easy to use** - setting up behavior is simple - see [2. Behavior setup](#2-behavior-setup) below
 - **Respects the quota** - the framework calls VK API not more then 20 times/second, so you don't exceed the quota
 
 ## Usage

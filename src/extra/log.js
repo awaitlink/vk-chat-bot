@@ -13,27 +13,18 @@ require('colors')
 
 /**
  * Types of log messages
- * @enum {string}
+ *
+ * @type {Object}
+ * @readonly
+ * @property {string} info the informational message type
+ * @property {string} warn the warning type
+ * @property {string} res the response type
+ * @property {string} err the error type
  */
 export var types = {
-  /**
-   * Informational message
-   */
   info: 'info'.blue,
-
-  /**
-   * Warning
-   */
   warn: 'warn'.yellow,
-
-  /**
-   * Response
-   */
   res: 'resp'.green,
-
-  /**
-   * Error
-   */
   err: 'err!'.red
 }
 

@@ -15,6 +15,13 @@ import * as log from './extra/log'
 import Stats from './extra/stats'
 
 /**
+ * @typedef core_and_bot
+ * @type {Object}
+ * @property {Core} core the Core object
+ * @property {Bot} bot the Bot object
+ */
+
+/**
  * Creates all the necessary objects for the bot and the [Bot]{@link module:bot~Bot} object itself
  * @param {Object} params - parameters object
  * @param {string} params.vk_token - an API token of a VK community
@@ -23,7 +30,21 @@ import Stats from './extra/stats'
  * @param {string} params.secret - secret key (can be set in Callback API settings)
  * @param {number} params.port - the port bot will run at
  * @param {string} [params.cmd_prefix = ""] - each command (for [Core#cmd]{@link module:core~Core#cmd} handlers) should start with this prefix to be recognized
- * @return {{core: Core, bot: Bot}} core and bot objects
+ *
+ * @return {core_and_bot} core and bot objects
+ *
+ * @example
+ * var params = {
+ *    vk_token: 'your_vk_access_token',
+ *    confirmation_token: 'f123456',
+ *    group_id: 1234567,
+ *    secret: 's3r10us1y_s3cr3t_phr4s3',
+ *    port: 12345,
+ *
+ *    cmd_prefix: "/"
+ *  }
+ *
+ *  var {bot, core} = vk.bot(params)
  */
 function bot (params) {
   process.on('uncaughtException', err => {
@@ -57,6 +78,23 @@ function bot (params) {
   }
 }
 
+/**
+ * The exported object. Use it to get what you need.
+ *
+ * @type {Object}
+ * @property {function} bot the quick creation function, [bot]{@link bot}
+ * @property {class} Bot the [Bot]{@link module:bot~Bot} class
+ * @property {class} Core the [Core]{@link module:core~Core} class
+ * @property {class} API the [API]{@link module:api/api~API} class
+ * @property {class} Context the [Context]{@link module:api/context~Context} class
+ * @property {Object} kbd keyboard classes, see [api/keyboard module]{@link module:api/keyboard}
+ * @property {Object} log logging functions, see [extra/log module]{@link module:extra/log}
+ * @property {class} Stats the [Stats]{@link module:extra/stats~Stats} class
+ *
+ * @example
+ * const vk = require('vk-chat-bot')
+ * // ...
+ */
 var vk = {
   // Quick creation function
   bot,
