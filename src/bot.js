@@ -42,7 +42,7 @@ export default class Bot {
      * @type {Core}
      * @memberof module:bot~Bot
      */
-    this.core = core
+    this._core = core
 
     /**
      * Group ID
@@ -51,7 +51,7 @@ export default class Bot {
      * @type {string|number}
      * @memberof module:bot~Bot
      */
-    this.groupId = groupId
+    this._groupId = groupId
 
     /**
      * Confirmation token
@@ -60,7 +60,7 @@ export default class Bot {
      * @type {string}
      * @memberof module:bot~Bot
      */
-    this.confirmationToken = confirmationToken
+    this._confirmationToken = confirmationToken
 
     /**
      * Secret
@@ -68,7 +68,7 @@ export default class Bot {
      * @type {string}
      * @memberof module:bot~Bot
      */
-    this.secret = secret
+    this._secret = secret
 
     /**
      * Port
@@ -77,7 +77,7 @@ export default class Bot {
      * @type {number}
      * @memberof module:bot~Bot
      */
-    this.port = port
+    this._port = port
   }
 
   /**
@@ -86,12 +86,12 @@ export default class Bot {
    * @memberof module:bot~Bot
    */
   start () {
-    this.core.lock()
+    this._core.lock()
 
-    var evt = this.core.eventCount
-    var pld = this.core.payloadCount
-    var cmd = this.core.commandHandlers.length
-    var reg = this.core.regexHandlers.length
+    var evt = this._core._eventCount
+    var pld = this._core._payloadCount
+    var cmd = this._core._commandHandlers.length
+    var reg = this._core._regexHandlers.length
     info('bot', `Handlers count: on:${evt} cmd:${cmd} regex:${reg} payload:${pld}`)
 
     if ((evt + cmd + reg + pld) === 0) {
@@ -112,33 +112,33 @@ export default class Bot {
     app.post('/', (req, res) => {
       var body = req.body
 
-      if (body.secret !== this.secret) {
+      if (body.secret !== this._secret) {
         res.status(400).send('Invalid secret key.')
         warn('bot', 'Received a request with an invalid secret key')
         return
       }
 
-      if (body.group_id.toString() !== this.groupId) {
+      if (body.group_id.toString() !== this._groupId) {
         res.status(400).send('Invalid group id.')
         warn('bot', 'Received a request with an invalid group id')
         return
       }
 
       if (body.type === 'confirmation') {
-        res.status(200).send(this.confirmationToken)
+        res.status(200).send(this._confirmationToken)
         response('bot', 'Sent confirmation token.')
       } else {
         res.status(200).send('ok')
-        this.core.parseRequest(body)
+        this._core.parseRequest(body)
       }
     })
 
-    var server = app.listen(this.port, (err) => {
+    var server = app.listen(this._port, (err) => {
       if (err) {
         error('bot', 'Error occured while starting the server: ' + err)
       }
 
-      info('bot', `Server is listening on port ${this.port}`)
+      info('bot', `Server is listening on port ${this._port}`)
 
       // Quit in test mode
       if (process.env.TEST_MODE) {

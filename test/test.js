@@ -139,11 +139,11 @@ test('Core#help() should return a proper help message', t => {
 
 // Keyboard
 
-test('Keyboard#getJSON should return valid keyboard JSON (empty keyboard)', t => {
+test('Keyboard should make a valid keyboard JSON (empty keyboard)', t => {
   var kbd = new Keyboard()
 
   t.is(
-    JSON.stringify(kbd.getJSON()),
+    JSON.stringify(kbd),
     JSON.stringify({
       one_time: false,
       buttons: []
@@ -151,14 +151,14 @@ test('Keyboard#getJSON should return valid keyboard JSON (empty keyboard)', t =>
   )
 })
 
-test('Keyboard#getJSON should return valid keyboard JSON (2 rows, 2 buttons, one time)', t => {
+test('Keyboard should make a valid keyboard JSON (2 rows, 2 buttons, one time)', t => {
   var kbd = new Keyboard([
     [new Button('1'), new Button('2', colors.primary, { pay: 'load' })],
     [new Button('3', colors.negative), new Button('4', colors.positive)]
   ], true)
 
   t.is(
-    JSON.stringify(kbd.getJSON()),
+    JSON.stringify(kbd),
     JSON.stringify({
       one_time: true,
       buttons: [

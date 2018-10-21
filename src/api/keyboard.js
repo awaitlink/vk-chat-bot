@@ -27,7 +27,7 @@ export class Keyboard {
    * @class Keyboard
    * @see module:api/keyboard
    *
-   * @param {Button[][]} [items=[]] array of arrays (rows) of buttons
+   * @param {Button[][]} [buttons=[]] array of arrays (rows) of buttons
    * @param {boolean} [oneTime=false] show only once? (or disappear after button press?)
    * @return {Keyboard}
    *
@@ -42,14 +42,14 @@ export class Keyboard {
    *    ],
    * ])
    */
-  constructor (items = [], oneTime = false) {
+  constructor (buttons = [], oneTime = false) {
     /**
      * Is this keyboard one-time?
      * @readonly
      * @type {boolean}
      * @memberof module:api/keyboard~Keyboard
      */
-    this.oneTime = oneTime
+    this.one_time = oneTime
 
     /**
      * Items of this keyboard
@@ -57,23 +57,7 @@ export class Keyboard {
      * @type {Button[][]}
      * @memberof module:api/keyboard~Keyboard
      */
-    this.items = items
-  }
-
-  /**
-   * Gets an object representing the keyboard, ready to be serialized into JSON
-   * @function module:api/keyboard~Keyboard#getJSON
-   * @instance
-   *
-   * @return {Object} an object representing the keyboard, ready to be serialized into JSON
-   */
-  getJSON () {
-    var json = {
-      one_time: this.oneTime,
-      buttons: this.items
-    }
-
-    return json
+    this.buttons = buttons
   }
 }
 

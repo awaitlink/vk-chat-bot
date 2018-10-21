@@ -61,7 +61,8 @@ export default class Context {
 
     /**
      * Does this `Context`'s response need auto-sending?
-     * @private
+     * @readonly
+     * @see module:api/context~Context#noAutoSend
      * @type {boolean}
      * @memberof module:api/context~Context
      */
@@ -88,7 +89,7 @@ export default class Context {
    * @instance
    */
   setPid (pid) {
-    this.pid = pid
+    this._pid = pid
   }
 
   /**
@@ -99,7 +100,7 @@ export default class Context {
    * @instance
    */
   text (txt) {
-    this.replyText = txt
+    this._replyText = txt
   }
 
   /**
@@ -119,9 +120,9 @@ export default class Context {
     requireParam('Context#attach', resId, 'resource id')
 
     if (accessKey) {
-      this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`)
+      this._attachment.push(`${type}${ownerId}_${resId}_${accessKey}`)
     } else {
-      this.attachment.push(`${type}${ownerId}_${resId}`)
+      this._attachment.push(`${type}${ownerId}_${resId}`)
     }
   }
 
@@ -158,7 +159,7 @@ export default class Context {
    * }, 'demo keyboard')
    */
   keyboard (kbd) {
-    this.kbd_object = JSON.stringify(kbd.getJSON())
+    this._kbdObject = JSON.stringify(kbd)
   }
 
   /**
@@ -180,17 +181,17 @@ export default class Context {
    */
   async send () {
     if (this.eventType === 'message_deny') {
-      warn('ctx', `No message was sent to peer ${this.pid} ("message_deny" event)`)
+      warn('ctx', `No message was sent to peer ${this._pid} ("message_deny" event)`)
       return
     }
 
-    if (this.replyText === '' && this.attachment === []) {
-      warn('ctx', `No message was sent to peer ${this.pid} (text or attachment is required)`)
+    if (this._replyText === '' && this._attachment === []) {
+      warn('ctx', `No message was sent to peer ${this._pid} (text or attachment is required)`)
       return
     }
 
-    var attachmentList = this.attachment.join(',')
-    return this.api.send(this.pid, this.replyText, attachmentList, this.kbd_object)
+    var attachmentList = this._attachment.join(',')
+    return this.api.send(this._pid, this._replyText, attachmentList, this._kbdObject)
   }
 
   /**
@@ -207,7 +208,7 @@ export default class Context {
      * @type {string}
      * @memberof module:api/context~Context
      */
-    this.replyText = ''
+    this._replyText = ''
 
     /**
      * Attachment, which will be used in the reply
@@ -215,7 +216,7 @@ export default class Context {
      * @type {string}
      * @memberof module:api/context~Context
      */
-    this.attachment = []
+    this._attachment = []
 
     /**
      * Object of the [Keyboard]{@link module:api/keyboard~Keyboard}, which will be used in the reply
@@ -223,7 +224,7 @@ export default class Context {
      * @type {Object}
      * @memberof module:api/context~Context
      */
-    this.kbd_object = ''
+    this._kbdObject = ''
 
     if (this.eventType === 'message_allow') {
       /**
@@ -234,11 +235,11 @@ export default class Context {
        * @type {string|number}
        * @memberof module:api/context~Context
        */
-      this.pid = this.obj.user_id
+      this._pid = this.obj.user_id
     } else if (this.eventType === 'message_typing_state') {
-      this.pid = this.obj.from_id
+      this._pid = this.obj.from_id
     } else {
-      this.pid = this.obj.peer_id
+      this._pid = this.obj.peer_id
     }
   }
 }

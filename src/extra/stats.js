@@ -64,7 +64,7 @@ export default class Stats {
      * @type {number}
      * @memberof module:extra/stats~Stats
      */
-    this.rx = 0
+    this._rx = 0
 
     /**
      * Count of messages sent
@@ -73,7 +73,7 @@ export default class Stats {
      * @type {number}
      * @memberof module:extra/stats~Stats
      */
-    this.tx = 0
+    this._tx = 0
 
     /**
      * Count of various events
@@ -82,7 +82,7 @@ export default class Stats {
      * @type {Object}
      * @memberof module:extra/stats~Stats
      */
-    this.eventCounters = {
+    this._eventCounters = {
       message_new: 0,
       message_reply: 0,
       message_edit: 0,
@@ -104,7 +104,7 @@ export default class Stats {
      * @type {string}
      * @memberof module:extra/stats~Stats
      */
-    this.previous = ''
+    this._previous = ''
 
     if (!process.env.TEST_MODE) {
       info('stat', 'Stats initialized')
@@ -121,7 +121,7 @@ export default class Stats {
    * @memberof module:extra/stats~Stats
    */
   sent () {
-    this.tx++
+    this._tx++
   }
 
   /**
@@ -132,12 +132,12 @@ export default class Stats {
    * @param {string} name - the event name
    */
   event (name) {
-    this.rx++
-    this.eventCounters[name]++
+    this._rx++
+    this._eventCounters[name]++
 
     var internalEvents = ['start', 'service_action', 'no_match', 'handler_error']
     if (internalEvents.includes(name)) {
-      this.rx-- // Not from Callback API
+      this._rx-- // Not from Callback API
     }
   }
 
@@ -151,7 +151,7 @@ export default class Stats {
    * @return {string} the count
    */
   getEventCount (name) {
-    return this.eventCounters[name].toString()
+    return this._eventCounters[name].toString()
   }
 
   /**
@@ -160,8 +160,8 @@ export default class Stats {
    * @memberof module:extra/stats~Stats
    */
   print () {
-    var rx = this.rx.toString().green
-    var tx = this.tx.toString().cyan
+    var rx = this._rx.toString().green
+    var tx = this._tx.toString().cyan
 
     var mn = this.getEventCount('message_new').green
     var ma = this.getEventCount('message_allow').green
@@ -179,10 +179,10 @@ export default class Stats {
     var up = moment.duration(process.uptime(), 'seconds').format('y[y] d[d] h[h] m[m] s[s]')
     var message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st} action:${sa}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`
 
-    if (message === this.previous) {
+    if (message === this._previous) {
       return
     } else {
-      this.previous = message
+      this._previous = message
     }
 
     message = `[${up}] ` + message

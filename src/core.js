@@ -49,12 +49,14 @@ export default class Core {
 
     /**
      * @type {API}
+     * @readonly
      * @memberof module:core~Core
      */
     this.api = api
 
     /**
      * @type {Stats}
+     * @readonly
      * @memberof module:core~Core
      */
     this.stats = stats
@@ -66,7 +68,7 @@ export default class Core {
      * @type {string}
      * @memberof module:core~Core
      */
-    this.cmdPrefix = cmdPrefix
+    this._cmdPrefix = cmdPrefix
 
     /**
      * Command prefix, escaped for usage in regular expressions
@@ -75,7 +77,7 @@ export default class Core {
      * @type {string}
      * @memberof module:core~Core
      */
-    this.escapedCmdPrefix = this.escapeRegex(this.cmdPrefix || '')
+    this._escapedCmdPrefix = this._escapeRegex(this._cmdPrefix || '')
 
     /**
      * Group ID
@@ -84,7 +86,7 @@ export default class Core {
      * @type {string}
      * @memberof module:core~Core
      */
-    this.groupId = this.escapeRegex(groupId) // Just in case
+    this._groupId = this._escapeRegex(groupId) // Just in case
 
     /**
      * Is this `Core` locked?
@@ -93,7 +95,7 @@ export default class Core {
      * @type {boolean}
      * @memberof module:core~Core
      */
-    this.locked = false
+    this._locked = false
 
     /**
      * Count of event handlers
@@ -103,7 +105,7 @@ export default class Core {
      * @memberof module:core~Core
      * @todo Couldn't we just count this by using [Core#eventHandlers]{@link module:core#eventHandlers} when needed?
      */
-    this.eventCount = 0
+    this._eventCount = 0
 
     /**
      * Handlers for events
@@ -112,7 +114,7 @@ export default class Core {
      * @memberof module:core~Core
      * @type {Object}
      */
-    this.eventHandlers = {
+    this._eventHandlers = {
       // Callback API
       message_new: null,
       message_reply: null,
@@ -138,7 +140,7 @@ export default class Core {
      * @type {number}
      * @todo Just [Core#exactPayloadHandlers]{@link module:core#exactPayloadHandlers}.length + [Core#dynPayloadHandlers]{@link module:core#dynPayloadHandlers}.length. Why this is needed?
      */
-    this.payloadCount = 0
+    this._payloadCount = 0
 
     /**
      * Exact payload handlers
@@ -147,7 +149,7 @@ export default class Core {
      * @memberof module:core~Core
      * @type {Object}
      */
-    this.exactPayloadHandlers = {}
+    this._exactPayloadHandlers = {}
 
     /**
      * Dynamic payload handlers (those which use functions to determine whether a handler is suitable)
@@ -156,7 +158,7 @@ export default class Core {
      * @memberof module:core~Core
      * @type {Object[]}
      */
-    this.dynPayloadHandlers = []
+    this._dynPayloadHandlers = []
 
     /**
      * Command handlers
@@ -165,7 +167,7 @@ export default class Core {
      * @memberof module:core~Core
      * @type {Object[]}
      */
-    this.commandHandlers = []
+    this._commandHandlers = []
 
     /**
      * Regular expression handlers
@@ -174,7 +176,7 @@ export default class Core {
      * @memberof module:core~Core
      * @type {Object[]}
      */
-    this.regexHandlers = []
+    this._regexHandlers = []
 
     /**
      * Are event warnings enabled?
@@ -183,7 +185,7 @@ export default class Core {
      * @memberof module:core~Core
      * @type {boolean}
      */
-    this.eventWarnings = true
+    this._eventWarnings = true
 
     /**
      * The help message
@@ -192,9 +194,9 @@ export default class Core {
      * @memberof module:core~Core
      * @type {string}
      */
-    this.helpMessage = ''
+    this._helpMessage = ''
 
-    this.registerMessageNewHandler()
+    this._registerMessageNewHandler()
   }
 
   /**
@@ -203,7 +205,7 @@ export default class Core {
    * @instance
    */
   noEventWarnings () {
-    this.eventWarnings = false
+    this._eventWarnings = false
     warn('core', 'Warnings about missing event handlers were disabled')
   }
 
@@ -211,13 +213,12 @@ export default class Core {
    * Locks this `Core`, so new handlers can't be added,
    * and generates the help message for later usage
    *
-   * @private
    * @memberof module:core~Core
    * @instance
    */
   lock () {
-    this.locked = true
-    this.generateHelpMessage()
+    this._locked = true
+    this._generateHelpMessage()
   }
 
   /**
@@ -230,12 +231,12 @@ export default class Core {
    *
    * @return {boolean} is this `Core` locked?
    */
-  isLocked () {
-    if (this.locked) {
+  _isLocked () {
+    if (this._locked) {
       warn('core', 'Registering a handler while the bot is running is not allowed')
     }
 
-    return this.locked
+    return this._locked
   }
 
   /**
@@ -318,19 +319,19 @@ export default class Core {
    *
    */
   on (event, callback) {
-    if (this.isLocked()) return
+    if (this._isLocked()) return
 
     requireParam('Core#on', event, 'event name')
     requireParam('Core#on', callback, 'callback')
     requireFunction(callback)
 
-    if (!Object.keys(this.eventHandlers).includes(event)) {
+    if (!Object.keys(this._eventHandlers).includes(event)) {
       err('core', `Cannot register a handler: unknown event type '${event}'`)
     }
 
-    if (!this.eventHandlers[event]) {
-      this.eventHandlers[event] = callback
-      this.eventCount++
+    if (!this._eventHandlers[event]) {
+      this._eventHandlers[event] = callback
+      this._eventCount++
     } else {
       if (event === 'message_new') {
         err('core', `Cannot register a handler: handler for the 'message_new' event is defined internally`)
@@ -400,7 +401,7 @@ export default class Core {
    *
    */
   payload (payload, callback) {
-    if (this.isLocked()) return
+    if (this._isLocked()) return
 
     requireParam('Core#payload', payload, 'target payload')
     requireParam('Core#payload', callback, 'callback')
@@ -409,21 +410,21 @@ export default class Core {
     if (typeof payload !== 'function') {
       // Exact payload match:
 
-      if (!this.exactPayloadHandlers[JSON.stringify(payload)]) {
-        this.exactPayloadHandlers[JSON.stringify(payload)] = callback
-        this.payloadCount++
+      if (!this._exactPayloadHandlers[JSON.stringify(payload)]) {
+        this._exactPayloadHandlers[JSON.stringify(payload)] = callback
+        this._payloadCount++
       } else {
         err('core', `Cannot register a handler: duplicate handler for payload '${payload}'`)
       }
     } else {
       // Dynamic payload match:
 
-      this.dynPayloadHandlers.push({
+      this._dynPayloadHandlers.push({
         tester: payload,
         callback
       })
 
-      this.payloadCount++
+      this._payloadCount++
     }
   }
 
@@ -446,13 +447,13 @@ export default class Core {
    * }, 'shows the help message')
    */
   cmd (command, callback, description = '') {
-    if (this.isLocked()) return
+    if (this._isLocked()) return
 
     requireParam('Core#cmd', command, 'command')
     requireParam('Core#cmd', callback, 'callback')
     requireFunction(callback)
 
-    this.commandHandlers.push({
+    this._commandHandlers.push({
       command,
       description,
       callback
@@ -474,13 +475,13 @@ export default class Core {
    * })
    */
   regex (regex, callback) {
-    if (this.isLocked()) return
+    if (this._isLocked()) return
 
     requireParam('Core#regex', regex, 'regular expression')
     requireParam('Core#regex', callback, 'callback')
     requireFunction(callback)
 
-    this.regexHandlers.push({
+    this._regexHandlers.push({
       regex,
       callback
     })
@@ -490,7 +491,6 @@ export default class Core {
    * Parses the request, creates a `Context`, and proceeds
    * to call `Core#event` to handle the event
    *
-   * @private
    * @memberof module:core~Core
    * @instance
    *
@@ -502,7 +502,7 @@ export default class Core {
     var event = body.type
 
     var $ = new Context(this.api, event, obj, obj.text)
-    await this.event(event, $)
+    await this._event(event, $)
   }
 
   /**
@@ -515,12 +515,12 @@ export default class Core {
    * @param {string} name - event name
    * @param {Context} $ - context object
    */
-  async event (name, $) {
+  async _event (name, $) {
     this.stats.event(name)
 
-    if (this.eventHandlers[name]) {
+    if (this._eventHandlers[name]) {
       try {
-        await this.eventHandlers[name]($)
+        await this._eventHandlers[name]($)
 
         if ($.autoSend && name !== 'message_new') {
           await $.send()
@@ -529,11 +529,11 @@ export default class Core {
         warn('core', `Error in handler: ${error}`)
 
         if (name !== 'handler_error') {
-          await this.event('handler_error', $)
+          await this._event('handler_error', $)
         }
       }
     } else {
-      if (this.eventWarnings) {
+      if (this._eventWarnings) {
         warn('core', `No handler for event '${name}'`)
       }
     }
@@ -545,20 +545,20 @@ export default class Core {
    * @memberof module:core~Core
    * @instance
    */
-  registerMessageNewHandler () {
+  _registerMessageNewHandler () {
     this.on('message_new', async $ => {
       // Check for 'service_action' event
       if ($.obj.action) {
-        await this.event('service_action', $)
+        await this._event('service_action', $)
         return
       }
 
       // Handle regular message
-      if (!await this.tryHandlePayload($)) {
-        if (!await this.tryHandleCommand($)) {
-          if (!await this.tryHandleRegex($)) {
+      if (!await this._tryHandlePayload($)) {
+        if (!await this._tryHandleCommand($)) {
+          if (!await this._tryHandleRegex($)) {
             warn('core', `Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
-            await this.event('no_match', $)
+            await this._event('no_match', $)
             return
           }
         }
@@ -567,7 +567,7 @@ export default class Core {
       if ($.autoSend) await $.send()
     })
 
-    this.eventCount-- // Do not count 'message_new' event
+    this._eventCount-- // Do not count 'message_new' event
   }
 
   /**
@@ -582,26 +582,26 @@ export default class Core {
    *
    * @return {boolean} was the message handled?
    */
-  async tryHandlePayload ($) {
+  async _tryHandlePayload ($) {
     var payload = $.obj.payload
     if (payload) {
       // Check for 'start' event
       try {
         if (JSON.parse(payload).command === 'start') {
-          await this.event('start', $)
+          await this._event('start', $)
           $.noAutoSend() // Message sending was already handled by event
           return true
         }
       } catch (e) { /* JSON Parse Error */ }
 
       // Check for exact payload handler
-      if (this.exactPayloadHandlers[payload]) {
-        await this.exactPayloadHandlers[payload]($)
+      if (this._exactPayloadHandlers[payload]) {
+        await this._exactPayloadHandlers[payload]($)
         return true
       }
 
       // Check for dynamic payload handler
-      for (var handler of this.dynPayloadHandlers) {
+      for (var handler of this._dynPayloadHandlers) {
         var parsed = null
         try {
           parsed = JSON.parse(payload)
@@ -629,12 +629,12 @@ export default class Core {
    *
    * @return {boolean} was the message handled?
    */
-  async tryHandleCommand ($) {
-    for (var i = 0; i < this.commandHandlers.length; i++) {
-      var cmdHandler = this.commandHandlers[i]
-      var cmd = this.escapeRegex(cmdHandler.command)
+  async _tryHandleCommand ($) {
+    for (var i = 0; i < this._commandHandlers.length; i++) {
+      var cmdHandler = this._commandHandlers[i]
+      var cmd = this._escapeRegex(cmdHandler.command)
 
-      var cmdRegex = new RegExp(`^( *\\[club${this.groupId}\\|.*\\])?( *${this.escapedCmdPrefix}${cmd})+`, 'i')
+      var cmdRegex = new RegExp(`^( *\\[club${this._groupId}\\|.*\\])?( *${this._escapedCmdPrefix}${cmd})+`, 'i')
 
       if (cmdRegex.test($.msg)) {
         $.msg = $.msg.replace(cmdRegex, '')
@@ -658,9 +658,9 @@ export default class Core {
    *
    * @return {boolean} was the message handled?
    */
-  async tryHandleRegex ($) {
-    for (var i = 0; i < this.regexHandlers.length; i++) {
-      var regexHandler = this.regexHandlers[i]
+  async _tryHandleRegex ($) {
+    for (var i = 0; i < this._regexHandlers.length; i++) {
+      var regexHandler = this._regexHandlers[i]
 
       if (regexHandler.regex.test($.msg)) {
         await regexHandler.callback($)
@@ -677,24 +677,24 @@ export default class Core {
    * @memberof module:core~Core
    * @instance
    */
-  generateHelpMessage () {
+  _generateHelpMessage () {
     var helpMessage = '\n'
 
-    for (var i = 0; i < this.commandHandlers.length; i++) {
+    for (var i = 0; i < this._commandHandlers.length; i++) {
       var commandHelpEntry = ''
 
-      commandHelpEntry += this.cmdPrefix
-      commandHelpEntry += this.commandHandlers[i].command
+      commandHelpEntry += this._cmdPrefix
+      commandHelpEntry += this._commandHandlers[i].command
 
-      if (this.commandHandlers[i].description) {
+      if (this._commandHandlers[i].description) {
         commandHelpEntry += ' - '
-        commandHelpEntry += this.commandHandlers[i].description
+        commandHelpEntry += this._commandHandlers[i].description
       }
 
       helpMessage += commandHelpEntry + '\n'
     }
 
-    this.helpMessage = helpMessage
+    this._helpMessage = helpMessage
   }
 
   /**
@@ -706,7 +706,7 @@ export default class Core {
    * @instance
    */
   help () {
-    return this.helpMessage
+    return this._helpMessage
   }
 
   /**
@@ -721,7 +721,7 @@ export default class Core {
    * @return {string} the escaped string
    *
    */
-  escapeRegex (s) {
+  _escapeRegex (s) {
     return s.replace(/[-|/\\^$*+?.()|[\]{}]/g, '\\$&')
   }
 }

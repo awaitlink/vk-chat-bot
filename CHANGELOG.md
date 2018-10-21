@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased] - ????-??-??
 ### Added
-- Documentation!
+- :tada: **Documentation!** :tada:
 
 ### Changed
 - Build is now in `dist/vk-chat-bot.min.js`
+- Renamed fields and methods intended for internal use by adding `_` in front
+
+### Removed
+- `log.progress` - was intended for internal use, but wasn't actually used
+- `Keyboard#getJSON` - instead, `Keyboard` follows the correct structure right away
 
 ## [10.5.1] - 2018-09-14
 ### Changed

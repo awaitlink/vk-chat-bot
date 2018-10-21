@@ -45,11 +45,11 @@ export default class API {
      * @type {string}
      * @memberof module:api/api~API
      */
-    this.vkToken = vkToken
+    this._vkToken = vkToken
 
     /**
-     * VK API token
-     * @private
+     * Stats object
+     * @readonly
      * @type {Stats}
      * @memberof module:api/api~API
      */
@@ -75,7 +75,7 @@ export default class API {
      * @type {Object[]}
      * @memberof module:api/api~API
      */
-    this.queue = []
+    this._queue = []
 
     /**
      * Is the queue being processed now?
@@ -83,25 +83,25 @@ export default class API {
      * @type {boolean}
      * @memberof module:api/api~API
      */
-    this.isQueueProcessing = false
+    this._isQueueProcessing = false
 
     if (!process.env.TEST_MODE) {
       // Check permissions
-      this.checkPermissions()
+      this._checkPermissions()
         .then(e => { info('api', e) })
         .catch(e => { warn('api', e) })
 
       // Start the queue processing
       setInterval(() => {
-        if (!this.isQueueProcessing) {
-          this.isQueueProcessing = true
-          this.processQueue()
+        if (!this._isQueueProcessing) {
+          this._isQueueProcessing = true
+          this._processQueue()
             .then(r => {
-              this.isQueueProcessing = false
+              this._isQueueProcessing = false
             })
             .catch(e => {
               warn('api', e)
-              this.isQueueProcessing = false
+              this._isQueueProcessing = false
             })
         }
       }, 1000)
@@ -114,7 +114,7 @@ export default class API {
    * @memberof module:api/api~API
    * @instance
    */
-  async checkPermissions () {
+  async _checkPermissions () {
     // Check if the token has the required permissions
     var response = await this.scheduleCall('groups.getTokenPermissions', {})
 
@@ -140,14 +140,14 @@ export default class API {
    * @memberof module:api/api~API
    * @instance
    */
-  async processQueue () {
-    if (this.queue) {
+  async _processQueue () {
+    if (this._queue) {
       for (var i = 1; i <= this.API_QUOTA; i++) {
-        if (this.queue.length === 0) {
+        if (this._queue.length === 0) {
           break
         }
 
-        var e = this.queue.shift()
+        var e = this._queue.shift()
 
         var json = await this.call(e.method, e.params)
 
@@ -200,7 +200,7 @@ export default class API {
   */
   async scheduleCall (method, params) {
     return new Promise((resolve, reject) => {
-      this.queue.push({
+      this._queue.push({
         method: method,
         params: params,
         resolve: resolve,
@@ -243,7 +243,7 @@ export default class API {
       uri: url,
       json: true,
       qs: {
-        access_token: this.vkToken,
+        access_token: this._vkToken,
         v: this.API_VERSION
       }
     }
