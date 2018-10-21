@@ -15,6 +15,7 @@
     "sdk",
     "vk"
   ],
+  "homepage": "https://u32i64.github.io/vk-chat-bot",
   "bugs": "https://github.com/u32i64/vk-chat-bot/issues",
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
   "license": "MIT",
   "author": {
     "name": "Artem Varaksa (u32i64)",
-    "email": "aymfst@gmail.com"
+    "email": "aymfst@gmail.com",
+    "url": "https://u32i64.github.io"
   },
   "files": [
     "dist/vk-chat-bot.min.js",
@@ -37,13 +39,13 @@
     "build": "yarn run clean && rollup -c",
     "clean": "rm -rf dist *.tgz && yarn run clean:docs",
     "clean:docs": "rm -rf docs",
+    "docs": "yarn run clean:docs && jsdoc -c .jsdoc.json --private && mv ./docs/vk-chat-bot/*/* ./docs/ && rm -rf ./docs/vk-chat-bot",
+    "fix": "standard --fix",
     "minify": "uglifyjs dist/vk-chat-bot.js -c -o dist/vk-chat-bot.min.js --source-map 'content=inline'",
     "prepare": "yarn run test && yarn run build && yarn run minify && yarn run docs",
     "test": "yarn run test:lint && yarn run test:ava",
     "test:ava": "ava",
-    "test:lint": "standard --verbose | snazzy",
-    "fix": "standard --fix",
-    "docs": "yarn run clean:docs && jsdoc -c .jsdoc.json --private && mv ./docs/vk-chat-bot/*/* ./docs/ && rm -rf ./docs/vk-chat-bot"
+    "test:lint": "standard --verbose | snazzy"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
