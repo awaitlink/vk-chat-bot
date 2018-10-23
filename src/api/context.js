@@ -1,15 +1,13 @@
 /**
- * @file A part of `vk-chat-bot` node.js framework
+ * @file A part of `vk-chat-bot` node.js framework.
+ * Defines the {@link Context} class.
+ *
  * @author Artem Varaksa <aymfst@gmail.com>
  * @copyright Artem Varaksa 2017-2018
  */
 
-/**
- * @module api/context
- */
-
 import { Keyboard } from './keyboard'
-import { warn, requireParam } from '../extra/log'
+import { log, requireParam } from '../extra/log'
 import '@babel/polyfill'
 
 export default class Context {
@@ -24,13 +22,13 @@ export default class Context {
    * @return {Context}
    *
    * @classdesc
-   * Context, which is passed to every [handler]{@link module:core~handler}
+   * Context, which is passed to every [handler]{@link handler}
    */
   constructor (api, eventType, object, message) {
     /**
      * API
      * @type {API}
-     * @memberof module:api/context~Context
+     * @memberof Context
      */
     this.api = api
 
@@ -40,7 +38,7 @@ export default class Context {
      * **Note:** If `message_new`, `message_reply`, `message_edit` or `no_match` event, this is a [Private message object](https://vk.com/dev/objects/message).
      * Else, see [Callback API docs](https://vk.com/dev/callback_api) or [Groups Events docs](https://vk.com/dev/groups_events) for more information.
      * @type {Object}
-     * @memberof module:api/context~Context
+     * @memberof Context
      */
     this.obj = object
 
@@ -48,23 +46,23 @@ export default class Context {
      * Incoming user message
      * **Note:** If `cmd()` handler, contains message without `cmd_prefix` and the command
      * @type {string}
-     * @memberof module:api/context~Context
+     * @memberof Context
      */
     this.msg = message
 
     /**
      * Name of the event
      * @type {string}
-     * @memberof module:api/context~Context
+     * @memberof Context
      */
     this.eventType = eventType
 
     /**
      * Does this `Context`'s response need auto-sending?
      * @readonly
-     * @see module:api/context~Context#noAutoSend
+     * @see Context#noAutoSend
      * @type {boolean}
-     * @memberof module:api/context~Context
+     * @memberof Context
      */
     this.autoSend = true
 
@@ -74,7 +72,7 @@ export default class Context {
   /**
    * Prevents this handler from sending the message automatically after it finishes
    *
-   * @memberof module:api/context~Context
+   * @memberof Context
    * @instance
    */
   noAutoSend () {
@@ -85,7 +83,7 @@ export default class Context {
    * Sets a new peer ID
    *
    * @param {string|number} pid new peer ID
-   * @memberof module:api/context~Context
+   * @memberof Context
    * @instance
    */
   setPid (pid) {
@@ -96,7 +94,7 @@ export default class Context {
    * Sets the reply message text
    *
    * @param {string} txt new text
-   * @memberof module:api/context~Context
+   * @memberof Context
    * @instance
    */
   text (txt) {
@@ -111,7 +109,7 @@ export default class Context {
    * @param {string|number} ownerId resource owner ID
    * @param {string|number} resId resource ID
    * @param {string} [accessKey] resource access key, if needed; see [Access Key](https://vk.com/dev/access_key) page in API docs for more information
-   * @memberof module:api/context~Context
+   * @memberof Context
    * @instance
    */
   attach (type, ownerId, resId, accessKey) {
@@ -130,7 +128,7 @@ export default class Context {
    * Attaches a keyboard
    *
    * @param {Keyboard} kbd the keyboard
-   * @memberof module:api/context~Context
+   * @memberof Context
    * @instance
    *
    * @example
@@ -165,7 +163,7 @@ export default class Context {
   /**
    * Attaches an empty keyboard
    *
-   * @memberof module:api/context~Context
+   * @memberof Context
    * @instance
    */
   removeKeyboard () {
@@ -174,19 +172,19 @@ export default class Context {
 
   /**
    * Sends the composed message to user
-   * **Note:** After the handler finishes its work, this method is called automatically (if [noAutoSend]{@link module:api/context~Context#noAutoSeng} was not called)
+   * **Note:** After the handler finishes its work, this method is called automatically (if [noAutoSend]{@link Context#noAutoSeng} was not called)
    *
-   * @memberof module:api/context~Context
+   * @memberof Context
    * @instance
    */
   async send () {
     if (this.eventType === 'message_deny') {
-      warn('ctx', `No message was sent to peer ${this._pid} ("message_deny" event)`)
+      log().w(`No message was sent to peer ${this._pid} ("message_deny" event)`).from('ctx').now()
       return
     }
 
     if (this._replyText === '' && this._attachment === []) {
-      warn('ctx', `No message was sent to peer ${this._pid} (text or attachment is required)`)
+      log().w('ctx', `No message was sent to peer ${this._pid} (text or attachment is required)`).from('ctx').now()
       return
     }
 
@@ -198,7 +196,7 @@ export default class Context {
    * Clears the buffer and resets the User ID back to original
    * For example, after calling this you can compose another message to the same user
    *
-   * @memberof module:api/context~Context
+   * @memberof Context
    * @instance
    */
   clear () {
@@ -206,7 +204,7 @@ export default class Context {
      * Text, which will be used in the reply
      * @private
      * @type {string}
-     * @memberof module:api/context~Context
+     * @memberof Context
      */
     this._replyText = ''
 
@@ -214,15 +212,15 @@ export default class Context {
      * Attachment, which will be used in the reply
      * @private
      * @type {string}
-     * @memberof module:api/context~Context
+     * @memberof Context
      */
     this._attachment = []
 
     /**
-     * Object of the [Keyboard]{@link module:api/keyboard~Keyboard}, which will be used in the reply
+     * Object of the [Keyboard]{@link Keyboard}, which will be used in the reply
      * @private
      * @type {Object}
-     * @memberof module:api/context~Context
+     * @memberof Context
      */
     this._kbdObject = ''
 
@@ -233,7 +231,7 @@ export default class Context {
        * **Note:** You can change this using [`setPid()`](#setpid) method, the original Peer ID is available in `$.obj.peer_id`
        * @private
        * @type {string|number}
-       * @memberof module:api/context~Context
+       * @memberof Context
        */
       this._pid = this.obj.user_id
     } else if (this.eventType === 'message_typing_state') {

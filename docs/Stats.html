@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Heroku Deploy Guide - Documentation</title>
+    <title>Stats - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,120 +29,1005 @@
 
 <div id="main">
     
-    <h1 class="page-title">Heroku Deploy Guide</h1>
+    <h1 class="page-title">Stats</h1>
     
 
-    <section>
+    
+
+
+
+
+<section>
 
 <header>
     
-</header>
-
-<article>
-    <h1>VK Chat Bot Heroku Guide</h1><p>This guide will walk you step-by-step through creating your own chat bot for a community using <code>vk-chat-bot</code> npm package and <a href="https://heroku.com">Heroku</a>.</p>
-<h2>1. Setting up Heroku</h2><ul>
-<li>Visit <a href="https://signup.heroku.com/">signup.heroku.com</a> and <strong>create an account</strong> there.</li>
-<li>After completing the registration process, visit your <a href="https://dashboard.heroku.com/apps">Heroku Dashboard</a>.</li>
-<li>Create a <strong>new app</strong> with any name that is available.</li>
-</ul>
-<p><img src="https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/new-app.png" alt="New App"></p>
-<p><img src="https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/new-app-dialog.png" alt="New App Dialog"></p>
-<h2>2. Setting up a VK community</h2><ul>
-<li>Visit <a href="https://vk.com/groups">vk.com/groups</a>, click <code>Create community</code>, and fill in the details:</li>
-</ul>
-<p><img src="https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/new-community.png" alt="Create a community"></p>
-<ul>
-<li>In your community, go to <code>Manage</code>.</li>
-<li>Go to <code>Messages</code> tab, and <strong>enable</strong> community messages.</li>
-<li>In <code>Messages</code> -&gt; <code>Bot settings</code> enable <code>Bot abilities</code>, and then enable <code>Add start button</code>.</li>
-<li>Go to <code>Settings</code> -&gt; <code>API usage</code>.</li>
-<li>Create a <strong>new access token</strong> by clicking <code>Create token</code>. Make sure to check this box:</li>
-</ul>
-<p><img src="https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/new-token.png" alt="New Token"></p>
-<ul>
-<li><strong>Save</strong> your new <strong>token</strong> somewhere.</li>
-<li>Now switch to the <code>Callback API</code> -&gt; <code>Server settings</code> tab.</li>
-<li>Set the API version to <code>5.80</code>.</li>
-<li>In the <code>Secret key</code> field, enter <strong>your own</strong> random combination of characters.</li>
-<li>Click <code>Save</code> below that field.</li>
-<li>Go back to <code>Server settings</code> tab and enter in the <code>URL</code> field: <strong>https://</strong><code>your-app-name</code><strong>.herokuapp.com/</strong> (Replace <code>your-app-name</code> with the name you specified when creating a new Heroku app in <strong>step 1</strong>).</li>
-<li><strong>Don't</strong> press <code>Confirm</code> and <strong>don't</strong> close this page yet.</li>
-</ul>
-<p><img src="https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/callback-api.png" alt="Callback API settings"></p>
-<h2>3. Setting up environment variables in Heroku</h2><ul>
-<li>Open the <code>Settings</code> tab in your Heroku app, click <code>Reveal Config Vars</code>, and <strong>add variables</strong>, as follows:</li>
-</ul>
-<table>
+        <h2>
+        Stats
+        </h2>
+        
+            <div class="class-description"><p>Stats stores and prints statistics.</p>
+<p>The bot logs statistics each <strong>~10s</strong> (if they changed):</p>
+<pre class="prettyprint source lang-console"><code>  stat info [12y 34d 12h 34m 56s] rx:32 tx:16 | allow/deny:5/0 typing:3 new:7(start:2 action:1) edit:1 | reply:16 | no_match:0 err:0</code></pre><h3>General statistics</h3><table>
 <thead>
 <tr>
-<th>Variable name</th>
+<th>Statistics</th>
 <th>Description</th>
-<th>Example value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>VK_API_KEY</code></td>
-<td>The <strong>token</strong> you saved earlier into somewhere</td>
-<td>-</td>
+<td><code>[...]</code></td>
+<td>Process uptime</td>
 </tr>
 <tr>
-<td><code>SECRET</code></td>
-<td><strong>Secret key</strong></td>
-<td><code>r4nd0m_53cr37_k3y</code></td>
+<td><code>rx</code></td>
+<td>Amount of received events from Callback API</td>
 </tr>
 <tr>
-<td><code>GROUP_ID</code></td>
-<td><strong>Number</strong> that comes after <code>&quot;group_id&quot;:</code></td>
-<td><code>123456789</code></td>
-</tr>
-<tr>
-<td><code>CONFIRMATION_TOKEN</code></td>
-<td><strong>String</strong> that comes after <code>String to be returned:</code></td>
-<td><code>f1234567</code></td>
-</tr>
-<tr>
-<td><code>CMD_PREFIX</code></td>
-<td>Any command prefix</td>
-<td><code>/</code></td>
+<td><code>tx</code></td>
+<td>Amount of sent messages</td>
 </tr>
 </tbody>
 </table>
-<h2>4. Creating the bot</h2><ul>
-<li>Make sure you have <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">git</a> and <a href="https://devcenter.heroku.com/articles/heroku-cli#download-and-install">Heroku CLI</a> installed.</li>
-<li>Open up terminal (console), and execute the following commands (assuming your project name on Heroku is <code>some-random-chat-bot</code>):</li>
-</ul>
-<pre class="prettyprint source lang-bash"><code># Clone the example repository
-git clone https://github.com/u32i64/vk-chat-bot-example.git
+<h3>Callback API event statistics</h3><table>
+<thead>
+<tr>
+<th>Statistics</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new</code></td>
+<td><code>message_new</code> events</td>
+</tr>
+<tr>
+<td><code>allow</code></td>
+<td><code>message_allow</code> events</td>
+</tr>
+<tr>
+<td><code>deny</code></td>
+<td><code>message_deny</code> events</td>
+</tr>
+<tr>
+<td><code>edit</code></td>
+<td><code>message_edit</code> events</td>
+</tr>
+<tr>
+<td><code>reply</code></td>
+<td><code>message_reply</code> events</td>
+</tr>
+<tr>
+<td><code>typing</code></td>
+<td><code>message_typing_state</code> events</td>
+</tr>
+</tbody>
+</table>
+<h3>Other event statistics</h3><table>
+<thead>
+<tr>
+<th>Statistics</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>start</code></td>
+<td><code>start</code> events</td>
+</tr>
+<tr>
+<td><code>action</code></td>
+<td><code>service_action</code> events</td>
+</tr>
+<tr>
+<td><code>no_match</code></td>
+<td><code>no_match</code> events</td>
+</tr>
+<tr>
+<td><code>err</code></td>
+<td><code>handler_error</code> events</td>
+</tr>
+</tbody>
+</table></div>
+        
+    
+</header>
 
-# Go inside the newly-created folder
-cd vk-chat-bot-example
+<article>
+    <div class="container-overview">
+    
+        
+<div class="section-method">
 
-# Log in to Heroku
-heroku login
+    
+    <h2>Constructor</h2>
+    
 
-# Add the heroku remote
-heroku git:remote -a some-random-chat-bot
+    <h4 class="name" id="Stats"><span class="type-signature"></span>new Stats<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="Stats.html">Stats</a>}</span></h4>
 
-# Finally, push the bot to Heroku
-git push -u heroku master</code></pre><h2>5. Final steps</h2><ul>
-<li>Go to your app's <strong>logs</strong> (in Heroku app dashboard -&gt; <code>More</code> -&gt; <code>View logs</code>)</li>
-<li>If you see a <strong>log message</strong> like the one below, then the bot has launched successfully:<pre class="prettyprint source lang-console"><code>bot info Server is listening on port 12345</code></pre>If something is not working, feel free to <a href="https://github.com/u32i64/vk-chat-bot/issues">open an issue</a> on GitHub.</li>
-<li>Now go back to VK's <strong>Callback API settings</strong>, and press the <code>Confirm</code> button.</li>
-<li>Also, in the <code>Event types</code> tab, <strong>check</strong> the following boxes:</li>
-</ul>
-<p><img src="https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/event-types.png" alt="Event types"></p>
-<h2>6. Ready!</h2><ul>
-<li>Congratulations, you have just made your own VK chat bot!</li>
-</ul>
-<h2>7. What's next?</h2><ul>
-<li>Take a look at other pages of the documentation - to understand how the example bot works</li>
-<li>Change or implement new behavior in your bot - see <a href="Core.html"><code>Core</code></a> docs</li>
-<li>If you have any questions, feature requests or bugs - create an <a href="https://github.com/u32i64/vk-chat-bot/issues">issue</a></li>
-</ul>
+    
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code><a href="Stats.html">Stats</a></code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".this._eventCounters"><span class="type-signature">(private, static) </span>this._eventCounters<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    <p>Count of various events</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line83">line 83</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Object</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".this._previous"><span class="type-signature">(private, static) </span>this._previous<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    <p>Previous stats log message, without time</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line105">line 105</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>string</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".this._rx"><span class="type-signature">(private, static) </span>this._rx<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    <p>Count of requests from the Callback API</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line65">line 65</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>number</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".this._tx"><span class="type-signature">(private, static) </span>this._tx<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    <p>Count of messages sent</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>number</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="event"><span class="type-signature"></span>event<span class="signature">(name)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>This is used to tell <code>Stats</code> that an event was emitted</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line132">line 132</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the event name</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="getEventCount"><span class="type-signature"></span>getEventCount<span class="signature">(name)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>How much events of this type were emitted?</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line151">line 151</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <p>the name of the event you're curious about</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>string</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>the count</p>
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="print"><span class="type-signature"></span>print<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Prints the statistics if they changed</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line160">line 160</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="sent"><span class="type-signature"></span>sent<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>This is used to tell <code>Stats</code> that a message was sent</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="extra_stats.js.html">extra/stats.js</a>, <a href="extra_stats.js.html#line121">line 121</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+    
+
+    
+
+    
 </article>
 
 </section>
+
+
+
 
 </div>
 

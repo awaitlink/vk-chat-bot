@@ -1,14 +1,12 @@
 /**
- * @file A part of `vk-chat-bot` node.js framework
+ * @file A part of `vk-chat-bot` node.js framework.
+ * Defines the {@link Stats} class.
+ *
  * @author Artem Varaksa <aymfst@gmail.com>
  * @copyright Artem Varaksa 2017-2018
  */
 
-/**
- * @module extra/stats
- */
-
-import { info } from './log'
+import { log } from './log'
 const chalk = require('chalk')
 
 const moment = require('moment')
@@ -62,7 +60,7 @@ export default class Stats {
      *
      * @private
      * @type {number}
-     * @memberof module:extra/stats~Stats
+     * @memberof Stats
      */
     this._rx = 0
 
@@ -71,7 +69,7 @@ export default class Stats {
      *
      * @private
      * @type {number}
-     * @memberof module:extra/stats~Stats
+     * @memberof Stats
      */
     this._tx = 0
 
@@ -80,7 +78,7 @@ export default class Stats {
      *
      * @private
      * @type {Object}
-     * @memberof module:extra/stats~Stats
+     * @memberof Stats
      */
     this._eventCounters = {
       message_new: 0,
@@ -102,12 +100,12 @@ export default class Stats {
      *
      * @private
      * @type {string}
-     * @memberof module:extra/stats~Stats
+     * @memberof Stats
      */
     this._previous = ''
 
     if (!process.env.TEST_MODE) {
-      info('stat', 'Stats initialized')
+      log().i('Stats initialized').from('stat').now()
 
       setInterval(() => {
         this.print()
@@ -118,7 +116,7 @@ export default class Stats {
   /**
    * This is used to tell `Stats` that a message was sent
    * @instance
-   * @memberof module:extra/stats~Stats
+   * @memberof Stats
    */
   sent () {
     this._tx++
@@ -127,7 +125,7 @@ export default class Stats {
   /**
    * This is used to tell `Stats` that an event was emitted
    * @instance
-   * @memberof module:extra/stats~Stats
+   * @memberof Stats
    *
    * @param {string} name - the event name
    */
@@ -144,7 +142,7 @@ export default class Stats {
   /**
    * How much events of this type were emitted?
    * @instance
-   * @memberof module:extra/stats~Stats
+   * @memberof Stats
    *
    * @param {string} name - the name of the event you're curious about
    *
@@ -157,7 +155,7 @@ export default class Stats {
   /**
    * Prints the statistics if they changed
    * @instance
-   * @memberof module:extra/stats~Stats
+   * @memberof Stats
    */
   print () {
     var rx = chalk.underline.green(this._rx.toString())
@@ -187,6 +185,6 @@ export default class Stats {
 
     message = `[${up}] ` + message
 
-    info('stat', message)
+    log().i(message).from('stat').now()
   }
 }

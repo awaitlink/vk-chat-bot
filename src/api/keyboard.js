@@ -1,38 +1,22 @@
 /**
- * @file A part of `vk-chat-bot` node.js framework
+ * @file A part of `vk-chat-bot` node.js framework.
+ * Defines the {@link Keyboard} and {@link Button} classes
+ * and {@link colors} of buttons.
+ *
  * @author Artem Varaksa <aymfst@gmail.com>
  * @copyright Artem Varaksa 2017-2018
- */
-
-/**
- * Classes for creating keyboards
- *
- * Get the `Keyboard` and `Button` classes and `colors` object from the `vk` object:
- *
- * ```js
- * const vk = require('vk-chat-bot')
- *
- * var Keyboard = vk.kbd.Keyboard
- * var Button = vk.kbd.Button
- * var colors = vk.kbd.colors
- * ```
- *
- * See full keyboard example in [Context#keyboard]{@link module:api/context~Context#keyboard}
- *
- * @module api/keyboard
  */
 
 export class Keyboard {
   /**
    * @class Keyboard
-   * @see module:api/keyboard
    *
    * @param {Button[][]} [buttons=[]] array of arrays (rows) of buttons
    * @param {boolean} [oneTime=false] show only once? (or disappear after button press?)
    * @return {Keyboard}
    *
    * @classdesc
-   * See full keyboard example in [Context#keyboard]{@link module:api/context~Context#keyboard}
+   * See full keyboard example in [Context#keyboard]{@link Context#keyboard}
    *
    * @example
    * var kbd = new Keyboard([
@@ -47,7 +31,7 @@ export class Keyboard {
      * Is this keyboard one-time?
      * @readonly
      * @type {boolean}
-     * @memberof module:api/keyboard~Keyboard
+     * @memberof Keyboard
      */
     this.one_time = oneTime
 
@@ -55,7 +39,7 @@ export class Keyboard {
      * Items of this keyboard
      * @readonly
      * @type {Button[][]}
-     * @memberof module:api/keyboard~Keyboard
+     * @memberof Keyboard
      */
     this.buttons = buttons
   }
@@ -64,7 +48,6 @@ export class Keyboard {
 export class Button {
   /**
    * @class Button
-   * @see module:api/keyboard
    *
    * @param {string} [label="Button"] button label
    * @param {string} [color="default"] button color
@@ -84,7 +67,7 @@ export class Button {
     /**
      * This button's `action`
      * @type {Object}
-     * @memberof module:api/keyboard~Button
+     * @memberof Button
      */
     this.action = {
       type: 'text',
@@ -94,7 +77,7 @@ export class Button {
     /**
      * This button's color
      * @type {string}
-     * @memberof module:api/keyboard~Button
+     * @memberof Button
      */
     this.color = color
 
@@ -102,7 +85,7 @@ export class Button {
       /**
        * This button's payload
        * @type {string}
-       * @memberof module:api/keyboard~Button
+       * @memberof Button
        */
       this.action.payload = JSON.stringify(payload)
     }

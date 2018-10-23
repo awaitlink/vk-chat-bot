@@ -1,19 +1,12 @@
 /**
- * @file A part of `vk-chat-bot` node.js framework
+ * @file A part of `vk-chat-bot` node.js framework.
+ * Defines the {@link Core} class.
+ *
  * @author Artem Varaksa <aymfst@gmail.com>
  * @copyright Artem Varaksa 2017-2018
  */
 
-/**
- * @module core
- */
-
-import {
-  err,
-  warn,
-  requireParam,
-  requireFunction
-} from './extra/log'
+import { log, requireParam, requireFunction } from './extra/log'
 import Context from './api/context'
 import '@babel/polyfill'
 
@@ -33,13 +26,13 @@ export default class Core {
    * and is used for setting these handlers.
    *
    * Handlers for the `message_new` event will be searched in this order:
-   * 1. If service action message => [Core#on]{@link module:core~Core#on} handler for the `service_action` event
-   * 1. If user pressed the `Start` button => [Core#on]{@link module:core~Core#on} handler for the `start` event
-   * 1. [Core#payload]{@link module:core~Core#payload}
-   * 1. [Core#cmd]{@link module:core~Core#cmd}
-   * 1. [Core#regex]{@link module:core~Core#regex}
+   * 1. If service action message => [Core#on]{@link Core#on} handler for the `service_action` event
+   * 1. If user pressed the `Start` button => [Core#on]{@link Core#on} handler for the `start` event
+   * 1. [Core#payload]{@link Core#payload}
+   * 1. [Core#cmd]{@link Core#cmd}
+   * 1. [Core#regex]{@link Core#regex}
    *
-   * For other events, a matching [Core#on]{@link module:core~Core#on} handler will be called.
+   * For other events, a matching [Core#on]{@link Core#on} handler will be called.
    */
   constructor (api, stats, cmdPrefix, groupId) {
     requireParam('Core#constructor', api, 'API object')
@@ -50,14 +43,14 @@ export default class Core {
     /**
      * @type {API}
      * @readonly
-     * @memberof module:core~Core
+     * @memberof Core
      */
     this.api = api
 
     /**
      * @type {Stats}
      * @readonly
-     * @memberof module:core~Core
+     * @memberof Core
      */
     this.stats = stats
 
@@ -66,7 +59,7 @@ export default class Core {
      *
      * @private
      * @type {string}
-     * @memberof module:core~Core
+     * @memberof Core
      */
     this._cmdPrefix = cmdPrefix
 
@@ -75,7 +68,7 @@ export default class Core {
      *
      * @private
      * @type {string}
-     * @memberof module:core~Core
+     * @memberof Core
      */
     this._escapedCmdPrefix = this._escapeRegex(this._cmdPrefix || '')
 
@@ -84,7 +77,7 @@ export default class Core {
      *
      * @private
      * @type {string}
-     * @memberof module:core~Core
+     * @memberof Core
      */
     this._groupId = this._escapeRegex(groupId) // Just in case
 
@@ -93,25 +86,15 @@ export default class Core {
      *
      * @private
      * @type {boolean}
-     * @memberof module:core~Core
+     * @memberof Core
      */
     this._locked = false
-
-    /**
-     * Count of event handlers
-     *
-     * @private
-     * @type {number}
-     * @memberof module:core~Core
-     * @todo Couldn't we just count this by using [Core#eventHandlers]{@link module:core#eventHandlers} when needed?
-     */
-    this._eventCount = 0
 
     /**
      * Handlers for events
      *
      * @private
-     * @memberof module:core~Core
+     * @memberof Core
      * @type {Object}
      */
     this._eventHandlers = {
@@ -133,20 +116,10 @@ export default class Core {
     }
 
     /**
-     * Count of payload handlers
-     *
-     * @private
-     * @memberof module:core~Core
-     * @type {number}
-     * @todo Just [Core#exactPayloadHandlers]{@link module:core#exactPayloadHandlers}.length + [Core#dynPayloadHandlers]{@link module:core#dynPayloadHandlers}.length. Why this is needed?
-     */
-    this._payloadCount = 0
-
-    /**
      * Exact payload handlers
      *
      * @private
-     * @memberof module:core~Core
+     * @memberof Core
      * @type {Object}
      */
     this._exactPayloadHandlers = {}
@@ -155,7 +128,7 @@ export default class Core {
      * Dynamic payload handlers (those which use functions to determine whether a handler is suitable)
      *
      * @private
-     * @memberof module:core~Core
+     * @memberof Core
      * @type {Object[]}
      */
     this._dynPayloadHandlers = []
@@ -164,7 +137,7 @@ export default class Core {
      * Command handlers
      *
      * @private
-     * @memberof module:core~Core
+     * @memberof Core
      * @type {Object[]}
      */
     this._commandHandlers = []
@@ -173,7 +146,7 @@ export default class Core {
      * Regular expression handlers
      *
      * @private
-     * @memberof module:core~Core
+     * @memberof Core
      * @type {Object[]}
      */
     this._regexHandlers = []
@@ -182,7 +155,7 @@ export default class Core {
      * Are event warnings enabled?
      *
      * @private
-     * @memberof module:core~Core
+     * @memberof Core
      * @type {boolean}
      */
     this._eventWarnings = true
@@ -191,7 +164,7 @@ export default class Core {
      * The help message
      *
      * @private
-     * @memberof module:core~Core
+     * @memberof Core
      * @type {string}
      */
     this._helpMessage = ''
@@ -201,19 +174,19 @@ export default class Core {
 
   /**
    * Disables warnings about missing event handlers
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    */
   noEventWarnings () {
     this._eventWarnings = false
-    warn('core', 'Warnings about missing event handlers were disabled')
+    log().w('Warnings about missing event handlers were disabled').from('core').now()
   }
 
   /**
    * Locks this `Core`, so new handlers can't be added,
    * and generates the help message for later usage
    *
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    */
   lock () {
@@ -226,14 +199,14 @@ export default class Core {
    * to notify the user if it is locked
    *
    * @private
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @return {boolean} is this `Core` locked?
    */
   _isLocked () {
     if (this._locked) {
-      warn('core', 'Registering a handler while the bot is running is not allowed')
+      log().w('Registering a handler while the bot is running is not allowed').from('core').now()
     }
 
     return this._locked
@@ -309,7 +282,7 @@ export default class Core {
    * @param {string} event - event name
    * @param {handler} callback - function, which will handle the message
    *
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @example
@@ -326,17 +299,16 @@ export default class Core {
     requireFunction(callback)
 
     if (!Object.keys(this._eventHandlers).includes(event)) {
-      err('core', `Cannot register a handler: unknown event type '${event}'`)
+      log().e(`Cannot register a handler: unknown event type '${event}'`).from('core').now()
     }
 
     if (!this._eventHandlers[event]) {
       this._eventHandlers[event] = callback
-      this._eventCount++
     } else {
       if (event === 'message_new') {
-        err('core', `Cannot register a handler: handler for the 'message_new' event is defined internally`)
+        log().e(`Cannot register a handler: handler for the 'message_new' event is defined internally`).from('core').now()
       } else {
-        err('core', `Cannot register a handler: duplicate handler for event '${event}'`)
+        log().e(`Cannot register a handler: duplicate handler for event '${event}'`).from('core').now()
       }
     }
   }
@@ -358,7 +330,7 @@ export default class Core {
    * @param {Object|payload_tester} payload - exact payload to handle, or a function which will determine whether to handle the payload or not
    * @param {handler} callback - function, which will handle the message
    *
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @example
@@ -412,9 +384,8 @@ export default class Core {
 
       if (!this._exactPayloadHandlers[JSON.stringify(payload)]) {
         this._exactPayloadHandlers[JSON.stringify(payload)] = callback
-        this._payloadCount++
       } else {
-        err('core', `Cannot register a handler: duplicate handler for payload '${payload}'`)
+        log().e(`Cannot register a handler: duplicate handler for payload '${payload}'`).from('core').now()
       }
     } else {
       // Dynamic payload match:
@@ -423,8 +394,6 @@ export default class Core {
         tester: payload,
         callback
       })
-
-      this._payloadCount++
     }
   }
 
@@ -437,7 +406,7 @@ export default class Core {
    * @param {handler} callback - function, which will handle the message
    * @param {string} [description = ""] - the description of what this command does, to be used in help messages
    *
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @example
@@ -466,7 +435,7 @@ export default class Core {
    * @param {RegExp} regex - regular expression
    * @param {handler} callback - function, which will handle the message
    *
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @example
@@ -491,7 +460,7 @@ export default class Core {
    * Parses the request, creates a `Context`, and proceeds
    * to call `Core#event` to handle the event
    *
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @param {Object} body - body of the request, in parsed JSON
@@ -509,7 +478,7 @@ export default class Core {
    * Handles an event
    *
    * @private
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @param {string} name - event name
@@ -526,7 +495,7 @@ export default class Core {
           await $.send()
         }
       } catch (error) {
-        warn('core', `Error in handler: ${error}`)
+        log().w(`Error in handler: ${error}`).from('core').now()
 
         if (name !== 'handler_error') {
           await this._event('handler_error', $)
@@ -534,7 +503,7 @@ export default class Core {
       }
     } else {
       if (this._eventWarnings) {
-        warn('core', `No handler for event '${name}'`)
+        log().w(`No handler for event '${name}'`).from('core').now()
       }
     }
   }
@@ -542,7 +511,7 @@ export default class Core {
   /**
    * Registers a handler for `message_new` event
    * @private
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    */
   _registerMessageNewHandler () {
@@ -557,7 +526,7 @@ export default class Core {
       if (!await this._tryHandlePayload($)) {
         if (!await this._tryHandleCommand($)) {
           if (!await this._tryHandleRegex($)) {
-            warn('core', `Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`)
+            log().w(`Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`).from('core').now()
             await this._event('no_match', $)
             return
           }
@@ -566,8 +535,6 @@ export default class Core {
 
       if ($.autoSend) await $.send()
     })
-
-    this._eventCount-- // Do not count 'message_new' event
   }
 
   /**
@@ -575,7 +542,7 @@ export default class Core {
    * with a payload handler
    *
    * @private
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @param {Context} $ - context object
@@ -622,7 +589,7 @@ export default class Core {
    * with a command handler
    *
    * @private
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @param {Context} $ - context object
@@ -651,7 +618,7 @@ export default class Core {
    * with a regex handler
    *
    * @private
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @param {Context} $ - context object
@@ -674,7 +641,7 @@ export default class Core {
   /**
    * Generates the help message
    * @private
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    */
   _generateHelpMessage () {
@@ -702,7 +669,7 @@ export default class Core {
    *
    * @return {string} the help message
    *
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    */
   help () {
@@ -713,7 +680,7 @@ export default class Core {
    * Escapes a string for usage in regex.
    *
    * @private
-   * @memberof module:core~Core
+   * @memberof Core
    * @instance
    *
    * @param {string} s - string to escape

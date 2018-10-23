@@ -1,14 +1,12 @@
 /**
- * @file A part of `vk-chat-bot` node.js framework
+ * @file A part of `vk-chat-bot` node.js framework.
+ * Defines the {@link Bot} class.
+ *
  * @author Artem Varaksa <aymfst@gmail.com>
  * @copyright Artem Varaksa 2017-2018
  */
 
-/**
- * @module bot
- */
-
-import { info, res as response, warn, err as error, requireParam } from './extra/log'
+import { log, requireParam } from './extra/log'
 const express = require('express')
 const bodyParser = require('body-parser')
 
@@ -40,7 +38,7 @@ export default class Bot {
      *
      * @private
      * @type {Core}
-     * @memberof module:bot~Bot
+     * @memberof Bot
      */
     this._core = core
 
@@ -49,7 +47,7 @@ export default class Bot {
      *
      * @private
      * @type {string|number}
-     * @memberof module:bot~Bot
+     * @memberof Bot
      */
     this._groupId = groupId
 
@@ -58,7 +56,7 @@ export default class Bot {
      *
      * @private
      * @type {string}
-     * @memberof module:bot~Bot
+     * @memberof Bot
      */
     this._confirmationToken = confirmationToken
 
@@ -66,7 +64,7 @@ export default class Bot {
      * Secret
      * @private
      * @type {string}
-     * @memberof module:bot~Bot
+     * @memberof Bot
      */
     this._secret = secret
 
@@ -75,7 +73,7 @@ export default class Bot {
      *
      * @private
      * @type {number}
-     * @memberof module:bot~Bot
+     * @memberof Bot
      */
     this._port = port
   }
@@ -83,22 +81,23 @@ export default class Bot {
   /**
    * Starts the bot
    * @instance
-   * @memberof module:bot~Bot
+   * @memberof Bot
    */
   start () {
     this._core.lock()
 
-    var evt = this._core._eventCount
-    var pld = this._core._payloadCount
+    var evt = Object.values(this._core._eventHandlers).filter(e => e).length - 1 // Do not count `message_new`
+    var pld = Object.keys(this._core._exactPayloadHandlers).length +
+              this._core._dynPayloadHandlers.length
     var cmd = this._core._commandHandlers.length
     var reg = this._core._regexHandlers.length
-    info('bot', `Handlers count: on:${evt} cmd:${cmd} regex:${reg} payload:${pld}`)
+    log().i(`Handlers count: on:${evt} cmd:${cmd} regex:${reg} payload:${pld}`).from('bot').now()
 
     if ((evt + cmd + reg + pld) === 0) {
-      warn('bot', `The bot won't do anything without handlers!`)
+      log().w(`The bot won't do anything without handlers!`).from('bot').now()
     }
 
-    info('bot', `Preparing and starting the server...`)
+    log().i(`Preparing and starting the server...`).from('bot').now()
 
     const app = express()
 
@@ -106,7 +105,7 @@ export default class Bot {
 
     app.get('/', (req, res) => {
       res.status(400).send('Only POST allowed.')
-      warn('bot', 'Received a GET request')
+      log().w('Received a GET request').from('bot').now()
     })
 
     app.post('/', (req, res) => {
@@ -114,19 +113,19 @@ export default class Bot {
 
       if (body.secret !== this._secret) {
         res.status(400).send('Invalid secret key.')
-        warn('bot', 'Received a request with an invalid secret key')
+        log().w('Received a request with an invalid secret key').from('bot').now()
         return
       }
 
       if (body.group_id.toString() !== this._groupId) {
         res.status(400).send('Invalid group id.')
-        warn('bot', 'Received a request with an invalid group id')
+        log().w('Received a request with an invalid group id').from('bot').now()
         return
       }
 
       if (body.type === 'confirmation') {
         res.status(200).send(this._confirmationToken)
-        response('bot', 'Sent confirmation token.')
+        log().r('Sent confirmation token.').from('bot').now()
       } else {
         res.status(200).send('ok')
         this._core.parseRequest(body)
@@ -135,10 +134,10 @@ export default class Bot {
 
     var server = app.listen(this._port, (err) => {
       if (err) {
-        error('bot', 'Error occured while starting the server: ' + err)
+        log().e('Error occured while starting the server: ' + err).from('bot').now()
       }
 
-      info('bot', `Server is listening on port ${this._port}`)
+      log().i(`Server is listening on port ${this._port}`).from('bot').now()
 
       // Quit in test mode
       if (process.env.TEST_MODE) {

@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
+## [12.0.0] - 2018-10-23
+### Changed
+- Internal shuffling, no APIs intended for public use have been changed.
+If you used the logging utilities, refer to the [documentation](https://u32i64.github.io/vk-chat-bot)
+to see how to use it now.
+
 ## [11.0.1] - 2018-10-21
 ### Changed
 - Moved jsdoc and minami to dev dependencies
@@ -12,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [11.0.0] - 2018-10-21
 ### Added
-- :tada: **Documentation!** :tada:
+- :tada: [**Documentation!**](https://u32i64.github.io/vk-chat-bot) :tada:
 
 ### Changed
 - Build is now in `dist/vk-chat-bot.min.js`

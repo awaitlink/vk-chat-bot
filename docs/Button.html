@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>bot.js - Documentation</title>
+    <title>Button - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,167 +29,545 @@
 
 <div id="main">
     
-    <h1 class="page-title">bot.js</h1>
+    <h1 class="page-title">Button</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file A part of `vk-chat-bot` node.js framework.
- * Defines the {@link Bot} class.
- *
- * @author Artem Varaksa &lt;aymfst@gmail.com>
- * @copyright Artem Varaksa 2017-2018
- */
+        <h2>
+        Button
+        </h2>
+        
+    
+</header>
 
-import { log, requireParam } from './extra/log'
-const express = require('express')
-const bodyParser = require('body-parser')
+<article>
+    <div class="container-overview">
+    
+        
+<div class="section-method">
 
-export default class Bot {
-  /**
-   * @constructor Bot
-   *
-   * @return {Bot}
-   *
-   * @param {Core} core - a `Core` object
-   * @param {string|number} groupId - group ID from Callback API settings
-   * @param {string} confirmationToken - confirmation token from Callback API settings
-   * @param {string} secret - secret key (can be set in Callback API settings)
-   * @param {number} port - the port bot will run at
-   *
-   * @classdesc
-   * The `Bot` class responds to incoming events from Callback API,
-   * and figures out what needs to be done.
-   */
-  constructor (core, groupId, confirmationToken, secret, port) {
-    requireParam('Bot#constructor', core, 'bot core')
-    requireParam('Bot#constructor', confirmationToken, 'confirmation token (from Callback API settings)')
-    requireParam('Bot#constructor', groupId, 'group id')
-    requireParam('Bot#constructor', secret, 'secret key (from Callback API settings)')
-    requireParam('Bot#constructor', port, 'port')
+    
 
-    /**
-     * Core
-     *
-     * @private
-     * @type {Core}
-     * @memberof Bot
-     */
-    this._core = core
+    <h4 class="name" id="Button"><span class="type-signature"></span>new Button<span class="signature">(label<span class="signature-attributes">opt</span>, color<span class="signature-attributes">opt</span>, payload<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="Button.html">Button</a>}</span></h4>
 
-    /**
-     * Group ID
-     *
-     * @private
-     * @type {string|number}
-     * @memberof Bot
-     */
-    this._groupId = groupId
+    
 
-    /**
-     * Confirmation token
-     *
-     * @private
-     * @type {string}
-     * @memberof Bot
-     */
-    this._confirmationToken = confirmationToken
 
-    /**
-     * Secret
-     * @private
-     * @type {string}
-     * @memberof Bot
-     */
-    this._secret = secret
 
-    /**
-     * Port
-     *
-     * @private
-     * @type {number}
-     * @memberof Bot
-     */
-    this._port = port
-  }
 
-  /**
-   * Starts the bot
-   * @instance
-   * @memberof Bot
-   */
-  start () {
-    this._core.lock()
 
-    var evt = Object.values(this._core._eventHandlers).filter(e => e).length - 1 // Do not count `message_new`
-    var pld = Object.keys(this._core._exactPayloadHandlers).length +
-              this._core._dynPayloadHandlers.length
-    var cmd = this._core._commandHandlers.length
-    var reg = this._core._regexHandlers.length
-    log().i(`Handlers count: on:${evt} cmd:${cmd} regex:${reg} payload:${pld}`).from('bot').now()
 
-    if ((evt + cmd + reg + pld) === 0) {
-      log().w(`The bot won't do anything without handlers!`).from('bot').now()
-    }
 
-    log().i(`Preparing and starting the server...`).from('bot').now()
+<dl class="details">
 
-    const app = express()
+    
 
-    app.use(bodyParser.json())
+    
 
-    app.get('/', (req, res) => {
-      res.status(400).send('Only POST allowed.')
-      log().w('Received a GET request').from('bot').now()
-    })
+    
 
-    app.post('/', (req, res) => {
-      var body = req.body
+    
 
-      if (body.secret !== this._secret) {
-        res.status(400).send('Invalid secret key.')
-        log().w('Received a request with an invalid secret key').from('bot').now()
-        return
-      }
+    
 
-      if (body.group_id.toString() !== this._groupId) {
-        res.status(400).send('Invalid group id.')
-        log().w('Received a request with an invalid group id').from('bot').now()
-        return
-      }
+    
 
-      if (body.type === 'confirmation') {
-        res.status(200).send(this._confirmationToken)
-        log().r('Sent confirmation token.').from('bot').now()
-      } else {
-        res.status(200).send('ok')
-        this._core.parseRequest(body)
-      }
-    })
+    
 
-    var server = app.listen(this._port, (err) => {
-      if (err) {
-        log().e('Error occured while starting the server: ' + err).from('bot').now()
-      }
+    
 
-      log().i(`Server is listening on port ${this._port}`).from('bot').now()
+    
 
-      // Quit in test mode
-      if (process.env.TEST_MODE) {
-        server.close()
-      }
-    })
-  }
-}
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_keyboard.js.html">api/keyboard.js</a>, <a href="api_keyboard.js.html#line49">line 49</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>label</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "Button"
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>button label</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "default"
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>button color</p>
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>payload</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    ""
+                
+                </td>
+            
+
+            <td class="description last">
+                <p>button payload, see <a href="https://vk.com/dev/bots_docs_3">VK bots docs</a> <strong>-&gt;</strong> Section <strong>4.3</strong> for more details</p>
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code><a href="Button.html">Button</a></code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+<div class="section-examples">
+<h5>Example</h5>
+
+    <pre class="prettyprint"><code>new Button('Default')
+new Button('Default', colors.default)
+new Button('Default', colors.default, {a: "b"})
+
+new Button('Primary', colors.primary)
+new Button('Negative', colors.negative)
+new Button('Positive', colors.positive)</code></pre>
+
+</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".this.action"><span class="type-signature">(static) </span>this.action<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    <p>This button's <code>action</code></p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_keyboard.js.html">api/keyboard.js</a>, <a href="api_keyboard.js.html#line72">line 72</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>Object</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".this.action.payload"><span class="type-signature">(static) </span>this.action.payload<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    <p>This button's payload</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_keyboard.js.html">api/keyboard.js</a>, <a href="api_keyboard.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>string</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+            
+<div class="section-members">
+<h4 class="name" id=".this.color"><span class="type-signature">(static) </span>this.color<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    <p>This button's color</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="api_keyboard.js.html">api/keyboard.js</a>, <a href="api_keyboard.js.html#line82">line 82</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type"><code>string</code></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</div>
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

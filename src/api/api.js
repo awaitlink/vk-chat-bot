@@ -1,14 +1,12 @@
 /**
- * @file A part of `vk-chat-bot` node.js framework
+ * @file A part of `vk-chat-bot` Node.js framework.
+ * Defines the {@link API} class.
+ *
  * @author Artem Varaksa <aymfst@gmail.com>
  * @copyright Artem Varaksa 2017-2018
  */
 
-/**
- * @module api/api
- */
-
-import { info, warn, requireParam } from '../extra/log'
+import { log, requireParam } from '../extra/log'
 import '@babel/polyfill'
 const request = require('request-promise')
 
@@ -43,7 +41,7 @@ export default class API {
      * VK API token
      * @private
      * @type {string}
-     * @memberof module:api/api~API
+     * @memberof API
      */
     this._vkToken = vkToken
 
@@ -51,21 +49,21 @@ export default class API {
      * Stats object
      * @readonly
      * @type {Stats}
-     * @memberof module:api/api~API
+     * @memberof API
      */
     this.stats = stats
 
     /**
      * VK API version used by API
      * @type {string}
-     * @memberof module:api/api~API
+     * @memberof API
      */
     this.API_VERSION = '5.85'
 
     /**
      * API quota, in requests per second
      * @type {number}
-     * @memberof module:api/api~API
+     * @memberof API
      */
     this.API_QUOTA = 20
 
@@ -73,7 +71,7 @@ export default class API {
      * Queue of scheduled API calls
      * @private
      * @type {Object[]}
-     * @memberof module:api/api~API
+     * @memberof API
      */
     this._queue = []
 
@@ -81,15 +79,15 @@ export default class API {
      * Is the queue being processed now?
      * @private
      * @type {boolean}
-     * @memberof module:api/api~API
+     * @memberof API
      */
     this._isQueueProcessing = false
 
     if (!process.env.TEST_MODE) {
       // Check permissions
       this._checkPermissions()
-        .then(e => { info('api', e) })
-        .catch(e => { warn('api', e) })
+        .then(e => { log().i(e).from('api').now() })
+        .catch(e => { log().w(e).from('api').now() })
 
       // Start the queue processing
       setInterval(() => {
@@ -100,7 +98,7 @@ export default class API {
               this._isQueueProcessing = false
             })
             .catch(e => {
-              warn('api', e)
+              log().w(e).from('api').now()
               this._isQueueProcessing = false
             })
         }
@@ -111,7 +109,7 @@ export default class API {
   /**
    * Checks if the required permissions for bot to work properly are present, and emits a warning if that is not the case.
    * @private
-   * @memberof module:api/api~API
+   * @memberof API
    * @instance
    */
   async _checkPermissions () {
@@ -135,9 +133,9 @@ export default class API {
   }
 
   /**
-   * Move forward through the queue, processing at most [API_QUOTA]{@link module:api/api~API#API_QUOTA} items
+   * Move forward through the queue, processing at most [API_QUOTA]{@link API#API_QUOTA} items
    * @private
-   * @memberof module:api/api~API
+   * @memberof API
    * @instance
    */
   async _processQueue () {
@@ -176,7 +174,7 @@ export default class API {
   *
   * After the call completes, a check will be performed to see if the call was successful or not, and in the latter case a warning will be logged
   *
-  * @memberof module:api/api~API
+  * @memberof API
   * @instance
   *
   * @param {string} method VK API method name
@@ -212,8 +210,8 @@ export default class API {
   /**
    * Call a VK API Method
    *
-   * **It is highly recommended to use [API#scheduleCall]{@link module:api/api~API#scheduleCall} instead to not exceed the API quota and to check whether the call was successful or not!**
-   * @memberof module:api/api~API
+   * **It is highly recommended to use [API#scheduleCall]{@link API#scheduleCall} instead to not exceed the API quota and to check whether the call was successful or not!**
+   * @memberof API
    * @instance
    *
    * @param {string} method VK API method name
@@ -253,7 +251,7 @@ export default class API {
     var promise = request(options)
 
     promise.catch((err) => {
-      warn('api', `Error occured while calling API method '${method}': ${err}`)
+      log().w(`Error occured while calling API method '${method}': ${err}`).from('api').now()
     })
 
     return promise
@@ -262,8 +260,8 @@ export default class API {
   /**
    * Sends a message to a user via User ID
    *
-   * **Note that it is much easier to use the [Context]{@link module:api/context~Context} object passed to handlers to compose and send messages, keyboards and attachments!**
-   * @memberof module:api/api~API
+   * **Note that it is much easier to use the [Context]{@link Context} object passed to handlers to compose and send messages, keyboards and attachments!**
+   * @memberof API
    * @instance
    *
    * @param {string|number} pid peer ID
@@ -292,7 +290,7 @@ export default class API {
           resolve()
         })
         .catch(e => {
-          warn('api', e)
+          log().w(e).from('api').now()
           resolve()
         })
     })
