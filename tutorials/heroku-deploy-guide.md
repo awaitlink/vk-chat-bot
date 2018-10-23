@@ -1,5 +1,4 @@
-# VK Chat Bot Heroku Guide
-This guide will walk you step-by-step through creating your own chat bot for a community using `vk-chat-bot` npm package and [Heroku](https://heroku.com).
+This guide will walk you step-by-step through deploying an example chat bot (which can be found in the [u32i64/vk-chat-bot-example](https://github.com/u32i64/vk-chat-bot-example) repository) for a community using [Heroku](https://heroku.com).
 
 ## 1. Setting up Heroku
 - Visit [signup.heroku.com](https://signup.heroku.com/) and **create an account** there.
