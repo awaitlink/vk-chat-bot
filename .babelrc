@@ -1,14 +1,13 @@
 {
   "presets": [
-    ["@babel/preset-env", {
+    ["@babel/env", {
       "modules": false
     }],
     "@ava/stage-4"
   ],
   "plugins": [
-    ["@babel/plugin-transform-runtime", {
+    ["@babel/transform-runtime", {
       "regenerator": true
     }]
-  ],
-  "sourceMaps": true
+  ]
 }

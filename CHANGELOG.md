@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed here.
 
+## [Unreleased] - ????-??-??
+### Changed
+- Build process improvements
+
 ## [12.0.0] - 2018-10-23
 ### Changed
 - Internal shuffling, no APIs intended for public use have been changed.

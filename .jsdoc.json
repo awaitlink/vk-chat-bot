@@ -1,17 +1,6 @@
 {
   "plugins": ["plugins/markdown"],
   "recurseDepth": 10,
-  "source": {
-    "include": [
-      "src",
-      "src/extra",
-      "src/api",
-      "package.json",
-      "README.md"
-    ],
-    "includePattern": ".js$"
-  },
-  "sourceType": "module",
   "tags": {
     "allowUnknownTags": true,
     "dictionaries": ["jsdoc", "closure"]
@@ -28,6 +17,7 @@
   "opts": {
     "destination": "./docs/",
     "template": "node_modules/minami",
-    "tutorials": "./tutorials/"
+    "tutorials": "./tutorials/",
+    "private": true
   }
 }

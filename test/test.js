@@ -1,7 +1,6 @@
 import test from 'ava'
 
 import vk from '../src/main'
-import { err, requireParam, requireFunction } from '../src/extra/log'
 
 var Keyboard = vk.kbd.Keyboard
 var Button = vk.kbd.Button
@@ -20,33 +19,33 @@ process.env.TEST_MODE = true
 
 // Log
 
-test('Log#err() throws error', t => {
+test('LogMessageBuilder -> error() throws error', t => {
   t.throws(() => {
-    err('test', 'Test error')
+    vk.log.log().from('test').error('Test error').now()
   })
 })
 
-test('Log#requireFunction() error when argument is not a function', t => {
+test('log.requireFunction() error when argument is not a function', t => {
   t.throws(() => {
-    requireFunction('not-a-function')
+    vk.log.requireFunction('not-a-function')
   })
 })
 
-test('Log#requireFunction() no error when argument is a function', t => {
+test('log.requireFunction() no error when argument is a function', t => {
   t.notThrows(() => {
-    requireFunction($ => {})
+    vk.log.requireFunction($ => {})
   })
 })
 
-test('Log#requireParams() error when argument is invalid', t => {
+test('log.requireParams() error when argument is invalid', t => {
   t.throws(() => {
-    requireParam('test', undefined, 'something')
+    vk.log.requireParam('test', undefined, 'something')
   })
 })
 
-test('Log#requireParams() no error when argument is valid', t => {
+test('log.requireParams() no error when argument is valid', t => {
   t.notThrows(() => {
-    requireParam('test', 'thing', 'something')
+    vk.log.requireParam('test', 'thing', 'something')
   })
 })
 
