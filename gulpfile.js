@@ -77,8 +77,12 @@ exports.docs = docs
 
 exports.default = gulp.series(
   exports.clean,
-  exports.lint,
-  exports.test,
-  exports.build,
-  exports.docs
+  gulp.parallel(
+    exports.lint,
+    exports.test
+  ),
+  gulp.parallel(
+    exports.build,
+    exports.docs
+  ),
 )
