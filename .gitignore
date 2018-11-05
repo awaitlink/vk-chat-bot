@@ -1,9 +1,10 @@
-# NPM stuff
+# npm stuff
 node_modules/
 npm-debug.log
 
-# Built library
+# Build artifacts
 dist/
+docs/
 
 # Tarballs
 *.tgz
