@@ -8,4 +8,4 @@ ssh-add ~/key
 
 yarn config set prefix .
 yarn global add gh-pages
-bin/gh-pages -d docs/ -b gh-pages -r git@github.com:${TRAVIS_REPO_SLUG}.git
+bin/gh-pages -d ../docs/ -b gh-pages -r git@github.com:${TRAVIS_REPO_SLUG}.git
