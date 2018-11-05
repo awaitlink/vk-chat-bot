@@ -7,6 +7,6 @@ script: ''
 deploy:
   - provider: script
     skip_cleanup: true
-    script: .travis/deploy_gh_pages.sh
+    script: cd .travis && chmod +x deploy_gh_pages.sh && ./deploy_gh_pages.sh
     on:
       branch: master
