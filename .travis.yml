@@ -1,13 +1,12 @@
 language: node_js
 node_js:
-- '8'
-- '10'
+- node
 cache:
   yarn: true
 script: ''
 deploy:
   - provider: script
     skip_cleanup: true
-    script: './.travis/deploy_gh_pages.sh'
+    script: .travis/deploy_gh_pages.sh
     on:
       branch: master
