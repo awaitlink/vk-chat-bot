@@ -9,6 +9,7 @@
 import { log, requireParam } from '../extra/log'
 import '@babel/polyfill'
 const request = require('request-promise')
+const crypto = require('crypto')
 
 export default class API {
   /**
@@ -58,7 +59,7 @@ export default class API {
      * @type {string}
      * @memberof API
      */
-    this.API_VERSION = '5.85'
+    this.API_VERSION = '5.92'
 
     /**
      * API quota, in requests per second
@@ -282,6 +283,9 @@ export default class API {
     if (message) params.message = message
     if (attachment) params.attachment = attachment
     if (keyboard) params.keyboard = keyboard
+
+    /* global BigInt */
+    params.random_id = BigInt.asIntN(64, BigInt('0x' + crypto.randomBytes(6).toString('hex'))).toString()
 
     return new Promise((resolve, reject) => {
       this.scheduleCall('messages.send', params)
