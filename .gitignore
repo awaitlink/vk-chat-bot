@@ -1,6 +1,6 @@
-# npm stuff
+# stuff
 node_modules/
-npm-debug.log
+*.log
 
 # Build artifacts
 dist/
