@@ -11,7 +11,7 @@
  * @module log
  */
 
-const chalk = require('chalk')
+const chalk = require('chalk');
 
 /**
  * Types of log messages
@@ -23,28 +23,19 @@ const chalk = require('chalk')
  * @property {string} error the error type
  * @property {string} response the response type
  */
-export var types = {
+export const types = {
   information: chalk.blue('info'),
   warning: chalk.bold.yellow('warn'),
   error: chalk.bold.red('err!'),
-  response: chalk.green('resp')
-}
+  response: chalk.green('resp'),
+};
 
 /**
  * Spacing of the message source
  *
  * @type {number}
  */
-const SRC_SPACING = 5
-
-/**
- * Shortcut for `new LogMessageBuilder()`.
- * @return {LogMessageBuilder}
- * @function log
- */
-export function log () {
-  return new LogMessageBuilder()
-}
+const SRC_SPACING = 5;
 
 class LogMessageBuilder {
   /**
@@ -53,33 +44,30 @@ class LogMessageBuilder {
    * Provides a convenient way for logging things.
    * @return {LogMessageBuilder} for chaining
    */
-  constructor () {
+  constructor() {
     /**
      * The source of the message
      *
-     * @private
      * @type {string}
      * @memberof module:log~LogMessageBuilder
      */
-    this._from = 'log'
+    this.messageFrom = 'log';
 
     /**
      * The type of the message
      *
-     * @private
      * @type {string}
      * @memberof module:log~LogMessageBuilder
      */
-    this._type = types.information
+    this.messageType = types.information;
 
     /**
      * The text of the message
      *
-     * @private
      * @type {string}
      * @memberof module:log~LogMessageBuilder
      */
-    this._text = ''
+    this.messageText = '';
   }
 
   /**
@@ -91,9 +79,9 @@ class LogMessageBuilder {
    * @return {LogMessageBuilder} for chaining
    * @method from
    */
-  from (f) {
-    this._from = f
-    return this
+  from(f) {
+    this.messageFrom = f;
+    return this;
   }
 
   /**
@@ -105,9 +93,9 @@ class LogMessageBuilder {
    * @return {LogMessageBuilder} for chaining
    * @method type
    */
-  type (t) {
-    this._type = t
-    return this
+  type(t) {
+    this.messageType = t;
+    return this;
   }
 
   /**
@@ -120,14 +108,14 @@ class LogMessageBuilder {
    * @return {LogMessageBuilder} for chaining
    * @method text
    */
-  text (t) {
+  text(t) {
     if (t instanceof Error) {
-      this._text = t.message
+      this.messageText = t.message;
     } else {
-      this._text = t
+      this.messageText = t;
     }
 
-    return this
+    return this;
   }
 
   /**
@@ -138,32 +126,31 @@ class LogMessageBuilder {
    * @return {LogMessageBuilder} for chaining
    * @method now
    */
-  now () {
-    this._log()
-    return this
+  now() {
+    this.log();
+    return this;
   }
 
   /**
    * Logs the message.
    *
-   * @private
    * @memberof module:log~LogMessageBuilder
    * @instance
-   * @method _log
+   * @method log
    */
-  _log () {
-    if (this._text === '') return
-    if (process.env.TEST_MODE && this._type !== types.error) return
+  log() {
+    if (this.messageText === '') return;
+    if (process.env.TEST_MODE && this.messageType !== types.error) return;
 
-    var spacing = ''
-    for (var i = 0; i < (SRC_SPACING - this._from.length); i++) spacing += ' '
+    let spacing = '';
+    for (let i = 0; i < (SRC_SPACING - this.messageFrom.length); i += 1) spacing += ' ';
 
-    var message = `${spacing}${this._from} ${this._type} ${this._text}`
+    const message = `${spacing}${this.messageFrom} ${this.messageType} ${this.messageText}`;
 
-    if (this._type === types.error) {
-      throw new Error(message)
+    if (this.messageType === types.error) {
+      throw new Error(message);
     } else {
-      console.log(message)
+      console.log(message);
     }
   }
 
@@ -178,9 +165,9 @@ class LogMessageBuilder {
    * @return {LogMessageBuilder} for chaining
    * @method i
    */
-  i (t) {
-    this.type(types.information)
-    return this.text(t)
+  i(t) {
+    this.type(types.information);
+    return this.text(t);
   }
 
   /**
@@ -194,9 +181,9 @@ class LogMessageBuilder {
    * @return {LogMessageBuilder} for chaining
    * @method w
    */
-  w (t) {
-    this.type(types.warning)
-    return this.text(t)
+  w(t) {
+    this.type(types.warning);
+    return this.text(t);
   }
 
   /**
@@ -210,9 +197,9 @@ class LogMessageBuilder {
    * @return {LogMessageBuilder} for chaining
    * @method e
    */
-  e (t) {
-    this.type(types.error)
-    return this.text(t)
+  e(t) {
+    this.type(types.error);
+    return this.text(t);
   }
 
   /**
@@ -226,10 +213,19 @@ class LogMessageBuilder {
    * @return {LogMessageBuilder} for chaining
    * @method r
    */
-  r (t) {
-    this.type(types.response)
-    return this.text(t)
+  r(t) {
+    this.type(types.response);
+    return this.text(t);
   }
+}
+
+/**
+ * Shortcut for `new LogMessageBuilder()`.
+ * @return {LogMessageBuilder}
+ * @function log
+ */
+export function log() {
+  return new LogMessageBuilder();
 }
 
 /**
@@ -239,12 +235,12 @@ class LogMessageBuilder {
  * @param {*} param the parameter to test
  * @param {string} name name of this param in the function requiring it
  */
-export function requireParam (functionName, param, name) {
+export function requireParam(functionName, param, name) {
   if (!param) {
     if (name) {
-      log().e(`In function '${functionName}': expected: '${name}', got: '${param}'.`).now()
+      log().e(`In function '${functionName}': expected: '${name}', got: '${param}'.`).now();
     } else {
-      log().e(`Bad parameter for function '${functionName}': '${param}'.`).now()
+      log().e(`Bad parameter for function '${functionName}': '${param}'.`).now();
     }
   }
 }
@@ -254,8 +250,8 @@ export function requireParam (functionName, param, name) {
  *
  * @param {*} param the parameter to test
  */
-export function requireFunction (param) {
+export function requireFunction(param) {
   if (typeof param !== 'function') {
-    log().e(`Callback function that you specified is not a function.`).now()
+    log().e('Callback function that you specified is not a function.').now();
   }
 }

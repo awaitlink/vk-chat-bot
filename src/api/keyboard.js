@@ -26,14 +26,14 @@ export class Keyboard {
    *    ],
    * ])
    */
-  constructor (buttons = [], oneTime = false) {
+  constructor(buttons = [], oneTime = false) {
     /**
      * Is this keyboard one-time?
      * @readonly
      * @type {boolean}
      * @memberof Keyboard
      */
-    this.one_time = oneTime
+    this.one_time = oneTime;
 
     /**
      * Items of this keyboard
@@ -41,7 +41,7 @@ export class Keyboard {
      * @type {Button[][]}
      * @memberof Keyboard
      */
-    this.buttons = buttons
+    this.buttons = buttons;
   }
 }
 
@@ -63,7 +63,7 @@ export class Button {
    * new Button('Negative', colors.negative)
    * new Button('Positive', colors.positive)
    */
-  constructor (label = 'Button', color = 'default', payload = '') {
+  constructor(label = 'Button', color = 'default', payload = '') {
     /**
      * This button's `action`
      * @type {Object}
@@ -71,15 +71,15 @@ export class Button {
      */
     this.action = {
       type: 'text',
-      label: label.toString()
-    }
+      label: label.toString(),
+    };
 
     /**
      * This button's color
      * @type {string}
      * @memberof Button
      */
-    this.color = color
+    this.color = color;
 
     if (payload) {
       /**
@@ -87,7 +87,7 @@ export class Button {
        * @type {string}
        * @memberof Button
        */
-      this.action.payload = JSON.stringify(payload)
+      this.action.payload = JSON.stringify(payload);
     }
   }
 }
@@ -101,9 +101,9 @@ export class Button {
  * @property {string} negative the negative color
  * @property {string} positive the positive color
  */
-export var colors = {
+export const colors = {
   primary: 'primary',
   default: 'default',
   negative: 'negative',
-  positive: 'positive'
-}
+  positive: 'positive',
+};

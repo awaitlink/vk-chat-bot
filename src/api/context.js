@@ -6,9 +6,9 @@
  * @copyright Artem Varaksa 2017-2018
  */
 
-import { Keyboard } from './keyboard'
-import { log, requireParam } from '../extra/log'
-import '@babel/polyfill'
+import '@babel/polyfill';
+import { Keyboard } from './keyboard';
+import { log, requireParam } from '../extra/log';
 
 export default class Context {
   /**
@@ -24,23 +24,25 @@ export default class Context {
    * @classdesc
    * Context, which is passed to every [handler]{@link handler}
    */
-  constructor (api, eventType, object, message) {
+  constructor(api, eventType, object, message) {
     /**
      * API
      * @type {API}
      * @memberof Context
      */
-    this.api = api
+    this.api = api;
 
     /**
      * Full object passed by Callback API
      *
-     * **Note:** If `message_new`, `message_reply`, `message_edit` or `no_match` event, this is a [Private message object](https://vk.com/dev/objects/message).
-     * Else, see [Callback API docs](https://vk.com/dev/callback_api) or [Groups Events docs](https://vk.com/dev/groups_events) for more information.
+     * **Note:** If `message_new`, `message_reply`, `message_edit` or `no_match` event,
+     * this is a [Private message object](https://vk.com/dev/objects/message).
+     * Else, see [Callback API docs](https://vk.com/dev/callback_api) or
+     * [Groups Events docs](https://vk.com/dev/groups_events) for more information.
      * @type {Object}
      * @memberof Context
      */
-    this.obj = object
+    this.obj = object;
 
     /**
      * Incoming user message
@@ -48,14 +50,14 @@ export default class Context {
      * @type {string}
      * @memberof Context
      */
-    this.msg = message
+    this.msg = message;
 
     /**
      * Name of the event
      * @type {string}
      * @memberof Context
      */
-    this.eventType = eventType
+    this.eventType = eventType;
 
     /**
      * Does this `Context`'s response need auto-sending?
@@ -64,9 +66,9 @@ export default class Context {
      * @type {boolean}
      * @memberof Context
      */
-    this.autoSend = true
+    this.autoSend = true;
 
-    this.clear()
+    this.clear();
   }
 
   /**
@@ -75,8 +77,8 @@ export default class Context {
    * @memberof Context
    * @instance
    */
-  noAutoSend () {
-    this.autoSend = false
+  noAutoSend() {
+    this.autoSend = false;
   }
 
   /**
@@ -86,8 +88,8 @@ export default class Context {
    * @memberof Context
    * @instance
    */
-  setPid (pid) {
-    this._pid = pid
+  setPid(pid) {
+    this.pid = pid;
   }
 
   /**
@@ -97,30 +99,32 @@ export default class Context {
    * @memberof Context
    * @instance
    */
-  text (txt) {
-    this._replyText = txt
+  text(txt) {
+    this.replyText = txt;
   }
 
   /**
    * Adds an attachment to the message
-   * **Note:** More information on the parameters can be found in [VK API docs](https://vk.com/dev/messages.send)
+   * **Note:** More information on the parameters can be found in
+   * [VK API docs](https://vk.com/dev/messages.send)
    *
    * @param {string} type the type of attachment
    * @param {string|number} ownerId resource owner ID
    * @param {string|number} resId resource ID
-   * @param {string} [accessKey] resource access key, if needed; see [Access Key](https://vk.com/dev/access_key) page in API docs for more information
+   * @param {string} [accessKey] resource access key, if needed;
+   * see [Access Key](https://vk.com/dev/access_key) page in API docs for more information
    * @memberof Context
    * @instance
    */
-  attach (type, ownerId, resId, accessKey) {
-    requireParam('Context#attach', type, 'attachment type')
-    requireParam('Context#attach', ownerId, 'owner id')
-    requireParam('Context#attach', resId, 'resource id')
+  attach(type, ownerId, resId, accessKey) {
+    requireParam('Context#attach', type, 'attachment type');
+    requireParam('Context#attach', ownerId, 'owner id');
+    requireParam('Context#attach', resId, 'resource id');
 
     if (accessKey) {
-      this._attachment.push(`${type}${ownerId}_${resId}_${accessKey}`)
+      this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`);
     } else {
-      this._attachment.push(`${type}${ownerId}_${resId}`)
+      this.attachment.push(`${type}${ownerId}_${resId}`);
     }
   }
 
@@ -133,9 +137,7 @@ export default class Context {
    *
    * @example
    *
-   * var Keyboard = vk.kbd.Keyboard
-   * var Button = vk.kbd.Button
-   * var colors = vk.kbd.colors
+   * const { colors, Keyboard, Button } = vk.kbd;
    *
    * core.cmd('keyboard', $ => {
    *     // Set 'true' instead of 'false' to make it disappear after a button was pressed
@@ -150,14 +152,14 @@ export default class Context {
    *         [
    *             new Button('Maximum rows is 10, columns - 4.')
    *         ],
-   *    ], false)
+   *    ], false);
    *
-   *    $.text('Here is your keyboard, as promised.')
-   *    $.keyboard(kbd)
-   * }, 'demo keyboard')
+   *    $.text('Here is your keyboard, as promised.');
+   *    $.keyboard(kbd);
+   * }, 'demo keyboard');
    */
-  keyboard (kbd) {
-    this._kbdObject = JSON.stringify(kbd)
+  keyboard(kbd) {
+    this.kbdObject = JSON.stringify(kbd);
   }
 
   /**
@@ -166,30 +168,34 @@ export default class Context {
    * @memberof Context
    * @instance
    */
-  removeKeyboard () {
-    this.keyboard(new Keyboard())
+  removeKeyboard() {
+    this.keyboard(new Keyboard());
   }
 
   /**
    * Sends the composed message to user
-   * **Note:** After the handler finishes its work, this method is called automatically (if [noAutoSend]{@link Context#noAutoSeng} was not called)
+   * **Note:** After the handler finishes its work, this method is called automatically
+   * (if [noAutoSend]{@link Context#noAutoSend} was not called)
    *
    * @memberof Context
    * @instance
+   * @see Context#noAutoSend
    */
-  async send () {
+  async send() {
     if (this.eventType === 'message_deny') {
-      log().w(`No message was sent to peer ${this._pid} ("message_deny" event)`).from('ctx').now()
-      return
+      log().w(`No message was sent to peer ${this.pid} ("message_deny" event)`).from('ctx').now();
+      return;
     }
 
-    if (this._replyText === '' && this._attachment === []) {
-      log().w('ctx', `No message was sent to peer ${this._pid} (text or attachment is required)`).from('ctx').now()
-      return
+    if (this.replyText === '' && this.attachment === []) {
+      log().w('ctx', `No message was sent to peer ${this.pid} (text or attachment is required)`).from('ctx').now();
+      return;
     }
 
-    var attachmentList = this._attachment.join(',')
-    return this.api.send(this._pid, this._replyText, attachmentList, this._kbdObject)
+    const attachmentList = this.attachment.join(',');
+
+    /* eslint-disable-next-line consistent-return */
+    return this.api.send(this.pid, this.replyText, attachmentList, this.kbdObject);
   }
 
   /**
@@ -199,45 +205,43 @@ export default class Context {
    * @memberof Context
    * @instance
    */
-  clear () {
+  clear() {
     /**
      * Text, which will be used in the reply
-     * @private
      * @type {string}
      * @memberof Context
      */
-    this._replyText = ''
+    this.replyText = '';
 
     /**
      * Attachment, which will be used in the reply
-     * @private
      * @type {string}
      * @memberof Context
      */
-    this._attachment = []
+    this.attachment = [];
 
     /**
      * Object of the [Keyboard]{@link Keyboard}, which will be used in the reply
-     * @private
      * @type {Object}
      * @memberof Context
      */
-    this._kbdObject = ''
+    this.kbdObject = '';
 
     if (this.eventType === 'message_allow') {
       /**
        * The ID of a peer, to which the reply is going to be sent
        *
-       * **Note:** You can change this using [`setPid()`](#setpid) method, the original Peer ID is available in `$.obj.peer_id`
-       * @private
+       * **Note:** You can change this using [`setPid()`](#setpid) method,
+       * the original Peer ID is available in `$.obj.peer_id`
+       * @readonly
        * @type {string|number}
        * @memberof Context
        */
-      this._pid = this.obj.user_id
+      this.pid = this.obj.user_id;
     } else if (this.eventType === 'message_typing_state') {
-      this._pid = this.obj.from_id
+      this.pid = this.obj.from_id;
     } else {
-      this._pid = this.obj.peer_id
+      this.pid = this.obj.peer_id;
     }
   }
 }

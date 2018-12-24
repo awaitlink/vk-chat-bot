@@ -6,9 +6,10 @@
  * @copyright Artem Varaksa 2017-2018
  */
 
-import { log, requireParam } from './extra/log'
-const express = require('express')
-const bodyParser = require('body-parser')
+import { log, requireParam } from './extra/log';
+
+const express = require('express');
+const bodyParser = require('body-parser');
 
 export default class Bot {
   /**
@@ -26,56 +27,51 @@ export default class Bot {
    * The `Bot` class responds to incoming events from Callback API,
    * and figures out what needs to be done.
    */
-  constructor (core, groupId, confirmationToken, secret, port) {
-    requireParam('Bot#constructor', core, 'bot core')
-    requireParam('Bot#constructor', confirmationToken, 'confirmation token (from Callback API settings)')
-    requireParam('Bot#constructor', groupId, 'group id')
-    requireParam('Bot#constructor', secret, 'secret key (from Callback API settings)')
-    requireParam('Bot#constructor', port, 'port')
+  constructor(core, groupId, confirmationToken, secret, port) {
+    requireParam('Bot#constructor', core, 'bot core');
+    requireParam('Bot#constructor', confirmationToken, 'confirmation token (from Callback API settings)');
+    requireParam('Bot#constructor', groupId, 'group id');
+    requireParam('Bot#constructor', secret, 'secret key (from Callback API settings)');
+    requireParam('Bot#constructor', port, 'port');
 
     /**
      * Core
      *
-     * @private
      * @type {Core}
      * @memberof Bot
      */
-    this._core = core
+    this.core = core;
 
     /**
      * Group ID
      *
-     * @private
      * @type {string|number}
      * @memberof Bot
      */
-    this._groupId = groupId
+    this.groupId = groupId;
 
     /**
      * Confirmation token
      *
-     * @private
      * @type {string}
      * @memberof Bot
      */
-    this._confirmationToken = confirmationToken
+    this.confirmationToken = confirmationToken;
 
     /**
      * Secret
-     * @private
      * @type {string}
      * @memberof Bot
      */
-    this._secret = secret
+    this.secret = secret;
 
     /**
      * Port
      *
-     * @private
      * @type {number}
      * @memberof Bot
      */
-    this._port = port
+    this.port = port;
   }
 
   /**
@@ -83,66 +79,67 @@ export default class Bot {
    * @instance
    * @memberof Bot
    */
-  start () {
-    this._core.lock()
+  start() {
+    this.core.lock();
 
-    var evt = Object.values(this._core._eventHandlers).filter(e => e).length - 1 // Do not count `message_new`
-    var pld = Object.keys(this._core._exactPayloadHandlers).length +
-              this._core._dynPayloadHandlers.length
-    var cmd = this._core._commandHandlers.length
-    var reg = this._core._regexHandlers.length
-    log().i(`Handlers count: on:${evt} cmd:${cmd} regex:${reg} payload:${pld}`).from('bot').now()
+    // Does not count `message_new` event
+    const evt = Object.values(this.core.eventHandlers).filter(e => e).length - 1;
+    const pld = Object.keys(this.core.exactPayloadHandlers).length
+              + this.core.dynPayloadHandlers.length;
+    const cmd = this.core.commandHandlers.length;
+    const reg = this.core.regexHandlers.length;
+    log().i(`Handlers count: on:${evt} cmd:${cmd} regex:${reg} payload:${pld}`).from('bot').now();
 
     if ((evt + cmd + reg + pld) === 0) {
-      log().w(`The bot won't do anything without handlers!`).from('bot').now()
+      log().w('The bot won\'t do anything without handlers!').from('bot').now();
     }
 
-    log().i(`Preparing and starting the server...`).from('bot').now()
+    log().i('Preparing and starting the server...').from('bot').now();
 
-    const app = express()
+    const app = express();
 
-    app.use(bodyParser.json())
+    app.use(bodyParser.json());
 
     app.get('/', (req, res) => {
-      res.status(400).send('Only POST allowed.')
-      log().w('Received a GET request').from('bot').now()
-    })
+      res.status(400).send('Only POST allowed.');
+      log().w('Received a GET request').from('bot').now();
+    });
 
     app.post('/', (req, res) => {
-      var body = req.body
+      const { body } = req;
 
-      if (body.secret !== this._secret) {
-        res.status(400).send('Invalid secret key.')
-        log().w('Received a request with an invalid secret key').from('bot').now()
-        return
+      if (body.secret !== this.secret) {
+        res.status(400).send('Invalid secret key.');
+        log().w('Received a request with an invalid secret key').from('bot').now();
+        return;
       }
 
-      if (body.group_id.toString() !== this._groupId) {
-        res.status(400).send('Invalid group id.')
-        log().w('Received a request with an invalid group id').from('bot').now()
-        return
+      if (body.group_id.toString() !== this.groupId) {
+        res.status(400).send('Invalid group id.');
+        log().w('Received a request with an invalid group id').from('bot').now();
+        return;
       }
 
       if (body.type === 'confirmation') {
-        res.status(200).send(this._confirmationToken)
-        log().r('Sent confirmation token.').from('bot').now()
+        res.status(200).send(this.confirmationToken);
+        log().r('Sent confirmation token.').from('bot').now();
       } else {
-        res.status(200).send('ok')
-        this._core.parseRequest(body)
+        res.status(200).send('ok');
+        this.core.parseRequest(body);
       }
-    })
+    });
 
-    var server = app.listen(this._port, (err) => {
+    const server = app.listen(this.port, (err) => {
       if (err) {
-        log().e('Error occured while starting the server: ' + err).from('bot').now()
+        log().e(`Error occured while starting the server: ${err}`).from('bot').now();
       }
 
-      log().i(`Server is listening on port ${this._port}`).from('bot').now()
+      log().i(`Server is listening on port ${this.port}`).from('bot').now();
 
       // Quit in test mode
       if (process.env.TEST_MODE) {
-        server.close()
+        server.close();
       }
-    })
+    });
   }
 }

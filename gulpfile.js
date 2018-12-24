@@ -6,7 +6,7 @@ let gulp = require('gulp'),
   { terser } = require('rollup-plugin-terser'),
   babel = require('rollup-plugin-babel'),
   concat = require('gulp-concat'),
-  standard = require('gulp-standard'),
+  eslint = require('gulp-eslint'),
   ava = require('gulp-ava'),
   pump = require('pump')
 
@@ -28,11 +28,9 @@ function clean (cb) {
 function lint (cb) {
   pump([
     gulp.src(SOURCE),
-    standard(),
-    standard.reporter('default', {
-      breakOnError: true,
-      quiet: false
-    })
+    eslint(),
+    eslint.format(),
+    eslint.failAfterError()
   ], cb)
 }
 

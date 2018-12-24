@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed.
 
+## [13.0.0] - 2018-12-24
+### Changed
+- **Parameters object passed to `vk.bot()` has now _camelCase_ fields!**
+- Removed starting `_` in fields and methods!
+- Use Airbnb JavaScript Style Guide with `eslint` instead of `standard`
+
 ## [12.1.0] - 2018-12-04
 ### Added
 - Parameter `random_id` is generated and sent with messages automatically

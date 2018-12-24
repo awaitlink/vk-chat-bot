@@ -1,8 +1,8 @@
 # ❮vk-chat-bot❯
 [![version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
+[![style][badges/airbnb]][airbnb]
 [![travis][badges/travis]][travis]
-[![style][badges/standard]][standard]  
 
 > **A chat bot framework for VK communities (*groups*).**    
 > **[documentation »][docs]** ⋅
@@ -123,9 +123,9 @@ This project is licensed under the terms of the **[MIT][license]** license.
 
 <!-- LINKS -->
 
-[badges/standard]:  https://img.shields.io/badge/code_style-standard-6200ea.svg?style=for-the-badge
+[badges/airbnb]:  https://img.shields.io/badge/code_style-airbnb-fa5a5f.svg?style=for-the-badge
 [badges/travis]:    https://img.shields.io/travis/u32i64/vk-chat-bot/master.svg?style=for-the-badge&logo=travis
-[badges/npm]:       https://img.shields.io/npm/v/vk-chat-bot.svg?style=for-the-badge
+[badges/npm]:       https://img.shields.io/npm/v/vk-chat-bot.svg?style=for-the-badge&logo=npm
 [badges/downloads]: https://img.shields.io/npm/dt/vk-chat-bot.svg?style=for-the-badge
 
 [npm]:    https://www.npmjs.com/package/vk-chat-bot
@@ -144,4 +144,4 @@ This project is licensed under the terms of the **[MIT][license]** license.
 [issues]:  https://github.com/u32i64/vk-chat-bot/issues
 [pulls]:   https://github.com/u32i64/vk-chat-bot/pulls
 
-[standard]: https://standardjs.com
+[airbnb]: https://github.com/airbnb/javascript

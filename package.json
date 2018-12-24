@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "12.1.0",
+  "version": "13.0.0",
   "description": "Framework for easy creation of chat bots for VK communities (uses Callback API).",
   "keywords": [
     "api",
@@ -35,7 +35,7 @@
   ],
   "main": "dist/vk-chat-bot.min.js",
   "scripts": {
-    "fix": "standard --fix",
+    "fix": "eslint --fix src/",
     "prepare": "gulp && yarn pack"
   },
   "dependencies": {
@@ -43,7 +43,9 @@
     "@babel/runtime": "^7.1.2",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
+    "escape-string-regexp": "^1.0.5",
     "express": "^4.16.4",
+    "gulp-eslint": "^5.0.0",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
     "request": "^2.88.0",
@@ -55,6 +57,9 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "ava": "1.0.0-rc.2",
+    "eslint": "^5.11.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "gulp": "^4.0.0",
     "gulp-ava": "^0.19.0",
     "gulp-better-rollup": "^3.4.0",
@@ -62,13 +67,11 @@
     "gulp-concat": "^2.6.1",
     "gulp-jsdoc3": "^2.0.0",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-standard": "^12.0.0",
     "jsdoc": "^3.5.5",
     "minami": "^1.2.3",
     "pump": "^3.0.0",
     "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-terser": "^3.0.0",
-    "standard": "^12.0.1"
+    "rollup-plugin-terser": "^3.0.0"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -76,12 +79,6 @@
   "ava": {
     "require": [
       "@babel/register"
-    ]
-  },
-  "standard": {
-    "ignore": [
-      "docs/",
-      "dist/"
     ]
   }
 }

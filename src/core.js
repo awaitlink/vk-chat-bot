@@ -6,9 +6,11 @@
  * @copyright Artem Varaksa 2017-2018
  */
 
-import { log, requireParam, requireFunction } from './extra/log'
-import Context from './api/context'
-import '@babel/polyfill'
+import '@babel/polyfill';
+import { log, requireParam, requireFunction } from './extra/log';
+import Context from './api/context';
+
+const escapeRegex = require('escape-string-regexp');
 
 export default class Core {
   /**
@@ -34,70 +36,60 @@ export default class Core {
    *
    * For other events, a matching [Core#on]{@link Core#on} handler will be called.
    */
-  constructor (api, stats, cmdPrefix, groupId) {
-    requireParam('Core#constructor', api, 'API object')
-    requireParam('Core#constructor', stats, 'statistics object')
-    requireParam('Core#constructor', cmdPrefix, 'command prefix')
-    requireParam('Core#constructor', groupId, 'group id')
+  constructor(api, stats, cmdPrefix, groupId) {
+    requireParam('Core#constructor', api, 'API object');
+    requireParam('Core#constructor', stats, 'statistics object');
+    requireParam('Core#constructor', cmdPrefix, 'command prefix');
+    requireParam('Core#constructor', groupId, 'group id');
 
     /**
      * @type {API}
      * @readonly
      * @memberof Core
      */
-    this.api = api
+    this.api = api;
 
     /**
      * @type {Stats}
      * @readonly
      * @memberof Core
      */
-    this.stats = stats
+    this.stats = stats;
 
     /**
      * Command prefix
-     *
-     * @private
      * @type {string}
      * @memberof Core
      */
-    this._cmdPrefix = cmdPrefix
+    this.cmdPrefix = cmdPrefix;
 
     /**
      * Command prefix, escaped for usage in regular expressions
-     *
-     * @private
      * @type {string}
      * @memberof Core
      */
-    this._escapedCmdPrefix = this._escapeRegex(this._cmdPrefix || '')
+    this.escapedCmdPrefix = escapeRegex(this.cmdPrefix);
 
     /**
      * Group ID
-     *
-     * @private
      * @type {string}
      * @memberof Core
      */
-    this._groupId = this._escapeRegex(groupId) // Just in case
+    this.groupId = escapeRegex(groupId); // Just in case
 
     /**
      * Is this `Core` locked?
-     *
-     * @private
      * @type {boolean}
      * @memberof Core
      */
-    this._locked = false
+    this.locked = false;
 
     /**
      * Handlers for events
-     *
-     * @private
      * @memberof Core
      * @type {Object}
      */
-    this._eventHandlers = {
+    this.eventHandlers = {
       // Callback API
       message_new: null,
       message_reply: null,
@@ -112,64 +104,53 @@ export default class Core {
 
       // Internal events
       no_match: null,
-      handler_error: null
-    }
+      handler_error: null,
+    };
 
     /**
      * Exact payload handlers
-     *
-     * @private
      * @memberof Core
      * @type {Object}
      */
-    this._exactPayloadHandlers = {}
+    this.exactPayloadHandlers = {};
 
     /**
-     * Dynamic payload handlers (those which use functions to determine whether a handler is suitable)
-     *
-     * @private
+     * Dynamic payload handlers
+     * (which use functions to determine whether a handler is suitable)
      * @memberof Core
      * @type {Object[]}
      */
-    this._dynPayloadHandlers = []
+    this.dynPayloadHandlers = [];
 
     /**
      * Command handlers
-     *
-     * @private
      * @memberof Core
      * @type {Object[]}
      */
-    this._commandHandlers = []
+    this.commandHandlers = [];
 
     /**
      * Regular expression handlers
-     *
-     * @private
      * @memberof Core
      * @type {Object[]}
      */
-    this._regexHandlers = []
+    this.regexHandlers = [];
 
     /**
      * Are event warnings enabled?
-     *
-     * @private
      * @memberof Core
      * @type {boolean}
      */
-    this._eventWarnings = true
+    this.eventWarnings = true;
 
     /**
      * The help message
-     *
-     * @private
      * @memberof Core
      * @type {string}
      */
-    this._helpMessage = ''
+    this.helpMessage = '';
 
-    this._registerMessageNewHandler()
+    this.registerMessageNewHandler();
   }
 
   /**
@@ -177,9 +158,9 @@ export default class Core {
    * @memberof Core
    * @instance
    */
-  noEventWarnings () {
-    this._eventWarnings = false
-    log().w('Warnings about missing event handlers were disabled').from('core').now()
+  noEventWarnings() {
+    this.eventWarnings = false;
+    log().w('Warnings about missing event handlers were disabled').from('core').now();
   }
 
   /**
@@ -189,27 +170,27 @@ export default class Core {
    * @memberof Core
    * @instance
    */
-  lock () {
-    this._locked = true
-    this._generateHelpMessage()
+  lock() {
+    this.locked = true;
+    this.generateHelpMessage();
   }
 
   /**
    * Returns whether this `Core` is locked, and prints a message
    * to notify the user if it is locked
    *
-   * @private
+   *
    * @memberof Core
    * @instance
    *
    * @return {boolean} is this `Core` locked?
    */
-  _isLocked () {
-    if (this._locked) {
-      log().w('Registering a handler while the bot is running is not allowed').from('core').now()
+  isLocked() {
+    if (this.locked) {
+      log().w('Registering a handler while the bot is running is not allowed').from('core').now();
     }
 
-    return this._locked
+    return this.locked;
   }
 
   /**
@@ -238,7 +219,7 @@ export default class Core {
    * #### Other Events
    * Event type | When handler is called
    * ---|---
-   * `start` | If the message's payload is `{"command": "start"}` (when user presses the `Start` button)
+   * `start` | If the message's payload is `{"command": "start"}` (i.e. `Start` button pressed)
    * `service_action` | Service action message received
    * `no_match` | When no matching `cmd()` or `regex()` handler is found
    * `handler_error` | If an error is thrown in a handler
@@ -287,29 +268,27 @@ export default class Core {
    *
    * @example
    * core.on('no_match', $ => {
-   *   $.text('I don\'t know how to respond to your message.')
-   * })
+   *   $.text('I don\'t know how to respond to your message.');
+   * });
    *
    */
-  on (event, callback) {
-    if (this._isLocked()) return
+  on(event, callback) {
+    if (this.isLocked()) return;
 
-    requireParam('Core#on', event, 'event name')
-    requireParam('Core#on', callback, 'callback')
-    requireFunction(callback)
+    requireParam('Core#on', event, 'event name');
+    requireParam('Core#on', callback, 'callback');
+    requireFunction(callback);
 
-    if (!Object.keys(this._eventHandlers).includes(event)) {
-      log().e(`Cannot register a handler: unknown event type '${event}'`).from('core').now()
+    if (!Object.keys(this.eventHandlers).includes(event)) {
+      log().e(`Cannot register a handler: unknown event type '${event}'`).from('core').now();
     }
 
-    if (!this._eventHandlers[event]) {
-      this._eventHandlers[event] = callback
+    if (!this.eventHandlers[event]) {
+      this.eventHandlers[event] = callback;
+    } else if (event === 'message_new') {
+      log().e('Cannot register a handler: handler for the \'message_new\' event is defined internally').from('core').now();
     } else {
-      if (event === 'message_new') {
-        log().e(`Cannot register a handler: handler for the 'message_new' event is defined internally`).from('core').now()
-      } else {
-        log().e(`Cannot register a handler: duplicate handler for event '${event}'`).from('core').now()
-      }
+      log().e(`Cannot register a handler: duplicate handler for event '${event}'`).from('core').now();
     }
   }
 
@@ -325,9 +304,11 @@ export default class Core {
   /**
    * Registers a payload handler
    *
-   * **Note**: exact handlers are searched first, and only if they don't match, the search for a dynamic handler begins.
+   * **Note**: exact handlers are searched first, and only if they don't match,
+   * the search for a dynamic handler begins.
    *
-   * @param {Object|payload_tester} payload - exact payload to handle, or a function which will determine whether to handle the payload or not
+   * @param {Object|payload_tester} payload - exact payload to handle,
+   * or a function which will determine whether to handle the payload or not
    * @param {handler} callback - function, which will handle the message
    *
    * @memberof Core
@@ -337,74 +318,74 @@ export default class Core {
    * // -------> KEYBOARD (for sending the payload)
    *
    * // Create a keyboard
-   * var Keyboard = vk.kbd.Keyboard
-   * var Button = vk.kbd.Button
-   * var colors = vk.kbd.colors
+   * const { colors, Keyboard, Button } = vk.kbd;
    *
    * var kbd = new Keyboard([[
    *      // Clicking on this button will send the payload {a: 'b'}
    *      new Button('Test 1', colors.default, {a: 'b'}),
    *      new Button('Test 2', colors.default, {a: 'b', c: 'd'})
-   * ]], false)
+   * ]], false);
    *
    * // When asked, send the keyboard
    * core.regex(/keyboard/i, $ => {
-   *    $.keyboard(kbd)
-   *    $.text('Here it is!')
-   * })
+   *    $.keyboard(kbd);
+   *    $.text('Here it is!');
+   * });
    *
    * // -------> EXACT PAYLOAD
    * core.payload({a: 'b'}, $ => {
-   *    $.text('Received secret payload!')
-   * })
+   *    $.text('Received secret payload!');
+   * });
    *
    * // -------> DYNAMIC PAYLOAD
    * // In this case, the handler will run only if the
    * // payload's property `c` contains the value `d`.
    * core.payload((payload, parsed) => {
    *    if (parsed) { // If the payload is a valid JSON
-   *      return parsed.c === 'd'
+   *      return parsed.c === 'd';
    *    } else {
-   *      return false
+   *      return false;
    *    }
    * }, $ => {
-   *    $.text(`In message '${$.msg}', payload.c is 'd'!`)
-   * })
+   *    $.text(`In message '${$.msg}', payload.c is 'd'!`);
+   * });
    *
    */
-  payload (payload, callback) {
-    if (this._isLocked()) return
+  payload(payload, callback) {
+    if (this.isLocked()) return;
 
-    requireParam('Core#payload', payload, 'target payload')
-    requireParam('Core#payload', callback, 'callback')
-    requireFunction(callback)
+    requireParam('Core#payload', payload, 'target payload');
+    requireParam('Core#payload', callback, 'callback');
+    requireFunction(callback);
 
     if (typeof payload !== 'function') {
       // Exact payload match:
 
-      if (!this._exactPayloadHandlers[JSON.stringify(payload)]) {
-        this._exactPayloadHandlers[JSON.stringify(payload)] = callback
+      if (!this.exactPayloadHandlers[JSON.stringify(payload)]) {
+        this.exactPayloadHandlers[JSON.stringify(payload)] = callback;
       } else {
-        log().e(`Cannot register a handler: duplicate handler for payload '${payload}'`).from('core').now()
+        log().e(`Cannot register a handler: duplicate handler for payload '${payload}'`).from('core').now();
       }
     } else {
       // Dynamic payload match:
 
-      this._dynPayloadHandlers.push({
+      this.dynPayloadHandlers.push({
         tester: payload,
-        callback
-      })
+        callback,
+      });
     }
   }
 
   /**
    * Registers a command handler
    *
-   * Handler is called if the message begins with `cmd_prefix` (defined in the parameters) **+** `command`
+   * Handler is called if the message begins with `cmd_prefix`
+   * (defined in the parameters) **+** `command`
    *
    * @param {string} command - command
    * @param {handler} callback - function, which will handle the message
-   * @param {string} [description = ""] - the description of what this command does, to be used in help messages
+   * @param {string} [description = ""] - the description of what this command does,
+   * to be used in help messages
    *
    * @memberof Core
    * @instance
@@ -412,21 +393,21 @@ export default class Core {
    * @example
    * core.cmd('help', $ => {
    *   // core.help() returns the help message
-   *   $.text('Test Bot' + core.help())
-   * }, 'shows the help message')
+   *   $.text('Test Bot' + core.help());
+   * }, 'shows the help message');
    */
-  cmd (command, callback, description = '') {
-    if (this._isLocked()) return
+  cmd(command, callback, description = '') {
+    if (this.isLocked()) return;
 
-    requireParam('Core#cmd', command, 'command')
-    requireParam('Core#cmd', callback, 'callback')
-    requireFunction(callback)
+    requireParam('Core#cmd', command, 'command');
+    requireParam('Core#cmd', callback, 'callback');
+    requireFunction(callback);
 
-    this._commandHandlers.push({
+    this.commandHandlers.push({
       command,
       description,
-      callback
-    })
+      callback,
+    });
   }
 
   /**
@@ -440,20 +421,20 @@ export default class Core {
    *
    * @example
    * core.regex(/h(i|ello|ey)/i, $ => {
-   *    $.text('Hello, I am a test bot. You said: ' + $.msg)
-   * })
+   *    $.text('Hello, I am a test bot. You said: ' + $.msg);
+   * });
    */
-  regex (regex, callback) {
-    if (this._isLocked()) return
+  regex(regex, callback) {
+    if (this.isLocked()) return;
 
-    requireParam('Core#regex', regex, 'regular expression')
-    requireParam('Core#regex', callback, 'callback')
-    requireFunction(callback)
+    requireParam('Core#regex', regex, 'regular expression');
+    requireParam('Core#regex', callback, 'callback');
+    requireFunction(callback);
 
-    this._regexHandlers.push({
+    this.regexHandlers.push({
       regex,
-      callback
-    })
+      callback,
+    });
   }
 
   /**
@@ -466,82 +447,80 @@ export default class Core {
    * @param {Object} body - body of the request, in parsed JSON
    *
    */
-  async parseRequest (body) {
-    var obj = body.object
-    var event = body.type
+  async parseRequest(body) {
+    const obj = body.object;
+    const event = body.type;
 
-    var $ = new Context(this.api, event, obj, obj.text)
-    await this._event(event, $)
+    const $ = new Context(this.api, event, obj, obj.text);
+    await this.event(event, $);
   }
 
   /**
    * Handles an event
    *
-   * @private
+   *
    * @memberof Core
    * @instance
    *
    * @param {string} name - event name
    * @param {Context} $ - context object
    */
-  async _event (name, $) {
-    this.stats.event(name)
+  async event(name, $) {
+    this.stats.event(name);
 
-    if (this._eventHandlers[name]) {
+    if (this.eventHandlers[name]) {
       try {
-        await this._eventHandlers[name]($)
+        await this.eventHandlers[name]($);
 
         if ($.autoSend && name !== 'message_new') {
-          await $.send()
+          await $.send();
         }
       } catch (error) {
-        log().w(`Error in handler: ${error}`).from('core').now()
+        log().w(`Error in handler: ${error}`).from('core').now();
 
         if (name !== 'handler_error') {
-          await this._event('handler_error', $)
+          await this.event('handler_error', $);
         }
       }
-    } else {
-      if (this._eventWarnings) {
-        log().w(`No handler for event '${name}'`).from('core').now()
-      }
+    } else if (this.eventWarnings) {
+      log().w(`No handler for event '${name}'`).from('core').now();
     }
   }
 
   /**
    * Registers a handler for `message_new` event
-   * @private
+   *
    * @memberof Core
    * @instance
    */
-  _registerMessageNewHandler () {
-    this.on('message_new', async $ => {
+  registerMessageNewHandler() {
+    this.on('message_new', async ($) => {
       // Check for 'service_action' event
       if ($.obj.action) {
-        await this._event('service_action', $)
-        return
+        await this.event('service_action', $);
+        return;
       }
 
       // Handle regular message
-      if (!await this._tryHandlePayload($)) {
-        if (!await this._tryHandleCommand($)) {
-          if (!await this._tryHandleRegex($)) {
-            log().w(`Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`).from('core').now()
-            await this._event('no_match', $)
-            return
+      if (!await this.tryHandlePayload($)) {
+        if (!await this.tryHandleCommand($)) {
+          if (!await this.tryHandleRegex($)) {
+            log().w(`Don't know how to respond to ${JSON.stringify($.msg).replace(/\n/g, '\\n')}, calling 'no_match' event`).from('core').now();
+            await this.event('no_match', $);
+            return;
           }
         }
       }
 
-      if ($.autoSend) await $.send()
-    })
+      if ($.autoSend) await $.send();
+    });
   }
 
   /**
    * Tries to handle the message in the given `Context`
    * with a payload handler
    *
-   * @private
+   *
    * @memberof Core
    * @instance
    *
@@ -549,46 +528,52 @@ export default class Core {
    *
    * @return {boolean} was the message handled?
    */
-  async _tryHandlePayload ($) {
-    var payload = $.obj.payload
+  async tryHandlePayload($) {
+    const { payload } = $.obj;
     if (payload) {
       // Check for 'start' event
       try {
         if (JSON.parse(payload).command === 'start') {
-          await this._event('start', $)
-          $.noAutoSend() // Message sending was already handled by event
-          return true
+          await this.event('start', $);
+          $.noAutoSend(); // Message sending was already handled by event
+          return true;
         }
       } catch (e) { /* JSON Parse Error */ }
 
       // Check for exact payload handler
-      if (this._exactPayloadHandlers[payload]) {
-        await this._exactPayloadHandlers[payload]($)
-        return true
+      if (this.exactPayloadHandlers[payload]) {
+        await this.exactPayloadHandlers[payload]($);
+        return true;
       }
 
       // Check for dynamic payload handler
-      for (var handler of this._dynPayloadHandlers) {
-        var parsed = null
+      const handlers = this.dynPayloadHandlers.map((potentialHandler) => {
+        let parsed = null;
         try {
-          parsed = JSON.parse(payload)
+          parsed = JSON.parse(payload);
         } catch (e) { /* JSON Parse Error */ }
 
-        if (handler.tester(payload, parsed)) {
-          await handler.callback($)
-          return true
+        if (potentialHandler.tester(payload, parsed)) {
+          return potentialHandler;
         }
+
+        return null;
+      }).filter(e => e);
+
+      if (handlers) {
+        await handlers[0].callback($);
+        return true;
       }
     }
 
-    return false
+    return false;
   }
 
   /**
    * Tries to handle the message in the given `Context`
    * with a command handler
    *
-   * @private
+   *
    * @memberof Core
    * @instance
    *
@@ -596,28 +581,37 @@ export default class Core {
    *
    * @return {boolean} was the message handled?
    */
-  async _tryHandleCommand ($) {
-    for (var i = 0; i < this._commandHandlers.length; i++) {
-      var cmdHandler = this._commandHandlers[i]
-      var cmd = this._escapeRegex(cmdHandler.command)
-
-      var cmdRegex = new RegExp(`^( *\\[club${this._groupId}\\|.*\\])?( *${this._escapedCmdPrefix}${cmd})+`, 'i')
+  async tryHandleCommand($) {
+    const handlerObjs = this.commandHandlers.map((potentialHandler) => {
+      const cmd = escapeRegex(potentialHandler.command);
+      const cmdRegex = new RegExp(`^( *\\[club${this.groupId}\\|.*\\])?( *${this.escapedCmdPrefix}${cmd})+`, 'i');
 
       if (cmdRegex.test($.msg)) {
-        $.msg = $.msg.replace(cmdRegex, '')
-        await cmdHandler.callback($)
-        return true
+        return {
+          handler: potentialHandler,
+          msg: $.msg.replace(cmdRegex, ''),
+        };
       }
+
+      return null;
+    }).filter(e => e);
+
+    if (handlerObjs) {
+      const { handler, msg } = handlerObjs[0];
+
+      $.msg = msg; // eslint-disable-line no-param-reassign
+      await handler.callback($);
+      return true;
     }
 
-    return false
+    return false;
   }
 
   /**
    * Tries to handle the message in the given `Context`
    * with a regex handler
    *
-   * @private
+   *
    * @memberof Core
    * @instance
    *
@@ -625,43 +619,43 @@ export default class Core {
    *
    * @return {boolean} was the message handled?
    */
-  async _tryHandleRegex ($) {
-    for (var i = 0; i < this._regexHandlers.length; i++) {
-      var regexHandler = this._regexHandlers[i]
+  async tryHandleRegex($) {
+    const handlers = this.regexHandlers.filter(
+      potentialHandler => potentialHandler.regex.test($.msg),
+    );
 
-      if (regexHandler.regex.test($.msg)) {
-        await regexHandler.callback($)
-        return true
-      }
+    if (handlers.length > 0) {
+      await handlers[0].callback($);
+      return true;
     }
 
-    return false
+    return false;
   }
 
   /**
    * Generates the help message
-   * @private
+   *
    * @memberof Core
    * @instance
    */
-  _generateHelpMessage () {
-    var helpMessage = '\n'
+  generateHelpMessage() {
+    let helpMessage = '\n';
 
-    for (var i = 0; i < this._commandHandlers.length; i++) {
-      var commandHelpEntry = ''
+    this.commandHandlers.forEach((handler) => {
+      let helpEntry = '';
 
-      commandHelpEntry += this._cmdPrefix
-      commandHelpEntry += this._commandHandlers[i].command
+      helpEntry += this.cmdPrefix;
+      helpEntry += handler.command;
 
-      if (this._commandHandlers[i].description) {
-        commandHelpEntry += ' - '
-        commandHelpEntry += this._commandHandlers[i].description
+      if (handler.description) {
+        helpEntry += ' - ';
+        helpEntry += handler.description;
       }
 
-      helpMessage += commandHelpEntry + '\n'
-    }
+      helpMessage += `${helpEntry}\n`;
+    });
 
-    this._helpMessage = helpMessage
+    this.helpMessage = helpMessage;
   }
 
   /**
@@ -672,23 +666,7 @@ export default class Core {
    * @memberof Core
    * @instance
    */
-  help () {
-    return this._helpMessage
-  }
-
-  /**
-   * Escapes a string for usage in regex.
-   *
-   * @private
-   * @memberof Core
-   * @instance
-   *
-   * @param {string} s - string to escape
-   *
-   * @return {string} the escaped string
-   *
-   */
-  _escapeRegex (s) {
-    return s.replace(/[-|/\\^$*+?.()|[\]{}]/g, '\\$&')
+  help() {
+    return this.helpMessage;
   }
 }

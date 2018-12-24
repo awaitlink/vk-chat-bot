@@ -7,31 +7,31 @@
  * @copyright Artem Varaksa 2017-2018
  */
 
-import Bot from './bot'
-import Core from './core'
+import Bot from './bot';
+import Core from './core';
 
-import API from './api/api'
-import Context from './api/context'
-import * as kbd from './api/keyboard'
+import API from './api/api';
+import Context from './api/context';
+import * as kbd from './api/keyboard';
 
-import * as log from './extra/log'
-import Stats from './extra/stats'
+import * as log from './extra/log';
+import Stats from './extra/stats';
 
-const chalk = require('chalk')
+const chalk = require('chalk');
 
-process.on('uncaughtException', err => {
+process.on('uncaughtException', (err) => {
   if (!process.env.TEST_MODE) {
-    var note = chalk.inverse(`• An error occured. The messages below may contain
+    const note = chalk.inverse(`• An error occured. The messages below may contain
 • useful information about the problem.
 • If you think this is an issue with 'vk-chat-bot' itself,
-• please report it at <https://github.com/u32i64/vk-chat-bot/issues>.`)
+• please report it at <https://github.com/u32i64/vk-chat-bot/issues>.`);
 
-    console.log(`\n\n${note}\n\n`)
+    console.log(`\n\n${note}\n\n`);
   }
 
-  console.log(err)
-  process.exit(1)
-})
+  console.log(err);
+  process.exit(1);
+});
 
 /**
  * @typedef core_and_bot
@@ -43,53 +43,51 @@ process.on('uncaughtException', err => {
 /**
  * Creates all the necessary objects for the bot and the [Bot]{@link Bot} object itself
  * @param {Object} params - parameters object
- * @param {string} params.vk_token - an API token of a VK community
- * @param {string} params.confirmation_token - confirmation token from Callback API settings
- * @param {string} params.group_id - group ID from Callback API settings
+ * @param {string} params.vkToken - an API token of a VK community
+ * @param {string} params.confirmationToken - confirmation token from Callback API settings
+ * @param {string} params.groupId - group ID from Callback API settings
  * @param {string} params.secret - secret key (can be set in Callback API settings)
  * @param {number} params.port - the port bot will run at
- * @param {string} [params.cmd_prefix = ""] - each command (for [Core#cmd]{@link Core#cmd} handlers) should start with this prefix to be recognized
+ * @param {string} [params.cmdPrefix = ""] - each command (for [Core#cmd]{@link Core#cmd} handlers)
+ * should start with this prefix to be recognized
  *
  * @return {core_and_bot} core and bot objects
  *
  * @example
  * var params = {
- *    vk_token: 'your_vk_access_token',
- *    confirmation_token: 'f123456',
- *    group_id: 1234567,
+ *    vkToken: 'your_vk_access_token',
+ *    confirmationToken: 'f123456',
+ *    groupId: 1234567,
  *    secret: 's3r10us1y_s3cr3t_phr4s3',
  *    port: 12345,
  *
- *    cmd_prefix: "/"
- *  }
+ *    cmdPrefix: "/"
+ *  };
  *
- *  var {bot, core} = vk.bot(params)
+ *  var {bot, core} = vk.bot(params);
  */
-function bot (params) {
-  log.requireParam('bot', params, 'parameters for the bot')
-  log.requireParam('bot', params.vk_token, 'VK API token')
-  log.requireParam('bot', params.confirmation_token, 'confirmation token (from Callback API settings)')
-  log.requireParam('bot', params.group_id, 'group id')
-  log.requireParam('bot', params.secret, 'secret key (from Callback API settings)')
-  log.requireParam('bot', params.port, 'port')
+function bot({
+  vkToken,
+  confirmationToken,
+  groupId,
+  secret,
+  port,
+  cmdPrefix = '',
+}) {
+  log.requireParam('bot', vkToken, 'VK API token');
+  log.requireParam('bot', confirmationToken, 'confirmation token (from Callback API settings)');
+  log.requireParam('bot', groupId, 'group id');
+  log.requireParam('bot', secret, 'secret key (from Callback API settings)');
+  log.requireParam('bot', port, 'port');
 
-  var groupId = params.group_id.toString()
-  var confirmationToken = params.confirmation_token.toString()
-  var secret = params.secret.toString()
-  var port = params.port
-
-  var vkToken = params.vk_token.toString()
-  var cmdPrefix = params.cmd_prefix ? params.cmd_prefix.toString() : ''
-
-  var stats = new Stats()
-  var api = new API(vkToken, stats)
-  var core = new Core(api, stats, cmdPrefix, groupId)
-  var bot = new Bot(core, groupId, confirmationToken, secret, port)
+  const stats = new Stats();
+  const api = new API(vkToken.toString(), stats);
+  const core = new Core(api, stats, cmdPrefix.toString(), groupId.toString());
 
   return {
-    bot,
-    core
-  }
+    bot: new Bot(core, groupId.toString(), confirmationToken.toString(), secret.toString(), port),
+    core,
+  };
 }
 
 /**
@@ -109,7 +107,7 @@ function bot (params) {
  * const vk = require('vk-chat-bot')
  * // ...
  */
-var vk = {
+const vk = {
   // Quick creation function
   bot,
 
@@ -124,7 +122,7 @@ var vk = {
 
   // src/extra/
   log,
-  Stats
-}
+  Stats,
+};
 
-export default vk
+export default vk;
