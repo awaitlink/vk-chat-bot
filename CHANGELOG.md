@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed.
 
+## [13.0.1] - 2018-12-24
+### Fixed
+- Merge conflict
+
 ## [13.0.0] - 2018-12-24
 ### Changed
 - **Parameters object passed to `vk.bot()` has now _camelCase_ fields!**

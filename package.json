@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "description": "Framework for easy creation of chat bots for VK communities (uses Callback API).",
   "keywords": [
     "api",
@@ -56,12 +56,12 @@
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
-    "ava": "1.0.0-rc.2",
+    "ava": "1.0.1",
     "eslint": "^5.11.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "gulp": "^4.0.0",
-    "gulp-ava": "^0.19.0",
+    "gulp-ava": "^1.0.0",
     "gulp-better-rollup": "^3.4.0",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
