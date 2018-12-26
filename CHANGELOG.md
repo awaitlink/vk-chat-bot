@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed.
 
+## [13.0.3] - 2018-12-26
+### Fixed
+- `README.md` contained non-_camelCase_ fields in `params`, while [v13.0.0](#1300---2018-12-24) changed them to be in _camelCase_.
+
 ## [13.0.2] - 2018-12-25
 ### Fixed
 - Placed `gulp-eslint` in `devDependencies` instead of `dependencies`
