@@ -1,40 +1,43 @@
-let gulp = require('gulp'),
-  sourcemaps = require('gulp-sourcemaps'),
-  jsdoc = require('gulp-jsdoc3'),
-  gulpClean = require('gulp-clean'),
-  rollup = require('gulp-better-rollup'),
-  { terser } = require('rollup-plugin-terser'),
-  babel = require('rollup-plugin-babel'),
-  concat = require('gulp-concat'),
-  eslint = require('gulp-eslint'),
-  ava = require('gulp-ava'),
-  pump = require('pump')
+const gulp = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
+const jsdoc = require('gulp-jsdoc3');
+const gulpClean = require('gulp-clean');
+const rollup = require('gulp-better-rollup');
+const { terser } = require('rollup-plugin-terser');
+const babel = require('rollup-plugin-babel');
+const concat = require('gulp-concat');
+const eslint = require('gulp-eslint');
+const ava = require('gulp-ava');
+const pump = require('pump');
 
-const TO_CLEAN = ['dist', 'docs', '*.tgz']
-const SOURCE = 'src/**/*.js'
-const MAIN = 'src/main.js'
-const DEST = 'vk-chat-bot.min.js'
-const DEST_FOLDER = 'dist'
-const DOCUMENTATION = ['README.md'].concat(SOURCE)
-const TESTS = './test/test.js'
+const jsdocConfig = require('./.jsdoc.json');
 
-function clean (cb) {
+const TO_CLEAN = ['dist', 'docs', '*.tgz'];
+const SOURCE = 'src/**/*.js';
+const ALL_JS = ['src/**/*.js', '*.js'];
+const MAIN = 'src/main.js';
+const DEST = 'vk-chat-bot.min.js';
+const DEST_FOLDER = 'dist';
+const DOCUMENTATION = ['README.md'].concat(SOURCE);
+const TESTS = './test/test.js';
+
+function clean(cb) {
   pump([
     gulp.src(TO_CLEAN, { read: false, allowEmpty: true }),
-    gulpClean()
-  ], cb)
+    gulpClean(),
+  ], cb);
 }
 
-function lint (cb) {
+function lint(cb) {
   pump([
-    gulp.src(SOURCE),
+    gulp.src(ALL_JS),
     eslint(),
     eslint.format(),
-    eslint.failAfterError()
-  ], cb)
+    eslint.failAfterError(),
+  ], cb);
 }
 
-function build (cb) {
+function build(cb) {
   pump([
     gulp.src(MAIN),
     sourcemaps.init(),
@@ -44,43 +47,43 @@ function build (cb) {
           babelrc: false,
           presets: [['@babel/env', { modules: false }]],
           plugins: [['@babel/transform-runtime', { regenerator: true }]],
-          runtimeHelpers: true
+          runtimeHelpers: true,
         }),
-        terser()
-      ]
+        terser(),
+      ],
     }, {
-      format: 'cjs'
+      format: 'cjs',
     }),
     concat(DEST),
     sourcemaps.write(),
-    gulp.dest(DEST_FOLDER)
-  ], cb)
+    gulp.dest(DEST_FOLDER),
+  ], cb);
 }
 
-function docs (cb) {
+function docs(cb) {
   gulp.src(DOCUMENTATION, { read: false })
-    .pipe(jsdoc(require('./.jsdoc.json'), cb))
+    .pipe(jsdoc(jsdocConfig, cb));
 }
 
-function test () {
+function test() {
   return gulp.src(TESTS)
-    .pipe(ava({ verbose: true }))
+    .pipe(ava({ verbose: true }));
 }
 
-exports.clean = clean
-exports.lint = lint
-exports.test = test
-exports.build = build
-exports.docs = docs
+exports.clean = clean;
+exports.lint = lint;
+exports.test = test;
+exports.build = build;
+exports.docs = docs;
 
 exports.default = gulp.series(
   exports.clean,
   gulp.parallel(
     exports.lint,
-    exports.test
+    exports.test,
   ),
   gulp.parallel(
     exports.build,
-    exports.docs
+    exports.docs,
   ),
-)
+);
