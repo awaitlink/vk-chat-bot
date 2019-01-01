@@ -4,7 +4,7 @@
  * and {@link colors} of buttons.
  *
  * @author Artem Varaksa <aymfst@gmail.com>
- * @copyright Artem Varaksa 2017-2018
+ * @copyright Artem Varaksa 2017-2019
  */
 
 export class Keyboard {

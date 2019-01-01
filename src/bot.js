@@ -3,7 +3,7 @@
  * Defines the {@link Bot} class.
  *
  * @author Artem Varaksa <aymfst@gmail.com>
- * @copyright Artem Varaksa 2017-2018
+ * @copyright Artem Varaksa 2017-2019
  */
 
 import { log, requireParam } from './extra/log';

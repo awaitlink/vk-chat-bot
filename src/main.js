@@ -4,7 +4,7 @@
  * and the exported object, {@link vk}.
  *
  * @author Artem Varaksa <aymfst@gmail.com>
- * @copyright Artem Varaksa 2017-2018
+ * @copyright Artem Varaksa 2017-2019
  */
 
 import Bot from './bot';
