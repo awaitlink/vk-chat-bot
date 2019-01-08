@@ -4008,12 +4008,13 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
-jest-worker@^23.2.0:
-  version "23.2.0"
-  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-23.2.0.tgz#faf706a8da36fae60eb26957257fa7b5d8ea02b9"
-  integrity sha1-+vcGqNo2+uYOsmlXJX+ntdjqArk=
+jest-worker@^24.0.0-alpha.9:
+  version "24.0.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-24.0.0-alpha.9.tgz#2d8a35687744461b5aa8ed553dc4d5a5da2ceab8"
+  integrity sha512-6lveyea6qbLdlQy+H+hn4IcEVgdqlI++KZU0tOdLeCliJ7myj7sDAO3fCVAcuMW9yxekIwrYclj472mP3wQdcQ==
   dependencies:
     merge-stream "^1.0.1"
+    supports-color "^5.5.0"
 
 js-levenshtein@^1.1.3:
   version "1.1.4"
@@ -5976,15 +5977,15 @@ rollup-plugin-babel@^4.0.3:
     rollup-pluginutils "^2.3.0"
 
 rollup-plugin-terser@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-terser/-/rollup-plugin-terser-4.0.1.tgz#aca038fa8352c99b28a1ed01a6168fcc80adef90"
-  integrity sha512-+voWqlP1dtrGwWyy41S+pJAqXKY4vBKs3tDmpCo3NoHT3hVfLql1lzSLu4ciiSjbwTuBFNfSQ54me7+sx+Zi7Q==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-terser/-/rollup-plugin-terser-4.0.2.tgz#78936d182ae7c4ecb313403ff5d5faad1b69e2aa"
+  integrity sha512-M2vY7NPMa3N77/avJSJyBva4nyBTiUM0kgMoWwEAeo2Edl3MW/GoM0069FzVrfMYP3xDqcVrDbaIOqVaBD8lHQ==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     escodegen "^1.11.0"
-    jest-worker "^23.2.0"
+    jest-worker "^24.0.0-alpha.9"
     lave "^1.1.10"
-    terser "^3.14.0"
+    terser "^3.14.1"
 
 rollup-pluginutils@^2.3.0:
   version "2.3.3"
@@ -6523,10 +6524,10 @@ term-size@^1.2.0:
   dependencies:
     execa "^0.7.0"
 
-terser@^3.14.0:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-3.14.0.tgz#49a8ddf34a1308a901d787dab03a42c51b557447"
-  integrity sha512-KQC1QNKbC/K1ZUjLIWsezW7wkTJuB4v9ptQQUNOzAPVHuVf2LrwEcB0I9t2HTEYUwAFVGiiS6wc+P4ClLDc5FQ==
+terser@^3.14.1:
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-3.14.1.tgz#cc4764014af570bc79c79742358bd46926018a32"
+  integrity sha512-NSo3E99QDbYSMeJaEk9YW2lTg3qS9V0aKGlb+PlOrei1X02r1wSBHCNX/O+yeTRFSWPKPIGj6MqvvdqV4rnVGw==
   dependencies:
     commander "~2.17.1"
     source-map "~0.6.1"
