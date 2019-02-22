@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed.
 
+## [13.1.0] - 2019-02-22
+### Fixed
+- `random_id` is now 32-bit.
+
 ## [13.0.3] - 2018-12-26
 ### Fixed
 - `README.md` contained non-_camelCase_ fields in `params`, while [v13.0.0](#1300---2018-12-24) changed them to be in _camelCase_.

@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "13.0.3",
+  "version": "13.1.0",
   "description": "Framework for easy creation of chat bots for VK communities (uses Callback API).",
   "keywords": [
     "api",
@@ -36,7 +36,7 @@
   "main": "dist/vk-chat-bot.min.js",
   "scripts": {
     "fix": "eslint --fix src/",
-    "prepare": "gulp && yarn pack"
+    "prepare": "gulp"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",

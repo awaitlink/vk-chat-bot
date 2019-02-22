@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - node
 cache:
-  yarn: true
+  npm: true
 script: ''
 deploy:
   - provider: script

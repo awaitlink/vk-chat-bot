@@ -18,10 +18,9 @@
 
 ## Usage
 #### Installation
-|          yarn          |         npm         |
-|:----------------------:|:-------------------:|
-| `yarn add vk-chat-bot` | `npm i vk-chat-bot` |
-
+```console
+$ npm i vk-chat-bot
+```
 
 #### Example
 You can find an example bot in the [`u32i64/vk-chat-bot-example`][example] repository.    
