@@ -289,7 +289,7 @@ export default class API {
     if (keyboard) params.keyboard = keyboard;
 
     /* global BigInt */
-    params.random_id = BigInt.asIntN(64, BigInt(`0x${crypto.randomBytes(6).toString('hex')}`)).toString();
+    params.random_id = BigInt.asIntN(32, BigInt(`0x${crypto.randomBytes(6).toString('hex')}`)).toString();
 
     return new Promise((resolve) => {
       this.scheduleCall('messages.send', params)
