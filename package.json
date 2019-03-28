@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "13.1.0",
+  "version": "13.1.1",
   "description": "Framework for easy creation of chat bots for VK communities (uses Callback API).",
   "keywords": [
     "api",
@@ -39,8 +39,8 @@
     "prepare": "gulp"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "@babel/runtime": "^7.1.2",
+    "@babel/polyfill": "^7.4.0",
+    "@babel/runtime": "^7.4.2",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "escape-string-regexp": "^1.0.5",
@@ -51,17 +51,17 @@
     "request-promise": "^4.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-transform-runtime": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/register": "^7.0.0",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-transform-runtime": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/register": "^7.4.0",
     "ava": "1.4.1",
-    "eslint": "^5.11.0",
+    "eslint": "^5.15.3",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "gulp": "^4.0.0",
     "gulp-ava": "^1.0.0",
-    "gulp-better-rollup": "^3.4.0",
+    "gulp-better-rollup": "^4.0.1",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^5.0.0",
@@ -70,8 +70,9 @@
     "jsdoc": "^3.5.5",
     "minami": "^1.2.3",
     "pump": "^3.0.0",
-    "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-terser": "^4.0.0"
+    "rollup": "^1.7.4",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-terser": "^4.0.4"
   },
   "engines": {
     "node": ">=8.0.0"
