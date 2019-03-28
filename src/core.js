@@ -596,7 +596,7 @@ export default class Core {
       return null;
     }).filter(e => e);
 
-    if (handlerObjs) {
+    if (handlerObjs.length > 0) {
       const { handler, msg } = handlerObjs[0];
 
       $.msg = msg; // eslint-disable-line no-param-reassign
