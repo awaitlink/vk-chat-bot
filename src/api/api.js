@@ -59,7 +59,7 @@ export default class API {
      * @type {string}
      * @memberof API
      */
-    this.API_VERSION = '5.92';
+    this.API_VERSION = '5.95';
 
     /**
      * API quota, in requests per second

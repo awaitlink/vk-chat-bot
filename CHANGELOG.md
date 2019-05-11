@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed.
 
+## [13.1.3] - 2019-05-11
+### Changed
+- Updated to API version **5.95**.
+
 ## [13.1.2] - 2019-03-28
 ### Fixed
 - This:
