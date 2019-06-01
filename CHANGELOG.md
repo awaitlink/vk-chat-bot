@@ -409,3 +409,46 @@ bot.init(params);
 
 ## [1.0.1] - 2017-12-02
 ### First version!
+
+[13.1.3]: https://github.com/u32i64/vk-bot/compare/v13.1.2...v13.1.3
+[13.1.2]: https://github.com/u32i64/vk-bot/compare/v13.1.1...v13.1.2
+[13.1.1]: https://github.com/u32i64/vk-bot/compare/v13.1.0...v13.1.1
+[13.1.0]: https://github.com/u32i64/vk-bot/compare/v13.0.3...v13.1.0
+[13.0.3]: https://github.com/u32i64/vk-bot/compare/v13.0.2...v13.0.3
+[13.0.2]: https://github.com/u32i64/vk-bot/compare/v13.0.1...v13.0.2
+[13.0.1]: https://github.com/u32i64/vk-bot/compare/v13.0.0...v13.0.1
+[13.0.0]: https://github.com/u32i64/vk-bot/compare/v12.1.0...v13.0.0
+[12.1.0]: https://github.com/u32i64/vk-bot/compare/v12.0.0...v12.1.0
+[12.0.0]: https://github.com/u32i64/vk-bot/compare/v11.0.1...v12.0.0
+[11.0.1]: https://github.com/u32i64/vk-bot/compare/v11.0.0...v11.0.1
+[11.0.0]: https://github.com/u32i64/vk-bot/compare/v10.6.0...v11.0.0
+[10.6.0]: https://github.com/u32i64/vk-bot/compare/v10.5.1...v10.6.0
+[10.5.1]: https://github.com/u32i64/vk-bot/compare/v10.5.0...v10.5.1
+[10.5.0]: https://github.com/u32i64/vk-bot/compare/v10.4.1...v10.5.0
+[10.4.1]: https://github.com/u32i64/vk-bot/compare/v10.4.0...v10.4.1
+[10.4.0]: https://github.com/u32i64/vk-bot/compare/v10.3.0...v10.4.0
+[10.3.0]: https://github.com/u32i64/vk-bot/compare/v10.2.0...v10.3.0
+[10.2.0]: https://github.com/u32i64/vk-bot/compare/v10.1.1...v10.2.0
+[10.1.1]: https://github.com/u32i64/vk-bot/compare/v10.1.0...v10.1.1
+[10.1.0]: https://github.com/u32i64/vk-bot/compare/v10.0.4...v10.1.0
+[10.0.4]: https://github.com/u32i64/vk-bot/compare/v10.0.3...v10.0.4
+[10.0.3]: https://github.com/u32i64/vk-bot/compare/v10.0.2...v10.0.3
+[10.0.2]: https://github.com/u32i64/vk-bot/compare/v10.0.1...v10.0.2
+[10.0.1]: https://github.com/u32i64/vk-bot/compare/v10.0.0...v10.0.1
+[10.0.0]: https://github.com/u32i64/vk-bot/compare/v9.3.1...v10.0.0
+[9.3.1]: https://github.com/u32i64/vk-bot/compare/v9.3.0...v9.3.1
+[9.3.0]: https://github.com/u32i64/vk-bot/compare/v9.2.0...v9.3.0
+[9.2.0]: https://github.com/u32i64/vk-bot/compare/v9.1.2...v9.2.0
+[9.1.2]: https://github.com/u32i64/vk-bot/compare/v9.1.1...v9.1.2
+[9.1.1]: https://github.com/u32i64/vk-bot/compare/v9.1.0...v9.1.1
+[9.1.0]: https://github.com/u32i64/vk-bot/compare/v9.0.1...v9.1.0
+[9.0.1]: https://github.com/u32i64/vk-bot/compare/v9.0.0...v9.0.1
+[9.0.0]: https://github.com/u32i64/vk-bot/compare/v8.3.2...v9.0.0
+[8.3.2]: https://github.com/u32i64/vk-bot/compare/v8.3.1...v8.3.2
+[8.3.1]: https://github.com/u32i64/vk-bot/compare/v8.3.0...v8.3.1
+[8.3.0]: https://github.com/u32i64/vk-bot/compare/v8.2.2...v8.3.0
+[8.2.2]: https://github.com/u32i64/vk-bot/compare/v8.2.1...v8.2.2
+[8.2.1]: https://github.com/u32i64/vk-bot/compare/v8.2.0...v8.2.1
+[8.2.0]: https://github.com/u32i64/vk-bot/compare/v8.1.0...v8.2.0
+[8.1.0]: https://github.com/u32i64/vk-bot/compare/v8.0.0...v8.1.0
+[8.0.0]: https://github.com/u32i64/vk-bot/releases/tag/v8.0.0
