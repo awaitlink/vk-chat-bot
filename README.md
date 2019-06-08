@@ -57,14 +57,14 @@ Here are some examples:
 const { colors, Button, Keyboard } = vk.kbd;
 
 // ...to create a keyboard like this.
-// +---------+---------+----------+----------+
-// | Default | Primary | Negative | Positive |
-// +---------+---------+----------+----------+
-// |     Maximum rows is 10, columns - 4.    |
-// +-----------------------------------------+
+// +-----------+---------+----------+----------+
+// | Secondary | Primary | Negative | Positive |
+// +-----------+---------+----------+----------+
+// |      Maximum rows is 10, columns - 4.     |
+// +-------------------------------------------+
 var kbd = new Keyboard([
   [ /* Row (array of buttons) */
-    Button.text('Default'),
+    Button.text('Secondary'),
     Button.text('Primary', colors.primary),
     Button.text('Negative', colors.negative),
     Button.text('Positive', colors.positive)
