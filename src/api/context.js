@@ -144,13 +144,13 @@ export default class Context {
    *     var kbd = new Keyboard([
    *         // Rows
    *         [
-   *             new Button('Default'),
-   *             new Button('Primary', colors.primary),
-   *             new Button('Negative', colors.negative),
-   *             new Button('Positive', colors.positive)
+   *             Button.text('Default'),
+   *             Button.text('Primary', colors.primary),
+   *             Button.text('Negative', colors.negative),
+   *             Button.text('Positive', colors.positive)
    *         ],
    *         [
-   *             new Button('Maximum rows is 10, columns - 4.')
+   *             Button.text('Maximum rows is 10, columns - 4.')
    *         ],
    *    ], false);
    *

@@ -322,8 +322,8 @@ export default class Core {
    *
    * var kbd = new Keyboard([[
    *      // Clicking on this button will send the payload {a: 'b'}
-   *      new Button('Test 1', colors.default, {a: 'b'}),
-   *      new Button('Test 2', colors.default, {a: 'b', c: 'd'})
+   *      Button.text('Test 1', colors.default, {a: 'b'}),
+   *      Button.text('Test 2', colors.default, {a: 'b', c: 'd'})
    * ]], false);
    *
    * // When asked, send the keyboard

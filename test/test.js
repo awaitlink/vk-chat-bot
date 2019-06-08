@@ -150,8 +150,8 @@ test('Keyboard should make a valid keyboard JSON (empty keyboard)', (t) => {
 
 test('Keyboard should make a valid keyboard JSON (2 rows, 2 buttons, one time)', (t) => {
   const kbd = new Keyboard([
-    [new Button('1'), new Button('2', colors.primary, { pay: 'load' })],
-    [new Button('3', colors.negative), new Button('4', colors.positive)],
+    [Button.text('1'), Button.text('2', colors.primary, { pay: 'load' })],
+    [Button.text('3', colors.negative), Button.text('4', colors.positive)],
   ], true);
 
   t.is(
@@ -160,7 +160,7 @@ test('Keyboard should make a valid keyboard JSON (2 rows, 2 buttons, one time)',
       one_time: true,
       buttons: [
         [
-          { action: { type: 'text', label: '1' }, color: 'default' },
+          { action: { type: 'text', label: '1' }, color: 'secondary' },
           { action: { type: 'text', label: '2', payload: '{"pay":"load"}' }, color: 'primary' },
         ],
         [
