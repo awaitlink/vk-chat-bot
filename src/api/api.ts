@@ -26,7 +26,7 @@ export default class API {
   /**
    * Queue of scheduled API calls.
    */
-  private queue: any[];
+  private queue: any[] = [];
 
   /**
    * Is the queue being processed now?
