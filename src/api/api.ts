@@ -133,8 +133,6 @@ export default class API {
    * **It is highly recommended to use [API#scheduleCall](#scheduleCall)
    * instead to not exceed the API quota and to check whether the call was successful or not!**
    *
-   * @see API#scheduleCall
-   *
    * @param method VK API method name
    * @param params parameters for the method, `access_token` and `v` will be added automatically
    *
@@ -183,12 +181,10 @@ export default class API {
   }
 
   /**
-   * Sends a message to a user via User ID.
+   * Sends a message to a user via Peer ID.
    *
    * **Note that it is much easier to use the [Context]{@link Context} object passed to handlers
    * to compose and send messages, keyboards and attachments!**
-   *
-   * @see Context
    *
    * @param pid peer ID
    * @param message message text **(required, if attachment is empty)**
