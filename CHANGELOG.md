@@ -5,6 +5,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed.
 
+## [Unreleased] - ????-??-??
+### Changed
+- Changes related to keyboards (also see [keyboard docs](https://u32i64.github.io/vk-chat-bot/modules/_api_keyboard_.html)):
+    - `kbd.Button` **->** `kbd.button`.
+    - `kbd.colors.<somecolor>` **->** `kbd.Color.<Somecolor>`.
+- Many previously "private" and "readonly" things are now actually private and readonly respectively. See [docs](https://u32i64.github.io/vk-chat-bot) for more details.
+- JavaScript **->** TypeScript.
+- Documentation generator: `jsdoc` + `minami` theme **->** `typedoc`.
+- `log.types.<sometype>` **->** `log.MessageType.<Sometype>` (see [`log` docs](https://u32i64.github.io/vk-chat-bot/modules/_extra_log_.html)).
+### Fixed
+- In case neither `replyText` nor `attachment` was supplied, [this line](https://github.com/u32i64/vk-chat-bot/blob/7e4af0f794ec0f7f0172df41ad6d23315ddb80aa/src/api/context.js#L191) might have caused a very informative log message to appear, namely 
+    ```
+        ctx warn ctx
+    ```
+    because there were more arguments supplied than needed. Thanks TypeScript!
+### Removed
+- `rollup` devDependency (and its plugins).
+- `log.requireParam`.
+- `log.requireFunction`.
+
 ## [14.0.0] - 2019-06-08
 ### Changed
 - New `Button` types, see [`Button` docs](https://u32i64.github.io/vk-chat-bot/Button.html) and [VK API bot keyboard docs](https://vk.com/dev/bots_docs_3) for more information.
@@ -414,6 +434,7 @@ bot.init(params);
 ## [1.0.1] - 2017-12-02
 ### First version!
 
+[Unreleased]: https://github.com/u32i64/vk-chat-bot/compare/v14.0.0...master
 [14.0.0]: https://github.com/u32i64/vk-chat-bot/compare/v13.1.3...v14.0.0
 [13.1.3]: https://github.com/u32i64/vk-chat-bot/compare/v13.1.2...v13.1.3
 [13.1.2]: https://github.com/u32i64/vk-chat-bot/compare/v13.1.1...v13.1.2
