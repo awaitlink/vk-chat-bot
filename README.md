@@ -3,7 +3,7 @@
 [![downloads][badges/downloads]][npm]
 [![travis][badges/travis]][travis]
 
-> **A chat bot framework for VK communities (*groups*).**    
+> **A package for creation of chat bots for VK communities (*groups*).**    
 > **[documentation »][docs]** ⋅
 > **[changelog »][changelog]** ⋅
 > [features](#features) ⋅
@@ -13,7 +13,7 @@
 
 ## Features
 - **Easy to use** - setting up behavior is simple - see [2. Behavior setup](#2-behavior-setup) below
-- **Respects the quota** - the framework calls VK API not more then 20 times/second, so you don't exceed the quota
+- **Respects the quota** - the package calls VK API not more then 20 times/second, so you don't exceed the quota
 
 ## Usage
 ### Installation
@@ -27,7 +27,7 @@ Also, a **step-by-step [Heroku Deploy Guide][docs/Heroku-Deploy-Guide]** can gui
 
 ### Quick Start
 #### 1. Preparation
-First, `require()` the framework:
+First, `require()` the package:
 ```js
 const vk = require('vk-chat-bot');
 ```
@@ -52,7 +52,7 @@ var { bot, core } = vk.bot(params);
 See [`Core`][docs/Core] wiki to learn more about behavior functions.   
 Here are some examples:
 ```js
-// Use stuff from the framework...
+// Use stuff from the package...
 const { Color, button, Keyboard } = vk.kbd;
 
 // ...to create a keyboard like this.
