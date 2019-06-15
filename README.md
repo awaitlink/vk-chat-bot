@@ -3,7 +3,7 @@
 [![downloads][badges/downloads]][npm]
 [![travis][badges/travis]][travis]
 
-> **A package for creation of chat bots for VK communities (*groups*).**    
+> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.    
 > **[documentation »][docs]** ⋅
 > **[changelog »][changelog]** ⋅
 > [features](#features) ⋅
