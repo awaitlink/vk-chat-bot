@@ -37,7 +37,7 @@
   "types": "dist/main.d.ts",
   "scripts": {
     "lint": "tslint --fix src/**/*",
-    "prepare": "gulp"
+    "prepare": "gulp && touch ./docs/.nojekyll"
   },
   "dependencies": {
     "@types/body-parser": "^1.17.0",
