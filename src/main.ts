@@ -9,16 +9,18 @@ import * as kbd from './api/keyboard';
 import * as log from './extra/log';
 import Stats from './extra/stats';
 
-process.on('uncaughtException', err => {
-  const note = chalk.inverse(`• An error occured. The messages below may contain
+process.on('uncaughtException', (err): void => {
+    const note = chalk.inverse(`• An error occured. The messages below may contain
 • useful information about the problem.
 • If you think this is an issue with 'vk-chat-bot' itself,
 • please report it at <https://github.com/u32i64/vk-chat-bot/issues>.`);
 
-  console.log(`\n\n${note}\n\n`);
+    /* eslint-disable no-console */
+    console.log(`\n\n${note}\n\n`); 
+    console.log(err);
+    /* eslint-enable no-console */
 
-  console.log(err);
-  process.exit(1);
+    process.exit(1);
 });
 
 /**
@@ -40,55 +42,55 @@ process.on('uncaughtException', err => {
  * ```
  */
 function bot({
-  vkToken,
-  confirmationToken,
-  groupId,
-  secret,
-  port,
-  cmdPrefix = '',
+    vkToken,
+    confirmationToken,
+    groupId,
+    secret,
+    port,
+    cmdPrefix = '',
 }: {
-  vkToken: string;
-  confirmationToken: string;
-  groupId: string | number;
-  secret: string;
-  port: number;
-  cmdPrefix: string;
-}) {
-  const stats = new Stats();
-  const api = new API(vkToken.toString(), stats);
-  const core = new Core(api, stats, cmdPrefix.toString(), groupId.toString());
+    vkToken: string;
+    confirmationToken: string;
+    groupId: string | number;
+    secret: string;
+    port: number;
+    cmdPrefix: string;
+}): { bot: Bot; core: Core } {
+    const stats = new Stats();
+    const api = new API(vkToken.toString(), stats);
+    const core = new Core(api, stats, cmdPrefix.toString(), groupId.toString());
 
-  return {
-    bot: new Bot(
-      core,
-      groupId.toString(),
-      confirmationToken.toString(),
-      secret.toString(),
-      port,
-    ),
-    core,
-  };
+    return {
+        bot: new Bot(
+            core,
+            groupId.toString(),
+            confirmationToken.toString(),
+            secret.toString(),
+            port,
+        ),
+        core,
+    };
 }
 
 /**
  * The exported object. Use it to get what you need.
  */
 const vk = {
-  // Quick creation function
-  bot,
+    // Quick creation function
+    bot,
 
-  // src/
-  Bot,
-  Core,
+    // src/
+    Bot,
+    Core,
 
-  // src/api/
-  API,
-  Context,
-  kbd,
+    // src/api/
+    API,
+    Context,
+    kbd,
 
-  // src/extra/
-  log,
-  Stats,
+    // src/extra/
+    log,
+    Stats,
 };
 
 export default vk; // for .d.ts generation

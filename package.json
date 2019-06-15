@@ -36,7 +36,7 @@
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "lint": "tslint --fix src/**/*",
+    "lint": "eslint --fix src/**/*",
     "prepare": "gulp && touch ./docs/.nojekyll"
   },
   "dependencies": {
@@ -55,15 +55,19 @@
   },
   "devDependencies": {
     "@types/node": "^12.0.8",
+    "@typescript-eslint/eslint-plugin": "^1.10.2",
+    "@typescript-eslint/parser": "^1.10.2",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
+    "gulp-eslint": "^5.0.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-terser": "^1.2.0",
-    "gulp-tslint": "^8.1.4",
     "gulp-typedoc": "^2.2.2",
     "gulp-typescript": "^5.0.1",
     "pump": "^3.0.0",
-    "tslint": "^5.17.0",
     "typedoc": "^0.14.2",
     "typescript": "^3.5.2"
   },

@@ -3,7 +3,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const typedoc = require('gulp-typedoc');
 const gulpClean = require('gulp-clean');
 const terser = require('gulp-terser');
-const tslint = require('gulp-tslint');
+const eslint = require('gulp-eslint');
 const pump = require('pump');
 const ts = require('gulp-typescript');
 
@@ -13,6 +13,7 @@ const NAME = 'vk-chat-bot';
 const DEST_FOLDER = 'dist';
 const DOCS_FOLDER = './docs';
 const TSCONFIG = 'tsconfig.json';
+const ESLINTRC = '.eslintrc.json';
 
 function clean(cb) {
   pump(
@@ -25,10 +26,9 @@ function lint(cb) {
   pump(
     [
       gulp.src(SOURCE),
-      tslint({
-        formatter: 'verbose',
-      }),
-      tslint.report(),
+      eslint(ESLINTRC),
+      eslint.format(),
+      eslint.failAfterError(),
     ],
     cb
   );

@@ -1,16 +1,16 @@
 export class Keyboard {
-  /**
+    /**
    * Is this keyboard one-time?
    */
-  // tslint:disable-next-line: variable-name
-  public readonly one_time: boolean;
+    // tslint:disable-next-line: variable-name
+    public readonly one_time: boolean;
 
-  /**
+    /**
    * Items of this keyboard.
    */
-  public readonly buttons: any[];
+    public readonly buttons: Button[][];
 
-  /**
+    /**
    * See full keyboard example in [Context#keyboard]{@link Context#keyboard}
    *
    * @param buttons array of arrays (rows) of buttons
@@ -26,59 +26,71 @@ export class Keyboard {
    * ]);
    * ```
    */
-  constructor(buttons: any[][] = [], oneTime: boolean = false) {
-    this.one_time = oneTime;
-    this.buttons = buttons;
-  }
+    public constructor(buttons: Button[][] = [], oneTime: boolean = false) {
+        this.one_time = oneTime; // eslint-disable-line @typescript-eslint/camelcase
+        this.buttons = buttons;
+    }
 }
+
+/**
+ * Colors of buttons in a keyboard.
+ */
+export enum Color {
+    Primary = 'primary',
+    Secondary = 'secondary',
+    Negative = 'negative',
+    Positive = 'positive',
+}
+
+type Button = TextButton | LocationButton | VKPayButton | OpenAppButton;
 
 /**
  * Text-sending button.
  */
-interface ITextButton {
-  action: {
-    type: string;
-    label: string;
-    payload?: string;
-  };
-  color: Color;
+interface TextButton {
+    action: {
+        type: string;
+        label: string;
+        payload?: string;
+    };
+    color: Color;
 }
 
 /**
  * Location-sending button.
  */
-interface ILocationButton {
-  action: {
-    type: string;
-    payload?: string;
-  };
+interface LocationButton {
+    action: {
+        type: string;
+        payload?: string;
+    };
 }
 
 /**
  * VK Pay payment button.
  */
-interface IVKPayButton {
-  action: {
-    type: string;
-    hash: string;
-  };
+interface VKPayButton {
+    action: {
+        type: string;
+        hash: string;
+    };
 }
 
 /**
  * App-opening button.
  */
-interface IOpenAppButton {
-  action: {
-    type: string;
-    app_id: number;
-    label: string;
-    hash: string;
-    owner_id?: number;
-  };
+interface OpenAppButton {
+    action: {
+        type: string;
+        app_id: number;
+        label: string;
+        hash: string;
+        owner_id?: number;
+    };
 }
 
 export const button = {
-  /**
+    /**
    * Creates a text-sending button.
    *
    * @param label button label
@@ -97,27 +109,27 @@ export const button = {
    * button.text('Positive', colors.positive);
    * ```
    */
-  text(
-    label: string = 'Button',
-    color: Color = Color.Secondary,
-    payload: any = '',
-  ): ITextButton {
-    const btn: ITextButton = {
-      action: {
-        type: 'text',
-        label: label.toString(),
-      },
-      color,
-    };
+    text(
+        label: string = 'Button',
+        color: Color = Color.Secondary,
+        payload: any = '', // eslint-disable-line @typescript-eslint/no-explicit-any
+    ): TextButton {
+        const btn: TextButton = {
+            action: {
+                type: 'text',
+                label: label.toString(),
+            },
+            color,
+        };
 
-    if (payload) {
-      btn.action.payload = JSON.stringify(payload);
-    }
+        if (payload) {
+            btn.action.payload = JSON.stringify(payload);
+        }
 
-    return btn;
-  },
+        return btn;
+    },
 
-  /**
+    /**
    * Creates a location-sending button.
    *
    * @param payload button payload, see [VK bots docs](https://vk.com/dev/bots_docs_3)
@@ -128,21 +140,21 @@ export const button = {
    * button.location({a: 'b'})
    * ```
    */
-  location(payload: any = ''): ILocationButton {
-    const btn: ILocationButton = {
-      action: {
-        type: 'location',
-      },
-    };
+    location(payload: any = ''): LocationButton { // eslint-disable-line @typescript-eslint/no-explicit-any
+        const btn: LocationButton = {
+            action: {
+                type: 'location',
+            },
+        };
 
-    if (payload) {
-      btn.action.payload = JSON.stringify(payload);
-    }
+        if (payload) {
+            btn.action.payload = JSON.stringify(payload);
+        }
 
-    return btn;
-  },
+        return btn;
+    },
 
-  /**
+    /**
    * Creates a VK Pay payment button.
    *
    * @param hash VK Pay parameters and app id in parameter `aid`, delimited by `&`,
@@ -153,18 +165,18 @@ export const button = {
    * button.vkPay('action=transfer-to-group&group_id=1&aid=10')
    * ```
    */
-  vkPay(hash: string): IVKPayButton {
-    const btn = {
-      action: {
-        type: 'vkpay',
-        hash,
-      },
-    };
+    vkPay(hash: string): VKPayButton {
+        const btn = {
+            action: {
+                type: 'vkpay',
+                hash,
+            },
+        };
 
-    return btn;
-  },
+        return btn;
+    },
 
-  /**
+    /**
    * Creates an app-opening button.
    *
    * @param appId Application ID
@@ -177,35 +189,25 @@ export const button = {
    * button.openApp(1, 1, 'My App', 'test')
    * ```
    */
-  openApp(
-    appId: number,
-    ownerId: number = null,
-    label: string,
-    hash: string,
-  ): IOpenAppButton {
-    const btn: IOpenAppButton = {
-      action: {
-        type: 'open_app',
-        app_id: appId,
-        label,
-        hash,
-      },
-    };
+    openApp(
+        appId: number,
+        ownerId: number = null,
+        label: string,
+        hash: string,
+    ): OpenAppButton {
+        const btn: OpenAppButton = {
+            action: {
+                type: 'open_app',
+                app_id: appId, // eslint-disable-line @typescript-eslint/camelcase
+                label,
+                hash,
+            },
+        };
 
-    if (ownerId) {
-      btn.action.owner_id = ownerId;
-    }
+        if (ownerId) {
+            btn.action.owner_id = ownerId; // eslint-disable-line @typescript-eslint/camelcase
+        }
 
-    return btn;
-  },
+        return btn;
+    },
 };
-
-/**
- * Colors of buttons in a keyboard.
- */
-export enum Color {
-  Primary = 'primary',
-  Secondary = 'secondary',
-  Negative = 'negative',
-  Positive = 'positive',
-}

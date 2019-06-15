@@ -6,12 +6,12 @@ import { Keyboard } from './keyboard';
  * Context, which is passed to every handler.
  */
 export default class Context {
-  /**
+    /**
    * API.
    */
-  public readonly api: API;
+    public readonly api: API;
 
-  /**
+    /**
    * Full object passed by Callback API.
    *
    * **Note:** If `message_new`, `message_reply`, `message_edit` or `no_match` event,
@@ -19,95 +19,95 @@ export default class Context {
    * Else, see [Callback API docs](https://vk.com/dev/callback_api) or
    * [Groups Events docs](https://vk.com/dev/groups_events) for more information.
    */
-  public readonly obj: any;
+    public readonly obj: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-  /**
+    /**
    * Incoming user message.
    *
    * **Note:** If `cmd()` handler, contains message without `cmd_prefix` and the command
    */
-  public msg: string; // TODO: Should be readonly
+    public msg: string; // TODO: Should be readonly
 
-  /**
+    /**
    * Name of the event.
    */
-  public readonly eventType: string;
+    public readonly eventType: string;
 
-  /**
+    /**
    * Does this `Context`'s response need auto-sending?
    */
-  private autoSend: boolean = true;
+    private autoSend: boolean = true;
 
-  /**
+    /**
    * The ID of a peer, to which the reply is going to be sent
    *
    * **Note:** You can change this using [`setPid()`](#setpid) method,
    * the original Peer ID is available in one of `$.obj.{peer_id, from_id, user_id}`.
    */
-  private pid: any;
+    private pid: string;
 
-  /**
+    /**
    * Text, which will be used in the reply
    */
-  private replyText: any;
+    private replyText: string;
 
-  /**
-   * Attachment, which will be used in the reply
+    /**
+   * Attachments, which will be used in the reply
    */
-  private attachment: any;
+    private attachment: string[];
 
-  /**
+    /**
    * Object of the [Keyboard]{@link Keyboard}, which will be used in the reply
    */
-  private kbdObject: string;
+    private kbdObject: string;
 
-  /**
+    /**
    * @param api the API object
    * @param eventType the event type
    * @param object full object from Callback API
    * @param message the message
    */
-  constructor(api: API, eventType: string, object: object, message: string) {
-    this.api = api;
-    this.obj = object;
-    this.msg = message;
-    this.eventType = eventType;
-    this.clear();
-  }
+    public constructor(api: API, eventType: string, object: object, message: string) {
+        this.api = api;
+        this.obj = object;
+        this.msg = message;
+        this.eventType = eventType;
+        this.clear();
+    }
 
-  /**
+    /**
    * Prevents this handler from sending the message automatically after it finishes.
    */
-  public noAutoSend() {
-    this.autoSend = false;
-  }
+    public noAutoSend(): void {
+        this.autoSend = false;
+    }
 
-  /**
+    /**
    * Does this `Context`'s response need auto-sending?
    */
-  public needsAutoSend() {
-    return this.autoSend;
-  }
+    public needsAutoSend(): boolean {
+        return this.autoSend;
+    }
 
-  /**
+    /**
    * Sets a new peer ID.
    *
    * @param pid new peer ID
    */
-  public setPid(pid: string | number) {
-    this.pid = pid;
-  }
+    public setPid(pid: string | number): void {
+        this.pid = pid.toString();
+    }
 
-  /**
+    /**
    * Sets the reply message text.
    *
    * @param txt new text
    */
-  public text(txt: string) {
-    this.replyText = txt;
-  }
+    public text(txt: string): void {
+        this.replyText = txt;
+    }
 
-  /**
+    /**
    * Adds an attachment to the message.
    *
    * **Note:** More information on the parameters can be found in
@@ -119,20 +119,20 @@ export default class Context {
    * @param accessKey resource access key, if needed;
    * see [Access Key](https://vk.com/dev/access_key) page in API docs for more information
    */
-  public attach(
-    type: string,
-    ownerId: string | number,
-    resId: string | number,
-    accessKey?: string,
-  ) {
-    if (accessKey) {
-      this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`);
-    } else {
-      this.attachment.push(`${type}${ownerId}_${resId}`);
+    public attach(
+        type: string,
+        ownerId: string | number,
+        resId: string | number,
+        accessKey?: string,
+    ): void {
+        if (accessKey) {
+            this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`);
+        } else {
+            this.attachment.push(`${type}${ownerId}_${resId}`);
+        }
     }
-  }
 
-  /**
+    /**
    * Attaches a keyboard.
    *
    * @param kbd the keyboard
@@ -161,69 +161,69 @@ export default class Context {
    * }, 'demo keyboard');
    * ```
    */
-  public keyboard(kbd: Keyboard) {
-    this.kbdObject = JSON.stringify(kbd);
-  }
+    public keyboard(kbd: Keyboard): void {
+        this.kbdObject = JSON.stringify(kbd);
+    }
 
-  /**
+    /**
    * Attaches an empty keyboard.
    */
-  public removeKeyboard() {
-    this.keyboard(new Keyboard());
-  }
+    public removeKeyboard(): void {
+        this.keyboard(new Keyboard());
+    }
 
-  /**
+    /**
    * Sends the composed message to user.
    * **Note:** After the handler finishes its work, this method is called automatically
    * (if [noAutoSend](#noautosend) was not called)
    */
-  public async send() {
-    if (this.eventType === 'message_deny') {
-      log()
-        .w(`No message was sent to peer ${this.pid} ("message_deny" event)`)
-        .from('ctx')
-        .now();
-      return;
+    public async send(): Promise<void> {
+        if (this.eventType === 'message_deny') {
+            log()
+                .w(`No message was sent to peer ${this.pid} ("message_deny" event)`)
+                .from('ctx')
+                .now();
+            return;
+        }
+
+        if (this.replyText === '' && this.attachment === []) {
+            log()
+                .w(
+                    `No message was sent to peer ${
+                        this.pid
+                    } (text or attachment is required)`,
+                )
+                .from('ctx')
+                .now();
+            return;
+        }
+
+        const attachmentList = this.attachment.join(',');
+
+        /* eslint-disable-next-line consistent-return */
+        return this.api.send(
+            this.pid,
+            this.replyText,
+            attachmentList,
+            this.kbdObject,
+        );
     }
 
-    if (this.replyText === '' && this.attachment === []) {
-      log()
-        .w(
-          `No message was sent to peer ${
-            this.pid
-          } (text or attachment is required)`,
-        )
-        .from('ctx')
-        .now();
-      return;
-    }
-
-    const attachmentList = this.attachment.join(',');
-
-    /* eslint-disable-next-line consistent-return */
-    return this.api.send(
-      this.pid,
-      this.replyText,
-      attachmentList,
-      this.kbdObject,
-    );
-  }
-
-  /**
+    /**
    * Clears the buffer and resets the User ID back to original.
    * For example, after calling this you can compose another message to the same user.
    */
-  public clear() {
-    this.replyText = '';
-    this.attachment = [];
-    this.kbdObject = '';
+    public clear(): void {
+        this.replyText = '';
+        this.attachment = [];
+        this.kbdObject = '';
 
-    if (this.eventType === 'message_allow') {
-      this.pid = this.obj.user_id;
-    } else if (this.eventType === 'message_typing_state') {
-      this.pid = this.obj.from_id;
-    } else {
-      this.pid = this.obj.peer_id;
+        if (this.eventType === 'message_allow') {
+            this.pid = this.obj.user_id;
+        } else if (this.eventType === 'message_typing_state') {
+            this.pid = this.obj.from_id;
+        } else {
+            this.pid = this.obj.peer_id;
+        }
     }
-  }
 }
