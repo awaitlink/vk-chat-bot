@@ -16,17 +16,17 @@
 - **Respects the quota** - the framework calls VK API not more then 20 times/second, so you don't exceed the quota
 
 ## Usage
-#### Installation
+### Installation
 ```console
 $ npm i vk-chat-bot
 ```
 
-#### Example
+### Example
 You can find an example bot in the [`u32i64/vk-chat-bot-example`][example] repository.    
 Also, a **step-by-step [Heroku Deploy Guide][docs/Heroku-Deploy-Guide]** can guide you through the process of deploying [`u32i64/vk-chat-bot-example`][example] to Heroku.
 
-#### Quick Start
-###### 1. Preparation
+### Quick Start
+#### 1. Preparation
 First, `require()` the framework:
 ```js
 const vk = require('vk-chat-bot');
@@ -47,7 +47,7 @@ const params = {
 var { bot, core } = vk.bot(params);
 ```
 
-###### 2. Behavior setup
+#### 2. Behavior setup
 
 See [`Core`][docs/Core] wiki to learn more about behavior functions.   
 Here are some examples:
@@ -101,7 +101,7 @@ core.regex(/h(i|ello|ey)/i, $ => {
 });
 ```
 
-###### 3. Start it!
+#### 3. Start it!
 Start the bot:
 
 ```js
