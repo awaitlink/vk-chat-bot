@@ -6,6 +6,5 @@ openssl aes-256-cbc -K $encrypted_7b49c23863d8_key -iv $encrypted_7b49c23863d8_i
 chmod 600 ~/key
 ssh-add ~/key
 
-yarn config set prefix .
-yarn global add gh-pages
+npm i -g -C . gh-pages
 bin/gh-pages -d ../docs/ -b gh-pages -r git@github.com:${TRAVIS_REPO_SLUG}.git
