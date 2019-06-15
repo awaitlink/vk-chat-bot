@@ -91,4 +91,5 @@ const vk = {
   Stats,
 };
 
-module.exports = vk;
+export default vk; // for .d.ts generation
+module.exports = vk; // for package to work correctly
