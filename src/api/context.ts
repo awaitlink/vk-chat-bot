@@ -23,7 +23,7 @@ export default class Context {
 
   /**
    * Incoming user message.
-   * 
+   *
    * **Note:** If `cmd()` handler, contains message without `cmd_prefix` and the command
    */
   public msg: string; // TODO: Should be readonly
@@ -109,7 +109,7 @@ export default class Context {
 
   /**
    * Adds an attachment to the message.
-   * 
+   *
    * **Note:** More information on the parameters can be found in
    * [VK API docs](https://vk.com/dev/messages.send).
    *
@@ -123,7 +123,7 @@ export default class Context {
     type: string,
     ownerId: string | number,
     resId: string | number,
-    accessKey?: string
+    accessKey?: string,
   ) {
     if (accessKey) {
       this.attachment.push(`${type}${ownerId}_${resId}_${accessKey}`);
@@ -191,7 +191,7 @@ export default class Context {
         .w(
           `No message was sent to peer ${
             this.pid
-          } (text or attachment is required)`
+          } (text or attachment is required)`,
         )
         .from('ctx')
         .now();
@@ -205,7 +205,7 @@ export default class Context {
       this.pid,
       this.replyText,
       attachmentList,
-      this.kbdObject
+      this.kbdObject,
     );
   }
 
