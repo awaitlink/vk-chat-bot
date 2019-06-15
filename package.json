@@ -33,7 +33,7 @@
     "CHANGELOG.md",
     "README.md"
   ],
-  "main": "dist/vk-chat-bot.min.js",
+  "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
     "lint": "tslint --fix src/**/*",
@@ -56,9 +56,7 @@
   "devDependencies": {
     "@types/node": "^12.0.8",
     "gulp": "^4.0.2",
-    "gulp-better-rollup": "^4.0.1",
     "gulp-clean": "^0.4.0",
-    "gulp-concat": "^2.6.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-terser": "^1.2.0",
     "gulp-tslint": "^8.1.4",

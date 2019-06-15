@@ -91,4 +91,4 @@ const vk = {
   Stats,
 };
 
-export default vk;
+module.exports = vk;

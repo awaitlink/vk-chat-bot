@@ -1,17 +1,15 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "lib": [
-            "esnext"
-        ],
-        "noImplicitAny": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "esModuleInterop": true,
-        "declaration": true,
-    }
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es5"],
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "declaration": true
+  }
 }
