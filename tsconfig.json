@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "lib": [
+            "esnext"
+        ],
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "esModuleInterop": true,
+    }
+}

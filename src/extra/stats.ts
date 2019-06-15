@@ -1,25 +1,44 @@
-/**
- * @file A part of `vk-chat-bot` node.js framework.
- * Defines the {@link Stats} class.
- *
- * @author Artem Varaksa <aymfst@gmail.com>
- * @copyright Artem Varaksa 2017-2019
- */
-
+import chalk from 'chalk';
+import moment from 'moment';
 import { log } from './log';
-
-const chalk = require('chalk');
-
-const moment = require('moment');
+// tslint:disable-next-line: no-var-requires
 require('moment-duration-format')(moment);
 
 export default class Stats {
   /**
-   * @class Stats
-   *
-   * @return {Stats}
-   *
-   * @classdesc
+   * Count of requests from the Callback API.
+   */
+  public rx: number = 0;
+
+  /**
+   * Count of messages sent.
+   */
+  public tx: number = 0;
+
+  /**
+   * Count of various events.
+   */
+  public eventCounters: { [key: string]: number } = {
+    message_new: 0,
+    message_reply: 0,
+    message_edit: 0,
+    message_typing_state: 0,
+    message_allow: 0,
+    message_deny: 0,
+
+    start: 0,
+    service_action: 0,
+
+    no_match: 0,
+    handler_error: 0,
+  };
+
+  /**
+   * Previous stats log message, without time
+   */
+  public previous: string = '';
+
+  /**
    * Stats stores and prints statistics.
    *
    * The bot logs statistics each **~10s** (if they changed):
@@ -57,105 +76,52 @@ export default class Stats {
    *
    */
   constructor() {
-    /**
-     * Count of requests from the Callback API
-     *
-     * @type {number}
-     * @memberof Stats
-     */
-    this.rx = 0;
+    log()
+      .i('Stats initialized')
+      .from('stat')
+      .now();
 
-    /**
-     * Count of messages sent
-     *
-     * @type {number}
-     * @memberof Stats
-     */
-    this.tx = 0;
-
-    /**
-     * Count of various events
-     *
-     * @type {Object}
-     * @memberof Stats
-     */
-    this.eventCounters = {
-      message_new: 0,
-      message_reply: 0,
-      message_edit: 0,
-      message_typing_state: 0,
-      message_allow: 0,
-      message_deny: 0,
-
-      start: 0,
-      service_action: 0,
-
-      no_match: 0,
-      handler_error: 0,
-    };
-
-    /**
-     * Previous stats log message, without time
-     *
-     * @type {string}
-     * @memberof Stats
-     */
-    this.previous = '';
-
-    if (!process.env.TEST_MODE) {
-      log().i('Stats initialized').from('stat').now();
-
-      setInterval(() => {
-        this.print();
-      }, 10000);
-    }
+    setInterval(() => {
+      this.print();
+    }, 10000);
   }
 
   /**
-   * This is used to tell `Stats` that a message was sent
-   * @instance
-   * @memberof Stats
+   * This is used to tell `Stats` that a message was sent.
    */
-  sent() {
+  public sent() {
     this.tx += 1;
   }
 
   /**
-   * This is used to tell `Stats` that an event was emitted
-   * @instance
-   * @memberof Stats
-   *
-   * @param {string} name - the event name
+   * This is used to tell `Stats` that an event was emitted.
    */
-  event(name) {
+  public event(eventName: string) {
     this.rx += 1;
-    this.eventCounters[name] += 1;
+    this.eventCounters[eventName] += 1;
 
-    const internalEvents = ['start', 'service_action', 'no_match', 'handler_error'];
-    if (internalEvents.includes(name)) {
+    const internalEvents = [
+      'start',
+      'service_action',
+      'no_match',
+      'handler_error',
+    ];
+    if (internalEvents.includes(eventName)) {
       this.rx -= 1; // Not from Callback API
     }
   }
 
   /**
-   * How much events of this type were emitted?
-   * @instance
-   * @memberof Stats
-   *
-   * @param {string} name - the name of the event you're curious about
-   *
-   * @return {string} the count
+   * Returns how much events of this type were emitted.
    */
-  getEventCount(name) {
-    return this.eventCounters[name].toString();
+  private getEventCount(eventName: string): string {
+    return this.eventCounters[eventName].toString();
   }
 
   /**
-   * Prints the statistics if they changed
-   * @instance
-   * @memberof Stats
+   * Prints the statistics if they changed.
    */
-  print() {
+  private print() {
     const rx = chalk.underline.green(this.rx.toString());
     const tx = chalk.underline.cyan(this.tx.toString());
 
@@ -172,7 +138,10 @@ export default class Stats {
     const nm = chalk.bold.magenta(this.getEventCount('no_match'));
     const he = chalk.bold.magenta(this.getEventCount('handler_error'));
 
-    const up = moment.duration(process.uptime(), 'seconds').format('y[y] d[d] h[h] m[m] s[s]');
+    const up = moment
+      .duration(process.uptime(), 'seconds')
+      .format('y[y] d[d] h[h] m[m] s[s]');
+    // tslint:disable-next-line: max-line-length
     let message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st} action:${sa}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`;
 
     if (message === this.previous) {
@@ -180,9 +149,11 @@ export default class Stats {
     }
     this.previous = message;
 
-
     message = `[${up}] ${message}`;
 
-    log().i(message).from('stat').now();
+    log()
+      .i(message)
+      .from('stat')
+      .now();
   }
 }

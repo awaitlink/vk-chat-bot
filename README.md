@@ -1,7 +1,6 @@
 # ❮vk-chat-bot❯
 [![version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
-[![style][badges/airbnb]][airbnb]
 [![travis][badges/travis]][travis]
 
 > **A chat bot framework for VK communities (*groups*).**    
@@ -54,7 +53,7 @@ See [`Core`][docs/Core] wiki to learn more about behavior functions.
 Here are some examples:
 ```js
 // Use stuff from the framework...
-const { colors, Button, Keyboard } = vk.kbd;
+const { Color, button, Keyboard } = vk.kbd;
 
 // ...to create a keyboard like this.
 // +-----------+---------+----------+----------+
@@ -64,13 +63,13 @@ const { colors, Button, Keyboard } = vk.kbd;
 // +-------------------------------------------+
 var kbd = new Keyboard([
   [ /* Row (array of buttons) */
-    Button.text('Secondary'),
-    Button.text('Primary', colors.primary),
-    Button.text('Negative', colors.negative),
-    Button.text('Positive', colors.positive)
+    button.text('Secondary'),
+    button.text('Primary', Color.Primary),
+    button.text('Negative', Color.Negative),
+    button.text('Positive', Color.Positive)
   ],
   [
-    Button.text('Maximum rows is 10, columns - 4.')
+    button.text('Maximum rows is 10, columns - 4.')
   ],
 ]);
 
@@ -120,7 +119,6 @@ This project is licensed under the terms of the **[MIT][license]** license.
 
 <!-- LINKS -->
 
-[badges/airbnb]:  https://img.shields.io/badge/code_style-airbnb-fa5a5f.svg?style=for-the-badge
 [badges/travis]:    https://img.shields.io/travis/u32i64/vk-chat-bot/master.svg?style=for-the-badge&logo=travis
 [badges/npm]:       https://img.shields.io/npm/v/vk-chat-bot.svg?style=for-the-badge&logo=npm
 [badges/downloads]: https://img.shields.io/npm/dt/vk-chat-bot.svg?style=for-the-badge
@@ -132,13 +130,11 @@ This project is licensed under the terms of the **[MIT][license]** license.
 [license]:   https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE
 
 [docs]:                     https://u32i64.github.io/vk-chat-bot/
-[docs/Core]:                https://u32i64.github.io/vk-chat-bot/Core.html
-[docs/Stats]:               https://u32i64.github.io/vk-chat-bot/Stats.html
-[docs/Heroku-Deploy-Guide]: https://u32i64.github.io/vk-chat-bot/tutorial-heroku-deploy-guide.html
-[docs/bot]:                 https://u32i64.github.io/vk-chat-bot/global.html#bot
+[docs/Core]:                https://u32i64.github.io/vk-chat-bot/classes/_core_.core.html
+[docs/Stats]:               https://u32i64.github.io/vk-chat-bot/classes/_extra_stats_.stats.html#constructor
+[docs/Heroku-Deploy-Guide]: https://github.com/u32i64/vk-chat-bot/blob/master/tutorials/heroku-deploy-guide.md
+[docs/bot]:                 https://u32i64.github.io/vk-chat-bot/modules/_main_.html#bot
 
 [example]: https://github.com/u32i64/vk-chat-bot-example
 [issues]:  https://github.com/u32i64/vk-chat-bot/issues
 [pulls]:   https://github.com/u32i64/vk-chat-bot/pulls
-
-[airbnb]: https://github.com/airbnb/javascript
