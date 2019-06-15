@@ -2,12 +2,11 @@ const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const typedoc = require('gulp-typedoc');
 const gulpClean = require('gulp-clean');
-const rollup = require('gulp-better-rollup');
-const { terser } = require('rollup-plugin-terser');
+const terser = require('gulp-terser');
 const concat = require('gulp-concat');
 const tslint = require('gulp-tslint');
 const pump = require('pump');
-const typescript = require('rollup-plugin-typescript2');
+const ts = require('gulp-typescript');
 
 const TO_CLEAN = ['dist', 'docs', '*.tgz'];
 const SOURCE = 'src/**/*.ts';
@@ -16,51 +15,55 @@ const DEST = 'vk-chat-bot.min.js';
 const DEST_FOLDER = 'dist';
 
 function clean(cb) {
-  pump([
-    gulp.src(TO_CLEAN, { read: false, allowEmpty: true }),
-    gulpClean(),
-  ], cb);
+  pump(
+    [gulp.src(TO_CLEAN, { read: false, allowEmpty: true }), gulpClean()],
+    cb
+  );
 }
 
 function lint(cb) {
-  pump([
-    gulp.src(SOURCE),
-    tslint({
-      formatter: 'verbose',
-    }),
-    tslint.report(),
-  ], cb);
+  pump(
+    [
+      gulp.src(SOURCE),
+      tslint({
+        formatter: 'verbose',
+      }),
+      tslint.report(),
+    ],
+    cb
+  );
 }
 
 function build(cb) {
-  pump([
-    gulp.src(MAIN),
-    sourcemaps.init(),
-    rollup({
-      plugins: [
-        typescript({ tsconfig: "tsconfig.json" }),
-        terser(),
-      ],
-    }, {
-        format: 'cjs',
-      }),
-    concat(DEST),
-    sourcemaps.write(),
-    gulp.dest(DEST_FOLDER),
-  ], cb);
+  const tsProject = ts.createProject('tsconfig.json');
+  let streams = pump([gulp.src(SOURCE), sourcemaps.init(), tsProject()]);
+  pump([streams.dts, gulp.dest(DEST_FOLDER)]);
+  pump(
+    [
+      streams.js,
+      terser(),
+      concat(DEST),
+      sourcemaps.write(),
+      gulp.dest(DEST_FOLDER),
+    ],
+    cb
+  );
 }
 
 function docs(cb) {
-  pump([
-    gulp.src(SOURCE, { read: false }),
-    typedoc({
-      tsconfig: 'tsconfig,json',
-      out: './docs',
-      name: 'vk-chat-bot',
-      ignoreCompilerErrors: false,
-      version: true,
-    }),
-  ], cb);
+  pump(
+    [
+      gulp.src(SOURCE, { read: false }),
+      typedoc({
+        tsconfig: 'tsconfig,json',
+        out: './docs',
+        name: 'vk-chat-bot',
+        ignoreCompilerErrors: false,
+        version: true,
+      }),
+    ],
+    cb
+  );
 }
 
 exports.clean = clean;
@@ -72,5 +75,5 @@ exports.default = gulp.series(
   exports.clean,
   exports.build,
   exports.docs,
-  exports.lint,
+  exports.lint
 );

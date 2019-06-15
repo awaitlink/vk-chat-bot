@@ -12,5 +12,6 @@
         "removeComments": true,
         "preserveConstEnums": true,
         "esModuleInterop": true,
+        "declaration": true,
     }
 }
