@@ -90,7 +90,7 @@ export const button = {
    * ```
    * button.text('Secondary');
    * button.text('Secondary', colors.secondary);
-   * button.text('Secondary', colors.secondary, {a: "b"});
+   * button.text('Secondary', colors.secondary, {a: 'b'});
    *
    * button.text('Primary', colors.primary);
    * button.text('Negative', colors.negative);
@@ -125,7 +125,7 @@ export const button = {
    *
    * @example
    * ```
-   * button.location({a: "b"})
+   * button.location({a: 'b'})
    * ```
    */
   location(payload: any = ''): ILocationButton {

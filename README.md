@@ -41,7 +41,7 @@ const params = {
   secret: 's3r10us1y_s3cr3t_phr4s3',
   port: 12345,
 
-  cmdPrefix: "/"
+  cmdPrefix: '/'
 };
 
 var { bot, core } = vk.bot(params);
@@ -77,14 +77,14 @@ var kbd = new Keyboard([
 // (you have to enable the button in community settings)
 core.on('start', $ => {
   // ...send them our keyboard.
-  $.text("Thanks for messaging us! Choose from the options below:");
+  $.text('Thanks for messaging us! Choose from the options below:');
   $.keyboard(kbd);
 
   // Here, $.send() is added automatically.
 });
 ```
 ```js
-// Searches for cmd_prefix + 'help', e.g. "/help"
+// Searches for cmd_prefix + 'help', e.g. '/help'
 core.cmd('help', $ => {
   // core.help() returns the help message
   $.text('Test Bot v1.0' + core.help());
@@ -95,7 +95,7 @@ core.cmd('help', $ => {
 }, 'shows the help message');
 ```
 ```js
-// Use case-insensitive regular expression to find words "hi", "hello" or "hey"
+// Use case-insensitive regular expression to find words 'hi', 'hello' or 'hey'
 core.regex(/h(i|ello|ey)/i, $ => {
   $.text('Hello, I am a test bot. You said: ' + $.msg);
 });

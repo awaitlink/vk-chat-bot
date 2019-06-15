@@ -216,7 +216,7 @@ export default class Core {
     } else if (event === 'message_new') {
       log()
         .e(
-          "Cannot register a handler: handler for the 'message_new' event is defined internally",
+          'Cannot register a handler: handler for the `message_new` event is defined internally',
         )
         .from('core')
         .now();
