@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     ```
     because there were more arguments supplied than needed. Thanks TypeScript!
 ### Removed
+- Custom messages when required arguments to `bot` and some other functions are not provided aka rudimentary input validation.
 - `rollup` devDependency (and its plugins).
 - `log.requireParam`.
 - `log.requireFunction`.
