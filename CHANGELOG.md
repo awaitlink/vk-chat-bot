@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed.
 
 ## [Unreleased] - ????-??-??
+### Added
+- Now packaging with `.d.ts` TypeScript declaration files.
 ### Changed
 - Changes related to keyboards (also see [keyboard docs](https://u32i64.github.io/vk-chat-bot/modules/_api_keyboard_.html)):
     - `kbd.Button` -> `kbd.button`.
@@ -13,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Many previously "private" and "readonly" things are now actually private and readonly respectively. See [docs](https://u32i64.github.io/vk-chat-bot) for more details.
 - JavaScript -> TypeScript.
 - Documentation generator: `jsdoc` + `minami` theme -> `typedoc`.
+- Package contains minified files for each module instead of one minified file.
 - `log.types.<sometype>` -> `log.MessageType.<Sometype>` (see [`log` docs](https://u32i64.github.io/vk-chat-bot/modules/_extra_log_.html)).
 ### Fixed
 - In case neither `replyText` nor `attachment` was supplied, [this line](https://github.com/u32i64/vk-chat-bot/blob/7e4af0f794ec0f7f0172df41ad6d23315ddb80aa/src/api/context.js#L191) might have caused a very informative log message to appear, namely 
