@@ -10,8 +10,8 @@ export type Handler = ($: Context) => void | Promise<void>;
 export type Payload = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 /**
- * @param payloadJson the stringified JSON of the payload (as given by Callback API)
- * @param payload the JS object that was made by parsing the `payloadJson`, if the
+ * @param payloadJson `payloadJson` the stringified JSON of the payload (as given by Callback API)
+ * @param payload `payload` the JS object that was made by parsing the `payloadJson`, if the
  * parsing was successful
  */
 export type Tester = (payloadJson: string, payload?: Payload) => boolean;
