@@ -277,11 +277,13 @@ export default class Core {
      * // Create a keyboard
      * const { colors, Keyboard, Button } = vk.kbd;
      *
-     * var kbd = new Keyboard([[
-     *      // Clicking on this button will send the payload {a: 'b'}
-     *      button.text('Test 1', colors.default, {a: 'b'}),
-     *      button.text('Test 2', colors.default, {a: 'b', c: 'd'})
-     * ]], false);
+     * var kbd = new Keyboard([
+     *     [
+     *         // Clicking on this button will send the payload {a: 'b'}
+     *         button.text('Test 1', colors.default, {a: 'b'}),
+     *         button.text('Test 2', colors.default, {a: 'b', c: 'd'})
+     *     ]
+     * ], false);
      *
      * // When asked, send the keyboard
      * core.regex(/keyboard/i, $ => {
