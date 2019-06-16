@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import express, { Request, Response } from 'express';
 
 /**
- * The `Bot` class responds to incoming events from Callback API,
+ * The [[Bot]] class responds to incoming events from Callback API,
  * and figures out what needs to be done.
  */
 export default class Bot {
@@ -32,7 +32,7 @@ export default class Bot {
 
     /**
      * Creates a new [[Bot]].
-     * @param core - a `Core` object
+     * @param core - a [[Core]] object
      * @param groupId - group ID from Callback API settings
      * @param confirmationToken - confirmation token from Callback API settings
      * @param secret - secret key (can be set in Callback API settings)

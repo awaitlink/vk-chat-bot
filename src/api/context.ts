@@ -24,7 +24,7 @@ export default class Context {
     /**
      * Incoming user message.
      *
-     * **Note:** If `cmd()` handler, contains message without `cmd_prefix` and the command
+     * **Note:** If [[Core.cmd]] handler, contains message without `cmd_prefix` and the command
      */
     public msg: string; // TODO: Should be readonly
 
@@ -34,7 +34,7 @@ export default class Context {
     public readonly eventType: string;
 
     /**
-     * Does this `Context`'s response need auto-sending?
+     * Does this [[Context]]'s response need auto-sending?
      */
     private autoSend: boolean = true;
 
@@ -83,7 +83,7 @@ export default class Context {
     }
 
     /**
-     * Does this `Context`'s response need auto-sending?
+     * Does this [[Context]]'s response need auto-sending?
      */
     public needsAutoSend(): boolean {
         return this.autoSend;

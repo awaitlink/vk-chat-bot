@@ -18,13 +18,13 @@ export type Tester = (payloadJson: string, payload?: Payload) => boolean;
 
 interface DynPayloadHandler {
     tester: Tester;
-    callback: Handler;
+    handler: Handler;
 }
 
 interface CommandHandler {
     command: string;
     description: string;
-    callback: Handler;
+    handler: Handler;
 }
 
 /**
@@ -106,7 +106,7 @@ export default class Core {
     /**
      * Regular expression handlers.
      */
-    private regexHandlers: { regex: RegExp; callback: Handler }[] = [];
+    private regexHandlers: { regex: RegExp; handler: Handler }[] = [];
 
     /**
      * Are event warnings enabled?
@@ -220,8 +220,8 @@ export default class Core {
      *     photo_200 (string): URL of image 200 x 200 px
      * ```
      *
-     * @param {string} - event name
-     * @param {handler} - function which will handle the message
+     * @param - event name
+     * @param - function which will handle the message
      *
      * @example
      * ```
@@ -230,7 +230,7 @@ export default class Core {
      * });
      * ```
      */
-    public on(event: string, callback: Handler): void {
+    public on(event: string, handler: Handler): void {
         if (this.isLocked()) {
             return;
         }
@@ -243,7 +243,7 @@ export default class Core {
         }
 
         if (!this.eventHandlers[event]) {
-            this.eventHandlers[event] = callback;
+            this.eventHandlers[event] = handler;
         } else if (event === 'message_new') {
             log()
                 .e(
@@ -268,7 +268,7 @@ export default class Core {
      * @param payload - exact payload to handle,
      * or a function (type [[Tester]]) which
      * will determine whether to handle the payload or not.
-     * @param callback - function which will handle the message
+     * @param handler - function which will handle the message
      *
      * @example
      * ```
@@ -308,7 +308,7 @@ export default class Core {
      * });
      * ```
      */
-    public payload(payload: Payload, callback: Handler): void {
+    public payload(payload: Payload, handler: Handler): void {
         if (this.isLocked()) {
             return;
         }
@@ -317,7 +317,7 @@ export default class Core {
             // Exact payload match:
 
             if (!this.exactPayloadHandlers[JSON.stringify(payload)]) {
-                this.exactPayloadHandlers[JSON.stringify(payload)] = callback;
+                this.exactPayloadHandlers[JSON.stringify(payload)] = handler;
             } else {
                 log()
                     .e(
@@ -331,7 +331,7 @@ export default class Core {
 
             this.dynPayloadHandlers.push({
                 tester: payload,
-                callback,
+                handler: handler,
             });
         }
     }
@@ -343,7 +343,7 @@ export default class Core {
      * (defined in the parameters) **+** `command`
      *
      * @param command - command
-     * @param callback - function which will handle the message
+     * @param handler - function which will handle the message
      * @param description - the description of what this command does,
      * to be used in help messages.
      *
@@ -357,7 +357,7 @@ export default class Core {
      */
     public cmd(
         command: string,
-        callback: Handler,
+        handler: Handler,
         description: string = '',
     ): void {
         if (this.isLocked()) {
@@ -367,14 +367,14 @@ export default class Core {
         this.commandHandlers.push({
             command,
             description,
-            callback,
+            handler: handler,
         });
     }
 
     /**
      * Registers a regex handler.
      *
-     * @param callback - function which will handle the message
+     * @param handler - function which will handle the message
      *
      * @example
      * ```
@@ -383,22 +383,22 @@ export default class Core {
      * });
      * ```
      */
-    public regex(regex: RegExp, callback: Handler): void {
+    public regex(regex: RegExp, handler: Handler): void {
         if (this.isLocked()) {
             return;
         }
 
         this.regexHandlers.push({
             regex,
-            callback,
+            handler: handler,
         });
     }
 
     /**
-     * Parses the request, creates a `Context`, and proceeds
-     * to call `Core#event` to handle the event
+     * Parses the request, creates a [[Context]], and proceeds
+     * to call [[Core.event]] to handle the event
      *
-     * @param {Object} body - body of the request, in parsed JSON
+     * @param body - body of the request, in parsed JSON
      *
      */
     public async parseRequest(body: any /* TODO: body type? */): Promise<void> { // eslint-disable-line @typescript-eslint/no-explicit-any 
@@ -543,7 +543,7 @@ export default class Core {
                 .filter(e => e); // eslint-disable-line @typescript-eslint/explicit-function-return-type
 
             if (handlers) {
-                await handlers[0].callback($);
+                await handlers[0].handler($);
                 return true;
             }
         }
@@ -580,7 +580,7 @@ export default class Core {
             const { handler, msg } = handlerObjs[0];
 
             $.msg = msg; // eslint-disable-line no-param-reassign
-            await handler.callback($);
+            await handler.handler($);
             return true;
         }
 
@@ -599,7 +599,7 @@ export default class Core {
         );
 
         if (handlers.length > 0) {
-            await handlers[0].callback($);
+            await handlers[0].handler($);
             return true;
         }
 

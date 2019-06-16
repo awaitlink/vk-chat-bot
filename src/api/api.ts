@@ -15,13 +15,13 @@ const API_QUOTA = 20;
 /**
  * Used to call API methods.
  *
- * You can get the `API` object from a `Context` object:
+ * You can get the [[API]] object from a [[Context]] object:
  * ```js
  * // Assuming your Context object is $
  * var api = $.api
  * ```
  *
- * Or from `core` (after initialization with [[bot]]:
+ * Or from [[Core]] (after initialization with [[bot]]:
  * ```js
  * var api = core.api
  * ```
