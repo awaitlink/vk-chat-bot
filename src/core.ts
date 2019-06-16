@@ -8,7 +8,13 @@ import Stats from './extra/stats';
 export type Handler = ($: Context) => void | Promise<void>;
 
 export type Payload = any; // eslint-disable-line @typescript-eslint/no-explicit-any
-export type Tester = (payloadJson: string, payload: Payload) => boolean;
+
+/**
+ * @param payloadJson the stringified JSON of the payload (as given by Callback API)
+ * @param payload the JS object that was made by parsing the `payloadJson`, if the
+ * parsing was successful
+ */
+export type Tester = (payloadJson: string, payload?: Payload) => boolean;
 
 interface DynPayloadHandler {
     tester: Tester;
@@ -21,6 +27,19 @@ interface CommandHandler {
     callback: Handler;
 }
 
+/**
+ * Dispatches message handling to appropriate handlers,
+ * and is used for setting these handlers.
+ *
+ * Handlers for the `message_new` event will be searched in this order:
+ * 1. If service action message => [[on]] handler for the `service_action` event
+ * 1. If user pressed the `Start` button => [[on]] handler for the `start` event
+ * 1. [[payload]]
+ * 1. [[cmd]]
+ * 1. [[regex]]
+ *
+ * For other events, a matching [[on]] handler will be called.
+ */
 export default class Core {
     public readonly api: API;
     public readonly stats: Stats;
@@ -71,7 +90,7 @@ export default class Core {
     /**
      * Exact payload handlers.
      */
-    private exactPayloadHandlers: { [key: string]: Handler} = {};
+    private exactPayloadHandlers: { [key: string]: Handler } = {};
 
     /**
      * Dynamic payload handlers.
@@ -87,7 +106,7 @@ export default class Core {
     /**
      * Regular expression handlers.
      */
-    private regexHandlers: {regex: RegExp; callback: Handler}[] = [];
+    private regexHandlers: { regex: RegExp; callback: Handler }[] = [];
 
     /**
      * Are event warnings enabled?
@@ -100,17 +119,11 @@ export default class Core {
     private helpMessage: string = '';
 
     /**
-     * `Core` dispatches message handling to appropriate handlers,
-     * and is used for setting these handlers.
-     *
-     * Handlers for the `message_new` event will be searched in this order:
-     * 1. If service action message => [Core#on](#on) handler for the `service_action` event
-     * 1. If user pressed the `Start` button => [Core#on](#on) handler for the `start` event
-     * 1. [Core#payload](#payload)
-     * 1. [Core#cmd](#cmd)
-     * 1. [Core#regex](#regex)
-     *
-     * For other events, a matching [Core#on](#on) handler will be called.
+     * Creates a new [[Core]].
+     * @param api [[API]] object
+     * @param stats [[Stats]] object
+     * @param cmdPrefix command prefix
+     * @param groupId group ID
      */
     public constructor(
         api: API,
@@ -253,7 +266,7 @@ export default class Core {
      * the search for a dynamic handler begins.
      *
      * @param payload - exact payload to handle,
-     * or a function (type `(payload_json: string, payload: any) => boolean`) which
+     * or a function (type {@link Tester}) which
      * will determine whether to handle the payload or not.
      * @param callback - function which will handle the message
      *

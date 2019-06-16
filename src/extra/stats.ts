@@ -4,20 +4,56 @@ import { log } from './log';
 // tslint:disable-next-line: no-var-requires
 require('moment-duration-format')(moment);
 
+/**
+ * Stats stores and prints statistics.
+ *
+ * The bot logs statistics each **~10s** (if they changed):
+ *
+ *  ```console
+ *   stat info [12y 34d 12h 34m 56s] rx:32 tx:16 | allow/deny:5/0 typing:3 new:7(start:2 action:1) edit:1 | reply:16 | no_match:0 err:0
+ *  ```
+ *
+ * ### General statistics
+ *
+ * Statistics | Description
+ * --- | ---
+ * `[...]` | Process uptime
+ * `rx` | Amount of received events from Callback API
+ * `tx` | Amount of sent messages
+ *
+ * ### Callback API event statistics
+ * Statistics | Description
+ * --- | ---
+ * `new` | `message_new` events
+ * `allow` | `message_allow` events
+ * `deny` | `message_deny` events
+ * `edit` | `message_edit` events
+ * `reply` | `message_reply` events
+ * `typing` | `message_typing_state` events
+ *
+ * ### Other event statistics
+ * Statistics | Description
+ * --- | ---
+ * `start` | `start` events
+ * `action` | `service_action` events
+ * `no_match` | `no_match` events
+ * `err` | `handler_error` events
+ *
+ */
 export default class Stats {
     /**
-   * Count of requests from the Callback API.
-   */
+     * Count of requests from the Callback API.
+     */
     public rx: number = 0;
 
     /**
-   * Count of messages sent.
-   */
+     * Count of messages sent.
+     */
     public tx: number = 0;
 
     /**
-   * Count of various events.
-   */
+     * Count of various events.
+     */
     /* eslint-disable @typescript-eslint/camelcase */
     public eventCounters: { [key: string]: number } = {
         message_new: 0,
@@ -36,47 +72,13 @@ export default class Stats {
     /* eslint-enable @typescript-eslint/camelcase */
 
     /**
-   * Previous stats log message, without time
-   */
+     * Previous stats log message, without time
+     */
     public previous: string = '';
 
     /**
-   * Stats stores and prints statistics.
-   *
-   * The bot logs statistics each **~10s** (if they changed):
-   *
-   *  ```console
-   *   stat info [12y 34d 12h 34m 56s] rx:32 tx:16 | allow/deny:5/0 typing:3 new:7(start:2 action:1)
-   *                                                 edit:1 | reply:16 | no_match:0 err:0
-   *  ```
-   *
-   * ### General statistics
-   *
-   * Statistics | Description
-   * --- | ---
-   * `[...]` | Process uptime
-   * `rx` | Amount of received events from Callback API
-   * `tx` | Amount of sent messages
-   *
-   * ### Callback API event statistics
-   * Statistics | Description
-   * --- | ---
-   * `new` | `message_new` events
-   * `allow` | `message_allow` events
-   * `deny` | `message_deny` events
-   * `edit` | `message_edit` events
-   * `reply` | `message_reply` events
-   * `typing` | `message_typing_state` events
-   *
-   * ### Other event statistics
-   * Statistics | Description
-   * --- | ---
-   * `start` | `start` events
-   * `action` | `service_action` events
-   * `no_match` | `no_match` events
-   * `err` | `handler_error` events
-   *
-   */
+     * Creates a new [[Stats]].
+     */
     public constructor() {
         log()
             .i('Stats initialized')
@@ -89,15 +91,15 @@ export default class Stats {
     }
 
     /**
-   * This is used to tell `Stats` that a message was sent.
-   */
+     * This is used to tell `Stats` that a message was sent.
+     */
     public sent(): void {
         this.tx += 1;
     }
 
     /**
-   * This is used to tell `Stats` that an event was emitted.
-   */
+     * This is used to tell `Stats` that an event was emitted.
+     */
     public event(eventName: string): void {
         this.rx += 1;
         this.eventCounters[eventName] += 1;
@@ -114,15 +116,15 @@ export default class Stats {
     }
 
     /**
-   * Returns how much events of this type were emitted.
-   */
+     * Returns how much events of this type were emitted.
+     */
     private getEventCount(eventName: string): string {
         return this.eventCounters[eventName].toString();
     }
 
     /**
-   * Prints the statistics if they changed.
-   */
+     * Prints the statistics if they changed.
+     */
     private print(): void {
         const rx = chalk.underline.green(this.rx.toString());
         const tx = chalk.underline.cyan(this.tx.toString());

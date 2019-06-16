@@ -131,7 +131,7 @@ This project is licensed under the terms of the **[MIT][license]** license.
 
 [docs]:                     https://u32i64.github.io/vk-chat-bot/
 [docs/Core]:                https://u32i64.github.io/vk-chat-bot/classes/_core_.core.html
-[docs/Stats]:               https://u32i64.github.io/vk-chat-bot/classes/_extra_stats_.stats.html#constructor
+[docs/Stats]:               https://u32i64.github.io/vk-chat-bot/classes/_extra_stats_.stats.html
 [docs/Heroku-Deploy-Guide]: https://github.com/u32i64/vk-chat-bot/blob/master/tutorials/heroku-deploy-guide.md
 [docs/bot]:                 https://u32i64.github.io/vk-chat-bot/modules/_main_.html#bot
 

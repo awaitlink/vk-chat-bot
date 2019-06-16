@@ -1,33 +1,35 @@
 import { Payload } from "../core";
 
+/**
+ * See full keyboard example in [[Context.keyboard]].
+ */
 export class Keyboard {
     /**
-   * Is this keyboard one-time?
-   */
+     * Is this keyboard one-time?
+     */
     // tslint:disable-next-line: variable-name
     public readonly one_time: boolean;
 
     /**
-   * Items of this keyboard.
-   */
+     * Items of this keyboard.
+     */
     public readonly buttons: Button[][];
 
     /**
-   * See full keyboard example in [Context#keyboard]{@link Context#keyboard}
-   *
-   * @param buttons array of arrays (rows) of buttons
-   * @param oneTime show only once? (or disappear after button press?)
-   *
-   * @example
-   * ```
-   * var kbd = new Keyboard([
-   *    // One row
-   *    [
-   *      button.text('Maximum rows is 10, columns - 4.')
-   *    ],
-   * ]);
-   * ```
-   */
+     * Creates a new [[Keyboard]].
+     * @param buttons array of arrays (rows) of buttons
+     * @param oneTime show only once? (or disappear after button press?)
+     *
+     * @example
+     * ```
+     * var kbd = new Keyboard([
+     *    // One row
+     *    [
+     *      button.text('Maximum rows is 10, columns - 4.')
+     *    ],
+     * ]);
+     * ```
+     */
     public constructor(buttons: Button[][] = [], oneTime: boolean = false) {
         this.one_time = oneTime; // eslint-disable-line @typescript-eslint/camelcase
         this.buttons = buttons;
@@ -93,24 +95,24 @@ interface OpenAppButton {
 
 export const button = {
     /**
-   * Creates a text-sending button.
-   *
-   * @param label button label
-   * @param color button color
-   * @param payload button payload, see [VK bots docs](https://vk.com/dev/bots_docs_3)
-   * **->** Section **4.3** for more details
-   *
-   * @example
-   * ```
-   * button.text('Secondary');
-   * button.text('Secondary', colors.secondary);
-   * button.text('Secondary', colors.secondary, {a: 'b'});
-   *
-   * button.text('Primary', colors.primary);
-   * button.text('Negative', colors.negative);
-   * button.text('Positive', colors.positive);
-   * ```
-   */
+     * Creates a text-sending button.
+     *
+     * @param label button label
+     * @param color button color
+     * @param payload button payload, see [VK bots docs](https://vk.com/dev/bots_docs_3)
+     * **->** Section **4.3** for more details
+     *
+     * @example
+     * ```
+     * button.text('Secondary');
+     * button.text('Secondary', colors.secondary);
+     * button.text('Secondary', colors.secondary, {a: 'b'});
+     *
+     * button.text('Primary', colors.primary);
+     * button.text('Negative', colors.negative);
+     * button.text('Positive', colors.positive);
+     * ```
+     */
     text(
         label: string = 'Button',
         color: Color = Color.Secondary,
@@ -132,16 +134,16 @@ export const button = {
     },
 
     /**
-   * Creates a location-sending button.
-   *
-   * @param payload button payload, see [VK bots docs](https://vk.com/dev/bots_docs_3)
-   * **->** Section **4.3** for more details
-   *
-   * @example
-   * ```
-   * button.location({a: 'b'})
-   * ```
-   */
+     * Creates a location-sending button.
+     *
+     * @param payload button payload, see [VK bots docs](https://vk.com/dev/bots_docs_3)
+     * **->** Section **4.3** for more details
+     *
+     * @example
+     * ```
+     * button.location({a: 'b'})
+     * ```
+     */
     location(payload: Payload = ''): LocationButton {
         const btn: LocationButton = {
             action: {
@@ -157,16 +159,16 @@ export const button = {
     },
 
     /**
-   * Creates a VK Pay payment button.
-   *
-   * @param hash VK Pay parameters and app id in parameter `aid`, delimited by `&`,
-   * see [VK Pay actions](https://vk.com/dev/vk_pay_actions)
-   *
-   * @example
-   * ```
-   * button.vkPay('action=transfer-to-group&group_id=1&aid=10')
-   * ```
-   */
+     * Creates a VK Pay payment button.
+     *
+     * @param hash VK Pay parameters and app id in parameter `aid`, delimited by `&`,
+     * see [VK Pay actions](https://vk.com/dev/vk_pay_actions)
+     *
+     * @example
+     * ```
+     * button.vkPay('action=transfer-to-group&group_id=1&aid=10')
+     * ```
+     */
     vkPay(hash: string): VKPayButton {
         const btn = {
             action: {
@@ -179,18 +181,18 @@ export const button = {
     },
 
     /**
-   * Creates an app-opening button.
-   *
-   * @param appId Application ID
-   * @param ownerId Group ID, if app needs to be opened in group context
-   * @param label Button label
-   * @param hash Parameters for app navigation
-   *
-   * @example
-   * ```
-   * button.openApp(1, 1, 'My App', 'test')
-   * ```
-   */
+     * Creates an app-opening button.
+     *
+     * @param appId Application ID
+     * @param ownerId Group ID, if app needs to be opened in group context
+     * @param label Button label
+     * @param hash Parameters for app navigation
+     *
+     * @example
+     * ```
+     * button.openApp(1, 1, 'My App', 'test')
+     * ```
+     */
     openApp(
         appId: number,
         ownerId: number = null,

@@ -83,7 +83,7 @@ If something is not working, feel free to [open an issue](https://github.com/u32
 
 ## 7. What's next?
 - Take a look at other pages of the documentation - to understand how the example bot works
-- Change or implement new behavior in your bot - see [Core]{@link Core} docs
+- Change or implement new behavior in your bot - see [Core] docs
 - If you have any questions, feature requests or bugs - create an [issue](https://github.com/u32i64/vk-chat-bot/issues)
 
 [New App]: https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/new-app.png
@@ -92,3 +92,5 @@ If something is not working, feel free to [open an issue](https://github.com/u32
 [New Token]: https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/new-token.png
 [Callback API settings]: https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/callback-api.png
 [Event types]: https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/event-types.png
+
+[Core]: https://u32i64.github.io/vk-chat-bot/docs/classes/_core_.core.html

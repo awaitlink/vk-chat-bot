@@ -24,7 +24,7 @@ process.on('uncaughtException', (err): void => {
 });
 
 /**
- * Creates all the necessary objects for the bot and the [Bot]{@link Bot} object itself
+ * Creates all the necessary objects for the bot and the [[Bot]] object itself
  *
  * @example
  * ```
