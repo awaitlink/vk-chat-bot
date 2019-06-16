@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Warning color is now orange.
 - Information and response message types now have bold colors, just like the other types.
+- Renamed `callback` to `handler`. No change in functionality.
+- Switched to `eslint`.
+### Fixed
+- Some types.
+- Documentation.
 
 ## [15.0.1] - 2019-06-15
 ### Fixed
