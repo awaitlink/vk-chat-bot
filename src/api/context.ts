@@ -42,7 +42,7 @@ export default class Context {
      * The ID of a peer, to which the reply is going to be sent
      *
      * **Note:** You can change this using [[setPid]] method,
-     * the original Peer ID is available in one of `$.obj.{peer_id, from_id, user_id}`.
+     * the original Peer ID can be obtained using [[getOriginalPid]].
      */
     private pid: string;
 
@@ -76,6 +76,18 @@ export default class Context {
     }
 
     /**
+     * Clears the buffer and resets the Peer ID back to original.
+     * 
+     * For example, after calling this you can compose another message to the same user.
+     */
+    public clear(): void {
+        this.replyText = '';
+        this.attachment = [];
+        this.kbdObject = '';
+        this.pid = this.getOriginalPid();
+    }
+
+    /**
      * Prevents this handler from sending the message automatically after it finishes.
      */
     public noAutoSend(): void {
@@ -90,12 +102,35 @@ export default class Context {
     }
 
     /**
+     * Returns the current peer ID.
+     */
+    public getPid(): string {
+        return this.pid;
+    }
+
+    /**
      * Sets a new peer ID.
      *
      * @param pid new peer ID
      */
     public setPid(pid: string | number): void {
         this.pid = pid.toString();
+    }
+
+    /**
+     * Returns the original peer ID from the Callback API object.
+     */
+    public getOriginalPid(): string {
+        let eventType = this.eventType;
+        let obj = this.obj;
+
+        if (eventType === 'message_allow') {
+            return obj.user_id;
+        } else if (eventType === 'message_typing_state') {
+            return obj.from_id;
+        } else {
+            return obj.peer_id;
+        }
     }
 
     /**
@@ -203,23 +238,5 @@ export default class Context {
             attachmentList,
             this.kbdObject,
         );
-    }
-
-    /**
-     * Clears the buffer and resets the User ID back to original.
-     * For example, after calling this you can compose another message to the same user.
-     */
-    public clear(): void {
-        this.replyText = '';
-        this.attachment = [];
-        this.kbdObject = '';
-
-        if (this.eventType === 'message_allow') {
-            this.pid = this.obj.user_id;
-        } else if (this.eventType === 'message_typing_state') {
-            this.pid = this.obj.from_id;
-        } else {
-            this.pid = this.obj.peer_id;
-        }
     }
 }

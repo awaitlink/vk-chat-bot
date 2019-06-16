@@ -1,4 +1,6 @@
 import chalk from 'chalk';
+import * as t from 'io-ts'
+import { reporter } from 'io-ts-reporters';
 
 /**
  * Types of log messages.
@@ -77,10 +79,10 @@ class LogMessageBuilder {
         }
 
         const messageTypeString = [
-            chalk.blue('info'),
-            chalk.bold.yellow('warn'),
+            chalk.bold.blue('info'),
+            chalk.bold.keyword('orange')('warn'),
             chalk.bold.red('err!'),
-            chalk.green('resp'),
+            chalk.bold.green('resp'),
         ][this.messageType];
 
         let spacing = '';
@@ -147,4 +149,30 @@ class LogMessageBuilder {
  */
 export function log(): LogMessageBuilder {
     return new LogMessageBuilder();
+}
+
+/**
+ * Validates using `io-ts` and converts report from the `io-ts-reporters`
+ * reporter to colorful format and joins lines with `.0` and `.1` using `or`.
+ */
+export function validate<A, O, I>(validator: t.Type<A, O, I>, data: any, location: string): any { // eslint-disable-line @typescript-eslint/no-explicit-any
+    const result = validator.decode(data);
+    const report = reporter(result);
+
+    if (result.isLeft()) {
+        report.unshift('The following errors occured during validation in `' + location + '`:');
+
+        let newReport = report.join('\n             ');
+        let regex = /Expecting (\w+) at (\w+)\.0 but instead got: (.+)\.\n *Expecting (\w+) at \w+\.1 but instead got: (.+)\./g;
+        newReport = newReport.replace(regex, chalk`Expecting {bold.blue $1} or {bold.blue $4} at {bold.green $2} but instead got {bold.red $3}`);
+
+        regex = /Expecting (\w+) at (\w+) but instead got: (.+)\./g;
+        newReport = newReport.replace(regex, chalk`Expecting {bold.blue $1} at {bold.green $2} but instead got {bold.red $3}`);
+
+        log().e(newReport).from('•_•').now();
+
+        return null;
+    } else {
+        return result.value;
+    }
 }

@@ -9,14 +9,14 @@ import * as kbd from './api/keyboard';
 import * as log from './extra/log';
 import Stats from './extra/stats';
 
+import * as t from 'io-ts'
+
 process.on('uncaughtException', (err): void => {
-    const note = chalk.inverse(`• An error occured. The messages below may contain
-• useful information about the problem.
-• If you think this is an issue with 'vk-chat-bot' itself,
-• please report it at <https://github.com/u32i64/vk-chat-bot/issues>.`);
+    const note = chalk.inverse(`• An error occured. The messages below may contain useful information about the problem.
+• If you think this is an issue with 'vk-chat-bot' itself, please report it at <https://github.com/u32i64/vk-chat-bot/issues>.`);
 
     /* eslint-disable no-console */
-    console.log(`\n\n${note}\n\n`); 
+    console.log(`\n\n${note}\n\n`);
     console.log(err);
     /* eslint-enable no-console */
 
@@ -24,7 +24,7 @@ process.on('uncaughtException', (err): void => {
 });
 
 /**
- * Creates all the necessary objects for the bot and the [[Bot]] object itself
+ * Creates all the necessary objects for the bot and the [[Bot]] object itself.
  *
  * @example
  * ```
@@ -41,24 +41,37 @@ process.on('uncaughtException', (err): void => {
  * var {bot, core} = vk.bot(params);
  * ```
  */
-function bot({
-    vkToken,
-    confirmationToken,
-    groupId,
-    secret,
-    port,
-    cmdPrefix = '',
-}: {
+function bot(options: {
     vkToken: string;
     confirmationToken: string;
     groupId: string | number;
     secret: string;
-    port: number;
+    port: string | number;
     cmdPrefix: string;
 }): { bot: Bot; core: Core } {
+
+    let result = log.validate(t.type({
+        vkToken: t.string,
+        confirmationToken: t.string,
+        groupId: t.union([t.string, t.number]),
+        secret: t.string,
+        port: t.union([t.string, t.number]),
+        cmdPrefix: t.string,
+    }), options, 'bot');
+
+    const {
+        vkToken,
+        confirmationToken,
+        groupId,
+        secret,
+        port,
+        cmdPrefix
+    } = result;
+
     const stats = new Stats();
-    const api = new API(vkToken.toString(), stats);
-    const core = new Core(api, stats, cmdPrefix.toString(), groupId.toString());
+    const api = new API(vkToken, stats);
+    const core = new Core(api, stats, cmdPrefix, groupId.toString());
+    const _port = typeof port === 'number' ? port : parseInt(port);
 
     return {
         bot: new Bot(
@@ -66,7 +79,7 @@ function bot({
             groupId.toString(),
             confirmationToken.toString(),
             secret.toString(),
-            port,
+            _port,
         ),
         core,
     };

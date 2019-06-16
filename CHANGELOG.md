@@ -1,9 +1,18 @@
 # Changelog
-All notable changes to this project will be documented in this file.    
+All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 **Note:** Patch versions prior to [v8.0.0](#800---2018-07-01) are not listed.
+
+## [Unreleased]
+### Added
+- `Core.getPid`.
+- `Core.getOriginalPid`.
+- `log.validate` - for now validates only `bot` function's inputs.
+### Changed
+- Warning color is now orange.
+- Information and response message types now have bold colors, just like the other types.
 
 ## [15.0.1] - 2019-06-15
 ### Fixed
@@ -22,16 +31,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Package contains minified files for each module instead of one minified file.
 - `log.types.<sometype>` -> `log.MessageType.<Sometype>` (see [`log` docs](https://u32i64.github.io/vk-chat-bot/modules/_extra_log_.html)).
 ### Fixed
-- In case neither `replyText` nor `attachment` was supplied, [this line](https://github.com/u32i64/vk-chat-bot/blob/7e4af0f794ec0f7f0172df41ad6d23315ddb80aa/src/api/context.js#L191) might have caused a very informative log message to appear, namely 
+- In case neither `replyText` nor `attachment` was supplied, [this line](https://github.com/u32i64/vk-chat-bot/blob/7e4af0f794ec0f7f0172df41ad6d23315ddb80aa/src/api/context.js#L191) might have caused a very informative log message to appear, namely
     ```
         ctx warn ctx
     ```
     because there were more arguments supplied than needed. Thanks TypeScript!
 ### Removed
 - Custom messages when required arguments to `bot` and some other functions are not provided aka rudimentary input validation.
+    - `log.requireParam`.
+    - `log.requireFunction`.
 - `rollup` devDependency (and its plugins).
-- `log.requireParam`.
-- `log.requireFunction`.
 
 ## [14.0.0] - 2019-06-08
 ### Changed
@@ -442,6 +451,7 @@ bot.init(params);
 ## [1.0.1] - 2017-12-02
 ### First version!
 
+[Unreleased]: https://github.com/u32i64/vk-chat-bot/compare/v15.0.1...master
 [15.0.1]: https://github.com/u32i64/vk-chat-bot/compare/v15.0.0...v15.0.1
 [15.0.0]: https://github.com/u32i64/vk-chat-bot/compare/v14.0.0...v15.0.0
 [14.0.0]: https://github.com/u32i64/vk-chat-bot/compare/v13.1.3...v14.0.0
