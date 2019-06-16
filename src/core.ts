@@ -5,8 +5,10 @@ import { log } from './extra/log';
 import API from './api/api';
 import Stats from './extra/stats';
 
-type Handler = ($: Context) => void | Promise<void>;
-type Tester = (payloadJson: string, payload: any) => boolean; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type Handler = ($: Context) => void | Promise<void>;
+
+export type Payload = any; // eslint-disable-line @typescript-eslint/no-explicit-any
+export type Tester = (payloadJson: string, payload: Payload) => boolean;
 
 interface DynPayloadHandler {
     tester: Tester;
@@ -293,7 +295,7 @@ export default class Core {
      * });
      * ```
      */
-    public payload(payload: any, callback: Handler): void { // eslint-disable-line @typescript-eslint/no-explicit-any
+    public payload(payload: Payload, callback: Handler): void {
         if (this.isLocked()) {
             return;
         }

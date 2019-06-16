@@ -1,3 +1,5 @@
+import { Payload } from "../core";
+
 export class Keyboard {
     /**
    * Is this keyboard one-time?
@@ -112,7 +114,7 @@ export const button = {
     text(
         label: string = 'Button',
         color: Color = Color.Secondary,
-        payload: any = '', // eslint-disable-line @typescript-eslint/no-explicit-any
+        payload: Payload = '',
     ): TextButton {
         const btn: TextButton = {
             action: {
@@ -140,7 +142,7 @@ export const button = {
    * button.location({a: 'b'})
    * ```
    */
-    location(payload: any = ''): LocationButton { // eslint-disable-line @typescript-eslint/no-explicit-any
+    location(payload: Payload = ''): LocationButton {
         const btn: LocationButton = {
             action: {
                 type: 'location',
