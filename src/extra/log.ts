@@ -99,7 +99,7 @@ class LogMessageBuilder {
 
     /**
      * Convenience method for logging information.
-     * Sets the type to {@link types.message} and also the text of the message.
+     * Sets the type to [[MessageType.Information]] and also the text of the message.
      * @param t the text of the message. If passed an `Error`,
      * the `message` property of the error will be used.
      */
@@ -110,7 +110,7 @@ class LogMessageBuilder {
 
     /**
      * Convenience method for logging warnings.
-     * Sets the type to {@link types.warning} and also the text of the message.
+     * Sets the type to [[MessageType.Warning]] and also the text of the message.
      * @param t the text of the message. If passed an `Error`,
      * the `message` property of the error will be used.
      */
@@ -121,7 +121,7 @@ class LogMessageBuilder {
 
     /**
      * Convenience method for logging errors.
-     * Sets the type to {@link types.error} and also the text of the message.
+     * Sets the type to [[MessageType.Error]] and also the text of the message.
      * @param t the text of the message. If passed an `Error`,
      * the `message` property of the error will be used.
      */
@@ -132,7 +132,7 @@ class LogMessageBuilder {
 
     /**
      * Convenience method for logging responses.
-     * Sets the type to {@link types.response} and also the text of the message.
+     * Sets the type to [[MessageType.Response]] and also the text of the message.
      * @param t the text of the message. If passed an `Error`,
      * the `message` property of the error will be used.
      */
@@ -143,7 +143,7 @@ class LogMessageBuilder {
 }
 
 /**
- * Shortcut for `new LogMessageBuilder()`.
+ * Shortcut for constructing [[LogMessageBuilder]]s.
  */
 export function log(): LogMessageBuilder {
     return new LogMessageBuilder();

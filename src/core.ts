@@ -266,7 +266,7 @@ export default class Core {
      * the search for a dynamic handler begins.
      *
      * @param payload - exact payload to handle,
-     * or a function (type {@link Tester}) which
+     * or a function (type [[Tester]]) which
      * will determine whether to handle the payload or not.
      * @param callback - function which will handle the message
      *
