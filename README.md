@@ -2,7 +2,7 @@
 [![version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
 
-> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.
+> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.    
 > **[documentation »][docs]** ⋅
 > **[changelog »][changelog]** ⋅
 > [features](#features) ⋅
