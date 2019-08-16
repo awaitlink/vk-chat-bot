@@ -3,7 +3,7 @@ name: node
 on:
   push:
     branches:
-      - !gh-pages
+    - !gh-pages
 
 jobs:
   build:
