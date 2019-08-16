@@ -1,0 +1,27 @@
+name: Node
+
+on:
+  push:
+    branches:
+      !gh-pages
+  pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '10', '12' ]
+    steps:
+      - uses: actions/checkout@master
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - name: (tmp) dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+
