@@ -1,9 +1,8 @@
 # ❮vk-chat-bot❯
 [![version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
-[![travis][badges/travis]][travis]
 
-> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.    
+> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.
 > **[documentation »][docs]** ⋅
 > **[changelog »][changelog]** ⋅
 > [features](#features) ⋅
@@ -22,7 +21,7 @@ $ npm i vk-chat-bot
 ```
 
 ### Example
-You can find an example bot in the [`u32i64/vk-chat-bot-example`][example] repository.    
+You can find an example bot in the [`u32i64/vk-chat-bot-example`][example] repository.
 Also, a **step-by-step [Heroku Deploy Guide][docs/Heroku-Deploy-Guide]** can guide you through the process of deploying [`u32i64/vk-chat-bot-example`][example] to Heroku.
 
 ### Quick Start
@@ -49,7 +48,7 @@ var { bot, core } = vk.bot(params);
 
 #### 2. Behavior setup
 
-See [`Core`][docs/Core] wiki to learn more about behavior functions.   
+See [`Core`][docs/Core] wiki to learn more about behavior functions.
 Here are some examples:
 ```js
 // Use stuff from the package...
@@ -119,12 +118,10 @@ This project is licensed under the terms of the **[MIT][license]** license.
 
 <!-- LINKS -->
 
-[badges/travis]:    https://img.shields.io/travis/u32i64/vk-chat-bot/master.svg?style=for-the-badge&logo=travis
 [badges/npm]:       https://img.shields.io/npm/v/vk-chat-bot.svg?style=for-the-badge&logo=npm
 [badges/downloads]: https://img.shields.io/npm/dt/vk-chat-bot.svg?style=for-the-badge
 
 [npm]:    https://www.npmjs.com/package/vk-chat-bot
-[travis]: https://travis-ci.org/u32i64/vk-chat-bot
 
 [changelog]: https://github.com/u32i64/vk-chat-bot/blob/master/CHANGELOG.md
 [license]:   https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE
