@@ -9,11 +9,9 @@ jobs:
       matrix:
         node: [ '10', '12' ]
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v1
       - name: setup node
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
       - run: npm ci
-
-
