@@ -1,10 +1,9 @@
 name: Node
 
 on:
-  - push:
-      branches:
-        !gh-pages
-  - pull_request
+  push:
+    branches:
+      - !gh-pages
 
 jobs:
   build:
@@ -23,5 +22,11 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+      # - name: deploy docs
+      #   if: GITHUB_REF == 'refs/heads/master' && matrix.node == '12'
+      #   uses: maxheld83/ghpages@v0.2.1
+      #   env:
+      #     GH_PAT: ${{ secrets.GH_PAT }}
+      #     BUILD_DIR: docs
 
 
