@@ -93,4 +93,4 @@ If something is not working, feel free to [open an issue](https://github.com/u32
 [Callback API settings]: https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/callback-api.png
 [Event types]: https://github.com/u32i64/vk-chat-bot/raw/master/tutorials/images/heroku_guide/event-types.png
 
-[Core]: https://u32i64.github.io/vk-chat-bot/docs/classes/_core_.core.html
+[Core]: https://u32i64.github.io/vk-chat-bot/classes/_core_.core.html
