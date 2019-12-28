@@ -1,9 +1,9 @@
-# ❮vk-chat-bot❯
+# vk-chat-bot
 [![version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
 [![bundle size][badges/size]][bundlephobia]
 
-> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.
+> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.<br>
 > **[documentation »][docs]** ⋅
 > **[changelog »][changelog]** ⋅
 > [features](#features) ⋅
