@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '10', '12' ]
+        node: [ '10', '13' ]
     steps:
       - uses: actions/checkout@v1
       - name: Set up Node
@@ -19,7 +19,7 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: yarn
       - name: Deploy docs
-        if: github.ref == 'refs/heads/master' && matrix.node == '12'
+        if: github.ref == 'refs/heads/master' && matrix.node == '13'
         uses: maxheld83/ghpages@v0.2.1
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
