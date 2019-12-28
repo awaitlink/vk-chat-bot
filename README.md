@@ -2,7 +2,7 @@
 [![version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
 
-> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.    
+> Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.
 > **[documentation »][docs]** ⋅
 > **[changelog »][changelog]** ⋅
 > [features](#features) ⋅
@@ -17,7 +17,7 @@
 ## Usage
 ### Installation
 ```console
-$ npm i vk-chat-bot
+$ yarn add vk-chat-bot
 ```
 
 ### Example
@@ -26,7 +26,7 @@ You can find an example bot in the [`u32i64/vk-chat-bot-example`][example] repos
 - **Deploying on [Glitch](https://glitch.com/)**
 
   Simply press the button below and follow the `SETUP.md` file there:
-  
+
   <a href="https://glitch.com/edit/#!/remix/vk-chat-bot-example"><img src="https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fremix%402x.png?1513093958726" alt="remix this" height="33"></a>
 
 - **Deploying on [Heroku](https://heroku.com)**
