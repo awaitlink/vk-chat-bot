@@ -1,6 +1,6 @@
 {
   "name": "vk-chat-bot",
-  "version": "15.1.0",
+  "version": "16.0.0",
   "description": "Package for easy creation of chat bots for VK communities (uses Callback API).",
   "keywords": [
     "api",
@@ -24,7 +24,7 @@
   "license": "MIT",
   "author": {
     "name": "Artem Varaksa (u32i64)",
-    "email": "aymfst@gmail.com",
+    "email": "artvaraksa@gmail.com",
     "url": "https://u32i64.github.io"
   },
   "files": [
@@ -36,7 +36,7 @@
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "lint": "eslint --fix src/**/*",
+    "fix": "eslint --fix src/**/*",
     "prepare": "gulp && touch ./docs/.nojekyll"
   },
   "dependencies": {
@@ -47,8 +47,6 @@
     "io-ts": "^2.0.2",
     "io-ts-reporters": "^1.0.0",
     "fp-ts": "^2.3.1",
-    "moment": "^2.22.2",
-    "moment-duration-format": "^2.3.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   },

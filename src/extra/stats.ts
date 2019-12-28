@@ -1,8 +1,5 @@
 import chalk from 'chalk';
-import moment from 'moment';
 import { log } from './log';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('moment-duration-format')(moment);
 
 /**
  * Stats stores and prints statistics.
@@ -10,14 +7,14 @@ require('moment-duration-format')(moment);
  * The bot logs statistics each **~10s** (if they changed):
  *
  *  ```console
- *   stat info [12y 34d 12h 34m 56s] rx:32 tx:16 | allow/deny:5/0 typing:3 new:7(start:2 action:1) edit:1 | reply:16 | no_match:0 err:0
+ *   stat info [12:34:56] rx:32 tx:16 | allow/deny:5/0 typing:3 new:7(start:2 action:1) edit:1 | reply:16 | no_match:0 err:0
  *  ```
  *
  * ### General statistics
  *
  * Statistics | Description
  * --- | ---
- * `[...]` | Process uptime
+ * `[...]` | Process uptime (`hh:mm:ss`)
  * `rx` | Amount of received events from Callback API
  * `tx` | Amount of sent messages
  *
@@ -123,6 +120,19 @@ export default class Stats {
     }
 
     /**
+     * Formats seconds into `hh:mm:ss` (`hh` may use more than two digits for very large durations).
+     */
+    private formatDuration(totalSeconds: number): string {
+        const s = totalSeconds % 60;
+        const m = ((totalSeconds - s) / 60) % 60;
+        const h = (totalSeconds - s - (m * 60)) / 3600;
+
+        const pad = (n: number): string => ((n > 9 ? '' : '0') + n.toString());
+
+        return `${pad(h)}:${pad(m)}:${pad(s)}`;
+    }
+
+    /**
      * Prints the statistics if they changed.
      */
     private print(): void {
@@ -142,9 +152,7 @@ export default class Stats {
         const nm = chalk.bold.magenta(this.getEventCount('no_match'));
         const he = chalk.bold.magenta(this.getEventCount('handler_error'));
 
-        const up = moment
-            .duration(process.uptime(), 'seconds')
-            .format('y[y] d[d] h[h] m[m] s[s]');
+        const up = this.formatDuration(process.uptime());
         // tslint:disable-next-line: max-line-length
         let message = `rx:${rx} tx:${tx} | allow/deny:${ma}/${md} typing:${mts} new:${mn}(start:${st} action:${sa}) edit:${me} | reply:${mr} | no_match:${nm} err:${he}`;
 

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [16.0.0] - 2019-12-28
+### Changed
+- Replaced `moment` and `moment-duration-format` dependencies with a simple function. The process uptime output format in stats is different now.
+- Switched back to `yarn`.
+- Upgraded dependencies.
+
 ## [15.1.0] - 2019-06-16
 ### Added
 - `Core.getPid`.
@@ -458,7 +464,8 @@ bot.init(params);
 ## [1.0.1] - 2017-12-02
 ### First version!
 
-[Unreleased]: https://github.com/u32i64/vk-chat-bot/compare/v15.1.0...master
+[Unreleased]: https://github.com/u32i64/vk-chat-bot/compare/v16.0.0...master
+[16.0.0]: https://github.com/u32i64/vk-chat-bot/compare/v15.1.0...v16.0.0
 [15.1.0]: https://github.com/u32i64/vk-chat-bot/compare/v15.0.1...v15.1.0
 [15.0.1]: https://github.com/u32i64/vk-chat-bot/compare/v15.0.0...v15.0.1
 [15.0.0]: https://github.com/u32i64/vk-chat-bot/compare/v14.0.0...v15.0.0

@@ -1,6 +1,7 @@
 # ❮vk-chat-bot❯
 [![version][badges/npm]][npm]
 [![downloads][badges/downloads]][npm]
+[![bundle size][badges/size]][bundlephobia]
 
 > Package for easy creation of chat bots for VK communities (*groups*). Uses Callback API.
 > **[documentation »][docs]** ⋅
@@ -11,8 +12,10 @@
 > [license](#license)
 
 ## Features
-- **Easy to use** - setting up behavior is simple - see [2. Behavior setup](#2-behavior-setup) below
-- **Respects the quota** - the package calls VK API not more then 20 times/second, so you don't exceed the quota
+- **Easy to use** — setting up behavior is simple — see [2. Behavior setup](#2-behavior-setup) below
+- **Respects the quota** — the package calls VK API not more then 20 times/second, so you don't exceed the quota
+
+The version of VK API used by this package can be found [here][api-version].
 
 ## Usage
 ### Installation
@@ -129,6 +132,11 @@ This project is licensed under the terms of the **[MIT][license]** license.
 
 [badges/npm]:       https://img.shields.io/npm/v/vk-chat-bot.svg?style=for-the-badge&logo=npm
 [badges/downloads]: https://img.shields.io/npm/dt/vk-chat-bot.svg?style=for-the-badge
+[badges/size]: https://img.shields.io/bundlephobia/minzip/vk-chat-bot?style=for-the-badge
+
+[bundlephobia]: https://bundlephobia.com/result?p=vk-chat-bot
+
+[api-version]: https://github.com/u32i64/vk-chat-bot/blob/master/src/api/api.ts#L9
 
 [npm]:    https://www.npmjs.com/package/vk-chat-bot
 
