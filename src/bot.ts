@@ -1,7 +1,6 @@
 import Core from './core';
 import { log } from './extra/log';
 
-import bodyParser from 'body-parser';
 import express, { Request, Response } from 'express';
 
 /**
@@ -78,7 +77,7 @@ export default class Bot {
 
         const app = express();
 
-        app.use(bodyParser.json());
+        app.use(express.json());
 
         app.get(
             '/',
