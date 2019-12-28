@@ -50,7 +50,7 @@ export default class API {
     /**
      * Is the queue being processed now?
      */
-    private isQueueProcessing: boolean = false;
+    private isQueueProcessing = false;
 
     /**
      * Creates a new [[API]].

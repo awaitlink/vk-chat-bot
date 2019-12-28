@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import moment from 'moment';
 import { log } from './log';
-// tslint:disable-next-line: no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('moment-duration-format')(moment);
 
 /**
@@ -44,12 +44,12 @@ export default class Stats {
     /**
      * Count of requests from the Callback API.
      */
-    public rx: number = 0;
+    public rx = 0;
 
     /**
      * Count of messages sent.
      */
-    public tx: number = 0;
+    public tx = 0;
 
     /**
      * Count of various events.
@@ -74,7 +74,7 @@ export default class Stats {
     /**
      * Previous stats log message, without time
      */
-    public previous: string = '';
+    public previous = '';
 
     /**
      * Creates a new [[Stats]].

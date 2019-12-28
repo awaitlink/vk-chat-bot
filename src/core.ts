@@ -62,7 +62,7 @@ export default class Core {
     /**
      * Is this `Core` locked?
      */
-    private locked: boolean = false;
+    private locked = false;
 
     /**
      * Handlers for events.
@@ -111,12 +111,12 @@ export default class Core {
     /**
      * Are event warnings enabled?
      */
-    private eventWarnings: boolean = true;
+    private eventWarnings = true;
 
     /**
      * The help message.
      */
-    private helpMessage: string = '';
+    private helpMessage = '';
 
     /**
      * Creates a new [[Core]].
@@ -360,7 +360,7 @@ export default class Core {
     public cmd(
         command: string,
         handler: Handler,
-        description: string = '',
+        description = '',
     ): void {
         if (this.isLocked()) {
             return;
@@ -403,7 +403,7 @@ export default class Core {
      * @param body - body of the request, in parsed JSON
      *
      */
-    public async parseRequest(body: any /* TODO: body type? */): Promise<void> { // eslint-disable-line @typescript-eslint/no-explicit-any 
+    public async parseRequest(body: any /* TODO: body type? */): Promise<void> { // eslint-disable-line @typescript-eslint/no-explicit-any
         const obj = body.object;
         const event = body.type;
 

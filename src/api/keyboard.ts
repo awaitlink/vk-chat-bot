@@ -30,7 +30,7 @@ export class Keyboard {
      * ]);
      * ```
      */
-    public constructor(buttons: Button[][] = [], oneTime: boolean = false) {
+    public constructor(buttons: Button[][] = [], oneTime = false) {
         this.one_time = oneTime; // eslint-disable-line @typescript-eslint/camelcase
         this.buttons = buttons;
     }
@@ -114,7 +114,7 @@ export const button = {
      * ```
      */
     text(
-        label: string = 'Button',
+        label = 'Button',
         color: Color = Color.Secondary,
         payload: Payload = '',
     ): TextButton {

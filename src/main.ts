@@ -50,7 +50,7 @@ function bot(options: {
     cmdPrefix: string;
 }): { bot: Bot; core: Core } {
 
-    let result = log.validate(t.type({
+    const result = log.validate(t.type({
         vkToken: t.string,
         confirmationToken: t.string,
         groupId: t.union([t.string, t.number]),

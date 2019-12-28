@@ -36,7 +36,7 @@ export default class Context {
     /**
      * Does this [[Context]]'s response need auto-sending?
      */
-    private autoSend: boolean = true;
+    private autoSend = true;
 
     /**
      * The ID of a peer, to which the reply is going to be sent
@@ -77,7 +77,7 @@ export default class Context {
 
     /**
      * Clears the buffer and resets the Peer ID back to original.
-     * 
+     *
      * For example, after calling this you can compose another message to the same user.
      */
     public clear(): void {
@@ -121,8 +121,8 @@ export default class Context {
      * Returns the original peer ID from the Callback API object.
      */
     public getOriginalPid(): string {
-        let eventType = this.eventType;
-        let obj = this.obj;
+        const eventType = this.eventType;
+        const obj = this.obj;
 
         if (eventType === 'message_allow') {
             return obj.user_id;

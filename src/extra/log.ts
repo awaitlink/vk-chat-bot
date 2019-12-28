@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import * as t from 'io-ts'
 import { reporter } from 'io-ts-reporters';
+import { isLeft } from 'fp-ts/lib/Either'
 
 /**
  * Types of log messages.
@@ -21,7 +22,7 @@ class LogMessageBuilder {
     /**
      * The source of the message.
      */
-    public messageFrom: string = 'log';
+    public messageFrom = 'log';
 
     /**
      * The type of the message.
@@ -31,7 +32,7 @@ class LogMessageBuilder {
     /**
      * The text of the message.
      */
-    public messageText: string = '';
+    public messageText = '';
 
     /**
      * Sets the source of the message.
@@ -159,7 +160,7 @@ export function validate<A, O, I>(validator: t.Type<A, O, I>, data: any, locatio
     const result = validator.decode(data);
     const report = reporter(result);
 
-    if (result.isLeft()) {
+    if (isLeft(result)) {
         report.unshift('The following errors occured during validation in `' + location + '`:');
 
         let newReport = report.join('\n             ');
@@ -173,6 +174,6 @@ export function validate<A, O, I>(validator: t.Type<A, O, I>, data: any, locatio
 
         return null;
     } else {
-        return result.value;
+        return result.right;
     }
 }
