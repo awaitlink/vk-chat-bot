@@ -2243,9 +2243,9 @@ io-ts-reporters@^1.0.0:
     io-ts "^2.0.0"
 
 io-ts@^2.0.0, io-ts@^2.0.2:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.1.1.tgz#d8230ed5a30f43ceaeeeb1094bb6b4937d9c604a"
-  integrity sha512-6mDCiTc/0uNtC8M1u/kcNiw5JUTlREFCGV7pjcbrQrUDguLkOpuzb4wbJcU78G74QvkhQdvT3F3dAupycXN95g==
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.1.2.tgz#8ea4439c902c3d15cda343900bed7ee5a9977f42"
+  integrity sha512-whVRGaNBZSrkPrg1y+sSy/kv/fDjweQPP1UCLhKwJUHWGD6rFgbZ44FBF98JlY/FFzTA0MkhGeHWZ/aFhF42eA==
 
 ipaddr.js@1.9.0:
   version "1.9.0"
