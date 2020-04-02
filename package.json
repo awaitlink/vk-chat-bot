@@ -40,7 +40,7 @@
     "prepare": "gulp && touch ./docs/.nojekyll"
   },
   "dependencies": {
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "escape-string-regexp": "^2.0.0",
     "express": "^4.17.1",
     "io-ts": "^2.0.2",
