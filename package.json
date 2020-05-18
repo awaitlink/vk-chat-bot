@@ -53,7 +53,7 @@
     "@types/body-parser": "^1.17.0",
     "@types/express": "^4.17.0",
     "@types/moment-duration-format": "^2.2.2",
-    "@types/node": "^13.1.1",
+    "@types/node": "^14.0.1",
     "@types/request-promise": "^4.1.44",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
