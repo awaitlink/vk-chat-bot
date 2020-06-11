@@ -2241,9 +2241,9 @@ invert-kv@^1.0.0:
   integrity sha1-EEqOSqym09jNFXqO+L+rLXo//bY=
 
 io-ts-reporters@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/io-ts-reporters/-/io-ts-reporters-1.0.0.tgz#c5901d49d454956698bbca48b328698f8ca1c9c7"
-  integrity sha512-jjMvTnFYYxX3ue3cajmqCAf7sM4+lFvaaUuAL+otJv2DE+WDxYvQeCcUYveoq37rVSftJHZBEOrnvz3x0VdRXA==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/io-ts-reporters/-/io-ts-reporters-1.1.0.tgz#c3227442bdcc84e46e9df1d6426a8c74bf9dc1c8"
+  integrity sha512-0pwIKTWqlUMYg59hqcBCtE64aYoL38YD0TLrmVUVg1m9PmNwE5ISyzPSAGbbKvLcHR2lqy6YqZ3w7z/yIT5ZWw==
   dependencies:
     fp-ts "^2.0.2"
     io-ts "^2.0.0"
