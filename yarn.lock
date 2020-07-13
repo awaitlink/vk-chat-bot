@@ -2263,9 +2263,9 @@ io-ts-reporters@^1.0.0:
   integrity sha512-wbNwb3p6q76dlqZrilZecgeBupnFijD6RRaN7418q0kNxIRJVS+8L28LcRaEevFhoCx7i0mhdPIxwpuIjGxkOw==
 
 io-ts@^2.0.2:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.7.tgz#5c05477580bff4c0154b474316c8916253e87c44"
-  integrity sha512-kCusyu/Fa0oax5ue2Id/ZqVLEk5JOWyrXHcLbD4kHoVM50MhDEWUtcHlN7RrD94I8OrWILcVltM6OllnZiHJmg==
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.8.tgz#119a9ac5f2dcc000826084f440f37e255a10ae6e"
+  integrity sha512-kMpEM7iqomjg3DkpMrdXEhhiL/67oxtMH5185AVGyja0MQP3JONw/w4/51RHZuHaYu3gsWM2zAFzkHETy5eyGw==
 
 ipaddr.js@1.9.0:
   version "1.9.0"
