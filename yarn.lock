@@ -2258,9 +2258,9 @@ invert-kv@^1.0.0:
   integrity sha1-EEqOSqym09jNFXqO+L+rLXo//bY=
 
 io-ts-reporters@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/io-ts-reporters/-/io-ts-reporters-1.2.0.tgz#f4b91c9b71fc357e4466a98754fe8a5bb644afdd"
-  integrity sha512-wbNwb3p6q76dlqZrilZecgeBupnFijD6RRaN7418q0kNxIRJVS+8L28LcRaEevFhoCx7i0mhdPIxwpuIjGxkOw==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/io-ts-reporters/-/io-ts-reporters-1.2.1.tgz#9fcfeb32d561e551151bccd36482c1759ded37c3"
+  integrity sha512-xaPiT49RbRR+tYTegDQa0jzdPbaAuFHnptZL1uKmY5xGKK6cPxOkcQstBFYCPzPcYs/itAaAIbYlQ209Ng5oJA==
 
 io-ts@^2.0.2:
   version "2.2.8"
