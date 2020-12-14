@@ -2048,9 +2048,9 @@ gulp-terser@^1.2.0:
     vinyl-sourcemaps-apply "^0.2.1"
 
 gulp-typedoc@^2.2.2:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/gulp-typedoc/-/gulp-typedoc-2.2.7.tgz#02f1b13487e6f68f76dc4ea0fc5d5b8d8be9f266"
-  integrity sha512-imYG30TnxsVc+BAa9+gfRRBT1CCXJGv3ZcsM0+Yr0clWfmaViXG4iLBwxGeRIDQeUy22rRUrVIdeSqpMSRcaqw==
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/gulp-typedoc/-/gulp-typedoc-2.2.8.tgz#d17820bf50417c5386540bb63df9d969729505a1"
+  integrity sha512-Fy8A2HU+2y8syMI+HqPrMMTEUqWWhf8gAge7reMkfcQ3wgFSTRiedD+7fPKiL6A/TeJjXahoeuK9dp0rzcUjwQ==
   dependencies:
     ansi-colors "^4.1.1"
     event-stream "^4.0.1"
