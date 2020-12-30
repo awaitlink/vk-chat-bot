@@ -69,7 +69,7 @@
     "gulp-typedoc": "^2.2.2",
     "gulp-typescript": "^5.0.1",
     "pump": "^3.0.0",
-    "typedoc": "^0.17.0",
+    "typedoc": "^0.20.5",
     "typescript": "^3.5.2"
   },
   "engines": {
