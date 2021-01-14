@@ -1,0 +1,267 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>vk-chat-bot</title>
+	<meta name="description" content="Documentation for vk-chat-bot">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">vk-chat-bot</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>vk-chat-bot</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#vk-chat-bot" id="vk-chat-bot" style="color: inherit; text-decoration: none;">
+					<h1>vk-chat-bot</h1>
+				</a>
+				<p><a href="https://www.npmjs.com/package/vk-chat-bot"><img src="https://img.shields.io/npm/v/vk-chat-bot.svg?style=for-the-badge&logo=npm" alt="version"></a>
+					<a href="https://www.npmjs.com/package/vk-chat-bot"><img src="https://img.shields.io/npm/dt/vk-chat-bot.svg?style=for-the-badge" alt="downloads"></a>
+				<a href="https://bundlephobia.com/result?p=vk-chat-bot"><img src="https://img.shields.io/bundlephobia/minzip/vk-chat-bot?style=for-the-badge" alt="bundle size"></a></p>
+				<blockquote>
+					<p>Package for easy creation of chat bots for VK communities (<em>groups<em>). Uses Callback API.<br>
+								<strong><a href="https://u32i64.github.io/vk-chat-bot/">documentation »</a></strong> ⋅
+						**<a href="https://github.com/u32i64/vk-chat-bot/blob/master/CHANGELOG.md">changelog »</a></em></em> ⋅
+						<a href="#features">features</a> ⋅
+						<a href="#usage">usage</a> ⋅
+						<a href="#contributing">contributing</a> ⋅
+					<a href="#license">license</a></p>
+				</blockquote>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
+				<ul>
+					<li><strong>Easy to use</strong> — setting up behavior is simple — see <a href="#2-behavior-setup">2. Behavior setup</a> below</li>
+					<li><strong>Respects the quota</strong> — the package calls VK API not more then 20 times/second, so you don&#39;t exceed the quota</li>
+				</ul>
+				<p>The version of VK API used by this package can be found <a href="https://github.com/u32i64/vk-chat-bot/blob/master/src/api/api.ts#L9">here</a>.</p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h3>Installation</h3>
+				</a>
+				<pre><code class="language-console"><span class="hljs-meta">$</span><span class="bash"> yarn add vk-chat-bot</span></code></pre>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h3>Example</h3>
+				</a>
+				<p>You can find an example bot in the <a href="https://github.com/u32i64/vk-chat-bot-example"><code>u32i64/vk-chat-bot-example</code></a> repository.</p>
+				<ul>
+					<li><p><strong>Deploying on <a href="https://glitch.com/">Glitch</a></strong></p>
+						<p>Simply press the button below and follow the <code>SETUP.md</code> file there:</p>
+						<p><a href="https://glitch.com/edit/#!/remix/vk-chat-bot-example"><img src="https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fremix%402x.png?1513093958726" alt="remix this" height="33"></a></p>
+					</li>
+					<li><p><strong>Deploying on <a href="https://heroku.com">Heroku</a></strong></p>
+						<p>You can find a step-by-step guide on deploying the example to Heroku <a href="https://github.com/u32i64/vk-chat-bot/blob/master/tutorials/heroku-deploy-guide.md">here</a>.</p>
+					</li>
+				</ul>
+				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
+					<h3>Quick Start</h3>
+				</a>
+				<a href="#1-preparation" id="1-preparation" style="color: inherit; text-decoration: none;">
+					<h4>1. Preparation</h4>
+				</a>
+				<p>First, <code>require()</code> the package:</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> vk = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;vk-chat-bot&#x27;</span>);</code></pre>
+				<p>Then, create your bot using the <code>vk.bot</code> function (see <a href="https://u32i64.github.io/vk-chat-bot/modules/_main_.html#bot">Params object</a> for more information about <code>params</code>):</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> params = {
+  <span class="hljs-attr">vkToken</span>: <span class="hljs-string">&#x27;your_vk_access_token&#x27;</span>,
+  <span class="hljs-attr">confirmationToken</span>: <span class="hljs-string">&#x27;f123456&#x27;</span>,
+  <span class="hljs-attr">groupId</span>: <span class="hljs-number">1234567</span>,
+  <span class="hljs-attr">secret</span>: <span class="hljs-string">&#x27;s3r10us1y_s3cr3t_phr4s3&#x27;</span>,
+  <span class="hljs-attr">port</span>: <span class="hljs-number">12345</span>,
+
+  <span class="hljs-attr">cmdPrefix</span>: <span class="hljs-string">&#x27;/&#x27;</span>
+};
+
+<span class="hljs-keyword">var</span> { bot, core } = vk.bot(params);</code></pre>
+				<a href="#2-behavior-setup" id="2-behavior-setup" style="color: inherit; text-decoration: none;">
+					<h4>2. Behavior setup</h4>
+				</a>
+				<p>See <a href="https://u32i64.github.io/vk-chat-bot/classes/_core_.core.html"><code>Core</code></a> wiki to learn more about behavior functions.
+				Here are some examples:</p>
+				<pre><code class="language-js"><span class="hljs-comment">// Use stuff from the package...</span>
+<span class="hljs-keyword">const</span> { Color, button, Keyboard } = vk.kbd;
+
+<span class="hljs-comment">// ...to create a keyboard like this.</span>
+<span class="hljs-comment">// +-----------+---------+----------+----------+</span>
+<span class="hljs-comment">// | Secondary | Primary | Negative | Positive |</span>
+<span class="hljs-comment">// +-----------+---------+----------+----------+</span>
+<span class="hljs-comment">// |      Maximum rows is 10, columns - 4.     |</span>
+<span class="hljs-comment">// +-------------------------------------------+</span>
+<span class="hljs-keyword">var</span> kbd = <span class="hljs-keyword">new</span> Keyboard([
+  [ <span class="hljs-comment">/* Row (array of buttons) */</span>
+    button.text(<span class="hljs-string">&#x27;Secondary&#x27;</span>),
+    button.text(<span class="hljs-string">&#x27;Primary&#x27;</span>, Color.Primary),
+    button.text(<span class="hljs-string">&#x27;Negative&#x27;</span>, Color.Negative),
+    button.text(<span class="hljs-string">&#x27;Positive&#x27;</span>, Color.Positive)
+  ],
+  [
+    button.text(<span class="hljs-string">&#x27;Maximum rows is 10, columns - 4.&#x27;</span>)
+  ],
+]);
+
+<span class="hljs-comment">// When user presses the `Start` button...</span>
+<span class="hljs-comment">// (you have to enable the button in community settings)</span>
+core.on(<span class="hljs-string">&#x27;start&#x27;</span>, $ =&gt; {
+  <span class="hljs-comment">// ...send them our keyboard.</span>
+  $.text(<span class="hljs-string">&#x27;Thanks for messaging us! Choose from the options below:&#x27;</span>);
+  $.keyboard(kbd);
+
+  <span class="hljs-comment">// Here, $.send() is added automatically.</span>
+});</code></pre>
+				<pre><code class="language-js"><span class="hljs-comment">// Searches for cmd_prefix + &#x27;help&#x27;, e.g. &#x27;/help&#x27;</span>
+core.cmd(<span class="hljs-string">&#x27;help&#x27;</span>, $ =&gt; {
+  <span class="hljs-comment">// core.help() returns the help message</span>
+  $.text(<span class="hljs-string">&#x27;Test Bot v1.0&#x27;</span> + core.help());
+
+  <span class="hljs-comment">// Attach an image from</span>
+  <span class="hljs-comment">// https://vk.com/team?z=photo6492_45624077</span>
+  $.attach(<span class="hljs-string">&#x27;photo&#x27;</span>, <span class="hljs-number">6492</span>, <span class="hljs-number">456240778</span>);
+}, <span class="hljs-string">&#x27;shows the help message&#x27;</span>);</code></pre>
+				<pre><code class="language-js"><span class="hljs-comment">// Use case-insensitive regular expression to find words &#x27;hi&#x27;, &#x27;hello&#x27; or &#x27;hey&#x27;</span>
+core.regex(<span class="hljs-regexp">/h(i|ello|ey)/i</span>, $ =&gt; {
+  $.text(<span class="hljs-string">&#x27;Hello, I am a test bot. You said: &#x27;</span> + $.msg);
+});</code></pre>
+				<a href="#3-start-it" id="3-start-it" style="color: inherit; text-decoration: none;">
+					<h4>3. Start it!</h4>
+				</a>
+				<p>Start the bot:</p>
+				<pre><code class="language-js">bot.start();</code></pre>
+				<p>The bot will log some useful information, see <a href="https://u32i64.github.io/vk-chat-bot/classes/_extra_stats_.stats.html">Logging</a> documentation for more information.</p>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<ul>
+					<li>Something does not seem right or you have a feature request? <strong>Open an <a href="https://github.com/u32i64/vk-chat-bot/issues">issue</a>.</strong></li>
+					<li>You know how to make <code>vk-chat-bot</code> better? <strong>Open a <a href="https://github.com/u32i64/vk-chat-bot/pulls">pull request</a>!</strong></li>
+				</ul>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>This project is licensed under the terms of the <strong><a href="https://github.com/u32i64/vk-chat-bot/blob/master/LICENSE">MIT</a></strong> license.</p>
+				<!-- LINKS -->
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_api_api_.html">&quot;api/api&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_api_context_.html">&quot;api/context&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_api_keyboard_.html">&quot;api/keyboard&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_bot_.html">&quot;bot&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_core_.html">&quot;core&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_extra_log_.html">&quot;extra/log&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_extra_stats_.html">&quot;extra/stats&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_main_.html">&quot;main&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
