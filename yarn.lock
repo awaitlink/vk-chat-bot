@@ -2036,14 +2036,13 @@ gulp-sourcemaps@^2.6.4:
     strip-bom-string "1.X"
     through2 "2.X"
 
-gulp-terser@^1.2.0:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/gulp-terser/-/gulp-terser-1.4.1.tgz#06b30023889b149bdbbdd49fada31b233fe737df"
-  integrity sha512-VUoKrk24G0ojr7fXqlZ7vA8qDFHRloYAM6doNRyKdJ/LFkj+X3P04f+7LlOp7j05WtdOCEg65oG6nGjSf//78A==
+gulp-terser@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/gulp-terser/-/gulp-terser-2.0.1.tgz#5f8f4fc54588b79519243809cc8eef4936286d0d"
+  integrity sha512-XCrnCXP8ovNpgLK9McJIXlgm0j3W2TsiWu7K9y3m+Sn5XZgUzi6U8MPHtS3NdLMic9poCj695N0ARJ2B6atypw==
   dependencies:
-    is-promise "^4.0.0"
     plugin-error "^1.0.1"
-    terser ">=4"
+    terser "5.4.0"
     through2 "^4.0.2"
     vinyl-sourcemaps-apply "^0.2.1"
 
@@ -2475,11 +2474,6 @@ is-promise@^2.1, is-promise@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
   integrity sha1-eaKp7OfwlugPNtKy87wWwf9L8/o=
-
-is-promise@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-4.0.0.tgz#42ff9f84206c1991d26debf520dd5c01042dd2f3"
-  integrity sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==
 
 is-regex@^1.0.5:
   version "1.0.5"
@@ -3948,10 +3942,10 @@ source-map-resolve@^0.5.0, source-map-resolve@^0.5.2:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@~0.5.12:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.16.tgz#0ae069e7fe3ba7538c64c98515e35339eac5a042"
-  integrity sha512-efyLRJDr68D9hBBNIPWFjhpFzURh+KJykQwvMyW5UiZzYwoF6l4YMMDIJJEyFWxWCqfyxLzz6tSfUFR+kXXsVQ==
+source-map-support@~0.5.19:
+  version "0.5.19"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
+  integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
@@ -3971,7 +3965,7 @@ source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
-source-map@^0.7.3:
+source-map@^0.7.3, source-map@~0.7.2:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.3.tgz#5302f8169031735226544092e64981f751750383"
   integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
@@ -4231,14 +4225,14 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-terser@>=4:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-4.8.0.tgz#63056343d7c70bb29f3af665865a46fe03a0df17"
-  integrity sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==
+terser@5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.4.0.tgz#9815c0839072d5c894e22c6fc508fbe9f5e7d7e8"
+  integrity sha512-3dZunFLbCJis9TAF2VnX+VrQLctRUmt1p3W2kCsJuZE4ZgWqh//+1MZ62EanewrqKoUf4zIaDGZAvml4UDc0OQ==
   dependencies:
     commander "^2.20.0"
-    source-map "~0.6.1"
-    source-map-support "~0.5.12"
+    source-map "~0.7.2"
+    source-map-support "~0.5.19"
 
 text-table@^0.2.0:
   version "0.2.0"
